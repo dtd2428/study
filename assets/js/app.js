@@ -20,17 +20,18 @@
   let custom = Array.isArray(saved.custom) ? saved.custom : [];
   let history = Array.isArray(saved.history) ? saved.history : [];
   let session = saved.session || null;
+  let lastDeleted = saved.lastDeleted || null;
   let result = null, page = 'home', resultFilter='all', timerInterval, toastTimer;
   const banks = () => [...window.STUDY_BANKS,...custom];
   const getBank = id => banks().find(b=>b.id===id);
-  const persist = () => {try{localStorage.setItem(KEY,JSON.stringify({custom,history,session}));}catch{if(storageOK){storageOK=false;toast('브라우저 저장 공간을 사용할 수 없어 새로고침 시 기록이 사라질 수 있습니다.');}}};
+  const persist = () => {try{localStorage.setItem(KEY,JSON.stringify({custom,history,session,lastDeleted}));}catch{if(storageOK){storageOK=false;toast('브라우저 저장 공간을 사용할 수 없어 새로고침 시 기록이 사라질 수 있습니다.');}}};
   function toast(message){$('#toast').textContent=message;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4500);}
   function setPage(name){page=name;clearInterval(timerInterval);document.querySelectorAll('[data-page]').forEach(b=>{b.classList.toggle('active',b.dataset.page===name);if(b.dataset.page===name)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});$('#breadcrumb').textContent=({home:'학습 홈',records:'학습 기록',manage:'과목 · 문제 관리',quiz:'문제 풀기',result:'시험 결과'})[name];}
   function focusMain(){main.focus();window.scrollTo({top:0,behavior:'instant'});}
   function go(name){setPage(name);({home:renderHome,records:renderRecords,manage:renderManage})[name]?.();focusMain();}
   document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>go(b.dataset.page));
   $('.brand').onclick=e=>{e.preventDefault();go('home');};
-  const warning=()=>((window.STUDY_LOAD_ERRORS?.length)?'<div class="storage-warning">일부 과목 파일을 불러오지 못했습니다. 과목 목록과 경로를 확인해 주세요: '+window.STUDY_LOAD_ERRORS.map(esc).join(', ')+'</div>':'')+(!storageOK?'<div class="storage-warning">이 브라우저에서 저장 공간을 사용할 수 없습니다. 문제 풀이는 가능하지만 새로고침 후 학습 기록·추가 과목이 사라질 수 있습니다. 문제 관리에서 백업 파일을 내려받으세요.</div>':'');
+  const warning=()=>deletionNotice()+((window.STUDY_LOAD_ERRORS?.length)?'<div class="storage-warning">일부 과목 파일을 불러오지 못했습니다. 과목 목록과 경로를 확인해 주세요: '+window.STUDY_LOAD_ERRORS.map(esc).join(', ')+'</div>':'')+(!storageOK?'<div class="storage-warning">이 브라우저에서 저장 공간을 사용할 수 없습니다. 문제 풀이는 가능하지만 새로고침 후 학습 기록·추가 과목이 사라질 수 있습니다. 문제 관리에서 백업 파일을 내려받으세요.</div>':'');
   const intro=(tag,title,sub)=>`<div class="intro"><div><div class="eyebrow">${tag}</div><h1>${title}</h1><p>${sub}</p></div><span class="date-tag">나만의 속도로 공부하기 ↗</span></div>`;
   const bankOptions=()=>banks().map(b=>`<option value="${esc(b.id)}">${esc(b.title)}</option>`).join('');
   const completed = () => history.filter(h=>h.total>0);
@@ -59,8 +60,9 @@
     if(!session){go('home');return;}setPage('quiz');
     const q=session.questions[session.index], checked=!!session.checked[q.id], a=session.answers[q.id];
     const count=session.questions.filter(answered).length;
-    main.innerHTML=warning()+`<div class="quiz-header"><div><span class="pill">${session.mode==='exam'?'◷ 모의고사':'✦ 연습 모드'}</span><h1>${esc(session.title)}</h1></div><div class="row"><span id="timer" class="timer" aria-label="남은 시간"></span><button id="save-exit" class="secondary">저장 후 나가기</button></div></div><div class="progress-line" aria-label="답안 작성 진행률"><span style="width:${count/session.questions.length*100}%"></span></div><div class="quiz-layout"><section class="question-card"><div class="q-meta"><span class="q-number">QUESTION ${String(session.index+1).padStart(2,'0')} <span class="muted">/ ${session.questions.length}</span></span><span>${q.week}주차 · ${TYPES[q.type]} <button id="mark" class="icon-btn ${session.marks[q.id]?'marked':''}" aria-label="나중에 다시 보기" aria-pressed="${!!session.marks[q.id]}">⚑</button></span></div><h2>${esc(q.prompt)}</h2><div id="answer-area">${answerHTML(q,a,checked)}</div>${q.type==='essay'?'<p class="answer-note">서술형은 자동 채점하지 않습니다. 모범답안의 체크 항목과 비교해 직접 평가해 주세요.</p>':q.type==='short'?'<p class="answer-note">앞뒤·연속 공백과 전각 문자를 정리해 채점합니다. 명령어의 대소문자는 구분합니다.</p>':q.type==='blanks'?'<p class="answer-note">문제의 조건과 각 칸의 항목에 맞춰 입력하세요. 한 문항의 모든 칸이 맞아야 정답입니다.</p>':''}<div id="feedback-area">${checked?feedbackHTML(q):''}</div><div class="quiz-actions"><button id="prev" class="secondary" ${session.index===0?'disabled':''}>← 이전</button><div>${session.mode==='practice'&&!checked?'<button id="check" class="secondary">정답 · 해설 확인</button>':''}<button id="next" class="primary">${session.index===session.questions.length-1?'답안 제출':'다음 문제 →'}</button></div></div><p class="answer-note">Alt + ← / → 로 문제 이동 · 답안은 자동 저장됩니다.</p></section><aside class="palette"><h3>문제 탐색</h3><p id="answered-count">${count} / ${session.questions.length}문항 답안 작성</p><div class="numbers">${session.questions.map((item,i)=>`<button class="number ${answered(item)?'filled':''} ${i===session.index?'current':''} ${session.marks[item.id]?'marked':''}" data-jump="${i}" aria-label="${i+1}번 문제${answered(item)?', 답안 작성됨':''}${session.marks[item.id]?', 다시 보기':''}" ${i===session.index?'aria-current="step"':''}>${i+1}</button>`).join('')}</div><div class="legend"><span><i></i>작성함</span><span><i class="book"></i>다시 보기</span></div><button id="submit-exam" class="primary">답안 제출하고 채점하기</button></aside></div>`;
+    main.innerHTML=warning()+`<div class="quiz-header"><div><span class="pill">${session.mode==='exam'?'◷ 모의고사':'✦ 연습 모드'}</span><h1>${esc(session.title)}</h1></div><div class="row"><span id="timer" class="timer" aria-label="남은 시간"></span><button id="save-exit" class="secondary">저장 후 나가기</button></div></div><div class="progress-line" aria-label="답안 작성 진행률"><span style="width:${count/session.questions.length*100}%"></span></div><div class="quiz-layout"><section class="question-card"><div class="q-meta"><span class="q-number">QUESTION ${String(session.index+1).padStart(2,'0')} <span class="muted">/ ${session.questions.length}</span></span><span>${q.week}주차 · ${TYPES[q.type]} <button id="mark" class="icon-btn ${session.marks[q.id]?'marked':''}" aria-label="나중에 다시 보기" aria-pressed="${!!session.marks[q.id]}">⚑</button></span></div><div class="question-tools"><button id="delete-current" class="delete-question-btn" type="button" ${getBank(session.bankId)?.questions.some(item=>item.id===q.id)?'':'disabled'}>문제 삭제</button></div><h2>${esc(q.prompt)}</h2><div id="answer-area">${answerHTML(q,a,checked)}</div>${q.type==='essay'?'<p class="answer-note">서술형은 자동 채점하지 않습니다. 모범답안의 체크 항목과 비교해 직접 평가해 주세요.</p>':q.type==='short'?'<p class="answer-note">앞뒤·연속 공백과 전각 문자를 정리해 채점합니다. 명령어의 대소문자는 구분합니다.</p>':q.type==='blanks'?'<p class="answer-note">문제의 조건과 각 칸의 항목에 맞춰 입력하세요. 한 문항의 모든 칸이 맞아야 정답입니다.</p>':''}<div id="feedback-area">${checked?feedbackHTML(q):''}</div><div class="quiz-actions"><button id="prev" class="secondary" ${session.index===0?'disabled':''}>← 이전</button><div>${session.mode==='practice'&&!checked?'<button id="check" class="secondary">정답 · 해설 확인</button>':''}<button id="next" class="primary">${session.index===session.questions.length-1?'답안 제출':'다음 문제 →'}</button></div></div><p class="answer-note">Alt + ← / → 로 문제 이동 · 답안은 자동 저장됩니다.</p></section><aside class="palette"><h3>문제 탐색</h3><p id="answered-count">${count} / ${session.questions.length}문항 답안 작성</p><div class="numbers">${session.questions.map((item,i)=>`<button class="number ${answered(item)?'filled':''} ${i===session.index?'current':''} ${session.marks[item.id]?'marked':''}" data-jump="${i}" aria-label="${i+1}번 문제${answered(item)?', 답안 작성됨':''}${session.marks[item.id]?', 다시 보기':''}" ${i===session.index?'aria-current="step"':''}>${i+1}</button>`).join('')}</div><div class="legend"><span><i></i>작성함</span><span><i class="book"></i>다시 보기</span></div><button id="submit-exam" class="primary">답안 제출하고 채점하기</button></aside></div>`;
     $('#save-exit').onclick=()=>{persist();go('home');};
+    $('#delete-current').onclick=()=>{if(!removeQuestion(session.bankId,q.id))return;if(session){renderQuiz();focusMain();}else{go('home');}toast('문제를 삭제했습니다. 삭제 취소로 되돌릴 수 있어요.');};
     $('#mark').onclick=()=>{session.marks[q.id]=!session.marks[q.id];persist();renderQuiz();};
     document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>jump(Number(b.dataset.jump)));
     $('#prev').onclick=()=>jump(session.index-1);$('#next').onclick=()=>session.index===session.questions.length-1?submitSession():jump(session.index+1);$('#submit-exam').onclick=submitSession;
@@ -85,7 +87,7 @@
     document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{resultFilter=b.dataset.filter;renderResult();});
     $('#back-home').onclick=()=>go('home');$('#retry-all').onclick=()=>retry(result.questions);$('#retry-wrong').onclick=()=>{const pool=result.questions.filter(q=>autoGrade(q,result.answers,result.grades)!==true);if(!pool.length){toast('모든 문항을 맞혔어요. 전체 다시 풀기로 복습할 수 있습니다.');return;}retry(pool);};bindSelfGrade();
   }
-  async function retry(qs){if(session&&!await confirmDialog('새 복습을 시작할까요?','현재 저장된 미완료 시험은 새 복습으로 대체됩니다.','복습 시작'))return;const b=getBank(result.bankId)||{id:result.bankId,title:result.title};startSession(b,shuffle(qs),'practice');}
+  async function retry(qs){const b=getBank(result.bankId);const available=b?qs.filter(q=>b.questions.some(item=>item.id===q.id)):[];if(!available.length){toast('이 기록의 문제는 현재 문제은행에서 모두 삭제되었습니다.');return;}if(session&&!await confirmDialog('새 복습을 시작할까요?','현재 저장된 미완료 시험은 새 복습으로 대체됩니다.','복습 시작'))return;startSession(b,shuffle(available),'practice');}
   function userAnswer(q,a){if(q.type==='choice')return q.options.find(o=>o.id===a)?.text||'미응답';if(q.type==='blanks')return q.fields.map((f,i)=>`${f}: ${a?.[i]||'미응답'}`).join(' / ');return a||'미응답';}
   function formatDate(date){return new Date(date).toLocaleDateString('ko-KR',{month:'2-digit',day:'2-digit'});}
   function renderRecords(){main.innerHTML=warning()+intro('YOUR LEARNING JOURNEY','조금씩 쌓인 공부의 흔적','최근 50개의 기록과 답안·해설을 이 브라우저에 보관합니다.')+(history.length?`<div class="section-head"><h2>학습 기록 ${history.length}</h2><button id="clear-history" class="link-btn danger">기록 전체 삭제</button></div><div class="table-wrap"><table><thead><tr><th>날짜</th><th>과목</th><th>방식</th><th>문항</th><th>점수</th><th>결과</th></tr></thead><tbody>${history.map((h,i)=>`<tr><td>${formatDate(h.date)}</td><td>${esc(h.title)}</td><td>${h.mode==='exam'?'모의고사':'연습'}</td><td>${h.questions.length}</td><td>${resultStats(h).score}점 ${resultStats(h).pending?'(임시)':''}</td><td><button class="link-btn" data-record="${i}">답안 · 해설 →</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="empty"><b>아직 완료한 학습이 없어요.</b>학습 홈에서 첫 시험을 시작해 보세요.</div>');document.querySelectorAll('[data-record]').forEach(b=>b.onclick=()=>{result=history[Number(b.dataset.record)];resultFilter='all';renderResult();focusMain();});if($('#clear-history'))$('#clear-history').onclick=async()=>{if(await confirmDialog('학습 기록을 모두 삭제할까요?','완료한 시험의 답안과 해설 기록을 삭제합니다. 이 작업은 되돌릴 수 없습니다.','기록 삭제')){history=[];result=null;persist();renderRecords();}};}
@@ -98,9 +100,74 @@
     document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>openEditor(b.dataset.add));
     document.querySelectorAll('[data-export]').forEach(b=>b.onclick=()=>download(`${b.dataset.export}.json`,[getBank(b.dataset.export)]));
     document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=async()=>{if(await confirmDialog('과목을 삭제할까요?',`“${getBank(b.dataset.remove).title}”의 문제를 삭제합니다. 필요하다면 먼저 내보내기로 백업하세요. 완료한 학습 기록은 유지됩니다.`,'과목 삭제')){custom=custom.filter(s=>s.id!==b.dataset.remove);persist();renderManage();}});
-    document.querySelectorAll('[data-inspect]').forEach(b=>b.onclick=()=>{const bank=getBank(b.dataset.inspect);$('#bank-preview').innerHTML=`<div class="note-card"><h3>${esc(bank.title)} · 문제 목록</h3><div class="bank-list">${bank.questions.map(q=>`<details><summary>${q.week}주차 · ${TYPES[q.type]} · ${esc(q.prompt)}</summary><p>정답: ${esc(correctText(q))}</p><p>${esc(q.explanation)}</p><p>${esc(q.source||'')}</p><button class="link-btn danger" data-delete-question="${esc(q.id)}">문제 삭제</button></details>`).join('')||'<p>아직 문제가 없습니다.</p>'}</div></div>`;document.querySelectorAll('[data-delete-question]').forEach(del=>del.onclick=async()=>{if(await confirmDialog('문제를 삭제할까요?','이 브라우저의 문제은행에서 삭제합니다.','문제 삭제')){const mutable=ensureCustom(bank.id);mutable.questions=mutable.questions.filter(q=>q.id!==del.dataset.deleteQuestion);persist();renderManage();}});$('#bank-preview').scrollIntoView({behavior:'smooth'});});
+    document.querySelectorAll('[data-inspect]').forEach(b=>b.onclick=()=>{const bank=getBank(b.dataset.inspect);$('#bank-preview').innerHTML=`<div class="note-card"><h3>${esc(bank.title)} · 문제 목록</h3><div class="bank-list">${bank.questions.map(q=>`<details><summary>${q.week}주차 · ${TYPES[q.type]} · ${esc(q.prompt)}</summary><p>정답: ${esc(correctText(q))}</p><p>${esc(q.explanation)}</p><p>${esc(q.source||'')}</p><button class="link-btn danger" data-delete-question="${esc(q.id)}">문제 삭제</button></details>`).join('')||'<p>아직 문제가 없습니다.</p>'}</div></div>`;document.querySelectorAll('[data-delete-question]').forEach(del=>del.onclick=async()=>{if(await confirmDialog('문제를 삭제할까요?','이 브라우저의 문제은행에서 삭제합니다.','문제 삭제')){removeQuestion(bank.id,del.dataset.deleteQuestion);renderManage();}});$('#bank-preview').scrollIntoView({behavior:'smooth'});});
   }
   function ensureCustom(id){let b=custom.find(s=>s.id===id);if(!b){const original=window.STUDY_BANKS.find(s=>s.id===id);b=JSON.parse(JSON.stringify(original));custom.push(b);window.STUDY_BANKS=window.STUDY_BANKS.filter(s=>s.id!==id);}return b;}
+  function deletionNotice(){
+    if(!lastDeleted)return '';
+    return `<div class="deletion-notice" role="status"><div><b>문제를 삭제했습니다.</b><span>현재 브라우저의 출제 대상에서 제외했어요. 친구의 문제은행은 그대로예요.</span></div><button type="button" class="secondary" data-undo-delete>삭제 취소</button></div>`;
+  }
+  function removeQuestion(bankId,questionId){
+    const bank=getBank(bankId);
+    const bankIndex=bank?.questions.findIndex(q=>q.id===questionId)??-1;
+    if(bankIndex<0)return false;
+    const removed={bankId,bankIndex,question:JSON.parse(JSON.stringify(bank.questions[bankIndex]))};
+    // 시험의 답안·확인 상태·표시·직접 채점 정보도 함께 제거합니다.
+    if(session?.bankId===bankId){
+      const index=session.questions.findIndex(q=>q.id===questionId);
+      if(index>=0){
+        removed.sessionId=session.id;
+        removed.sessionIndex=index;
+        removed.sessionQuestion=JSON.parse(JSON.stringify(session.questions[index]));
+        removed.values={};
+        for(const field of ['answers','checked','marks','grades']){
+          if(Object.hasOwn(session[field],questionId))removed.values[field]=session[field][questionId];
+          delete session[field][questionId];
+        }
+        session.questions.splice(index,1);
+        if(session.questions.length){
+          if(index<session.index)session.index--;
+          session.index=Math.min(session.index,session.questions.length-1);
+        }else{
+          removed.emptySession={...session};
+          clearInterval(timerInterval);
+          session=null;
+        }
+      }
+    }
+    ensureCustom(bankId).questions.splice(bankIndex,1);
+    lastDeleted=removed;
+    persist();
+    return true;
+  }
+  function undoQuestionDeletion(){
+    const removed=lastDeleted;
+    if(!removed)return;
+    const bank=getBank(removed.bankId);
+    if(!bank){toast('과목이 삭제되어 문제를 복원할 수 없습니다.');return;}
+    const mutable=ensureCustom(bank.id);
+    if(!mutable.questions.some(q=>q.id===removed.question.id)){
+      mutable.questions.splice(Math.min(removed.bankIndex,mutable.questions.length),0,removed.question);
+    }
+    if(!session&&removed.emptySession&&(!removed.emptySession.deadline||Date.now()<removed.emptySession.deadline)){
+      session=removed.emptySession;
+    }
+    if(session?.id===removed.sessionId&&!session.questions.some(q=>q.id===removed.question.id)){
+      const index=Math.min(removed.sessionIndex,session.questions.length);
+      session.questions.splice(index,0,removed.sessionQuestion);
+      for(const [field,value] of Object.entries(removed.values))session[field][removed.question.id]=value;
+      session.index=index;
+    }
+    lastDeleted=null;
+    persist();
+    if(page==='quiz'&&session)renderQuiz();
+    else if(page==='home')renderHome();
+    else if(page==='manage')renderManage();
+    else if(page==='records')renderRecords();
+    else if(page==='result')renderResult();
+    toast('문제를 복원했습니다.');
+  }
+  document.addEventListener('click',e=>{if(e.target.closest('[data-undo-delete]'))undoQuestionDeletion();});
   // 모든 과목에 동일하게 브라우저의 수정본을 우선 적용합니다.
   window.STUDY_BANKS=window.STUDY_BANKS.filter(b=>!custom.some(c=>c.id===b.id));
   function download(name,data,script=false){const json=JSON.stringify(data,null,2);const url=URL.createObjectURL(new Blob([script?`/* 스터디룸 문제은행 */\nwindow.STUDY_OVERRIDES = ${json};\n`:json],{type:script?'text/javascript;charset=utf-8':'application/json;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
