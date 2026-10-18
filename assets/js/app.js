@@ -10,6 +10,7 @@
   const TYPES = {choice:'4지선다',short:'단답형',blanks:'빈칸형',essay:'서술형'};
   const validateBanks = window.STUDY_VALIDATE_BANKS;
   const KEY = 'studyroom-v1';
+  const DELETION_KEY = 'studyroom-deletions-v1';
   const builtInBanks = JSON.parse(JSON.stringify(window.STUDY_BANKS));
   const builtInIds = new Set(builtInBanks.map(b=>b.id));
   const esc = x => String(x ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -21,8 +22,9 @@
   let history = Array.isArray(saved.history) ? saved.history : [];
   let session = saved.session || null;
   let lastDeleted = saved.lastDeleted || null;
+  let deletionState = readDeletionState();
   let result = null, page = 'home', resultFilter='all', timerInterval, toastTimer;
-  const banks = () => [...window.STUDY_BANKS,...custom];
+  const banks = () => [...window.STUDY_BANKS,...custom].map(b=>({...b,questions:b.questions.filter(q=>!deletedIds(b.id).includes(q.id))}));
   const getBank = id => banks().find(b=>b.id===id);
   const persist = () => {try{localStorage.setItem(KEY,JSON.stringify({custom,history,session,lastDeleted}));}catch{if(storageOK){storageOK=false;toast('브라우저 저장 공간을 사용할 수 없어 새로고침 시 기록이 사라질 수 있습니다.');}}};
   function toast(message){$('#toast').textContent=message;$('#toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').hidden=true,4500);}
@@ -60,7 +62,7 @@
     if(!session){go('home');return;}setPage('quiz');
     const q=session.questions[session.index], checked=!!session.checked[q.id], a=session.answers[q.id];
     const count=session.questions.filter(answered).length;
-    main.innerHTML=warning()+`<div class="quiz-header"><div><span class="pill">${session.mode==='exam'?'◷ 모의고사':'✦ 연습 모드'}</span><h1>${esc(session.title)}</h1></div><div class="row"><span id="timer" class="timer" aria-label="남은 시간"></span><button id="save-exit" class="secondary">저장 후 나가기</button></div></div><div class="progress-line" aria-label="답안 작성 진행률"><span style="width:${count/session.questions.length*100}%"></span></div><div class="quiz-layout"><section class="question-card"><div class="q-meta"><span class="q-number">QUESTION ${String(session.index+1).padStart(2,'0')} <span class="muted">/ ${session.questions.length}</span></span><span>${q.week}주차 · ${TYPES[q.type]} <button id="mark" class="icon-btn ${session.marks[q.id]?'marked':''}" aria-label="나중에 다시 보기" aria-pressed="${!!session.marks[q.id]}">⚑</button></span></div><div class="question-tools"><button id="delete-current" class="delete-question-btn" type="button" ${getBank(session.bankId)?.questions.some(item=>item.id===q.id)?'':'disabled'}>문제 삭제</button></div><h2>${esc(q.prompt)}</h2><div id="answer-area">${answerHTML(q,a,checked)}</div>${q.type==='essay'?'<p class="answer-note">서술형은 자동 채점하지 않습니다. 모범답안의 체크 항목과 비교해 직접 평가해 주세요.</p>':q.type==='short'?'<p class="answer-note">앞뒤·연속 공백과 전각 문자를 정리해 채점합니다. 명령어의 대소문자는 구분합니다.</p>':q.type==='blanks'?'<p class="answer-note">문제의 조건과 각 칸의 항목에 맞춰 입력하세요. 한 문항의 모든 칸이 맞아야 정답입니다.</p>':''}<div id="feedback-area">${checked?feedbackHTML(q):''}</div><div class="quiz-actions"><button id="prev" class="secondary" ${session.index===0?'disabled':''}>← 이전</button><div>${session.mode==='practice'&&!checked?'<button id="check" class="secondary">정답 · 해설 확인</button>':''}<button id="next" class="primary">${session.index===session.questions.length-1?'답안 제출':'다음 문제 →'}</button></div></div><p class="answer-note">Alt + ← / → 로 문제 이동 · 답안은 자동 저장됩니다.</p></section><aside class="palette"><h3>문제 탐색</h3><p id="answered-count">${count} / ${session.questions.length}문항 답안 작성</p><div class="numbers">${session.questions.map((item,i)=>`<button class="number ${answered(item)?'filled':''} ${i===session.index?'current':''} ${session.marks[item.id]?'marked':''}" data-jump="${i}" aria-label="${i+1}번 문제${answered(item)?', 답안 작성됨':''}${session.marks[item.id]?', 다시 보기':''}" ${i===session.index?'aria-current="step"':''}>${i+1}</button>`).join('')}</div><div class="legend"><span><i></i>작성함</span><span><i class="book"></i>다시 보기</span></div><button id="submit-exam" class="primary">답안 제출하고 채점하기</button></aside></div>`;
+    main.innerHTML=warning()+`<div class="quiz-header"><div><span class="pill">${session.mode==='exam'?'◷ 모의고사':'✦ 연습 모드'}</span><h1>${esc(session.title)}</h1></div><div class="row"><span id="timer" class="timer" aria-label="남은 시간"></span><button id="save-exit" class="secondary">저장 후 나가기</button></div></div><div class="progress-line" aria-label="답안 작성 진행률"><span style="width:${count/session.questions.length*100}%"></span></div><div class="quiz-layout"><section class="question-card"><div class="q-meta"><span class="q-number">QUESTION ${String(session.index+1).padStart(2,'0')} <span class="muted">/ ${session.questions.length}</span></span><span>${q.week}주차 · ${TYPES[q.type]} <button id="mark" class="icon-btn ${session.marks[q.id]?'marked':''}" aria-label="나중에 다시 보기" aria-pressed="${!!session.marks[q.id]}">⚑</button></span></div><div class="question-tools"><button id="delete-current" class="secondary delete-local-btn" type="button" ${getBank(session.bankId)?.questions.some(item=>item.id===q.id)?'':'disabled'}>나만 제외</button>${sourceDeletionLink(session.bankId,q)}</div><p class="answer-note source-delete-note">‘문제 삭제’는 GitHub에 요청을 등록하면 전체 사이트 원본에 반영됩니다.</p><h2>${esc(q.prompt)}</h2><div id="answer-area">${answerHTML(q,a,checked)}</div>${q.type==='essay'?'<p class="answer-note">서술형은 자동 채점하지 않습니다. 모범답안의 체크 항목과 비교해 직접 평가해 주세요.</p>':q.type==='short'?'<p class="answer-note">앞뒤·연속 공백과 전각 문자를 정리해 채점합니다. 명령어의 대소문자는 구분합니다.</p>':q.type==='blanks'?'<p class="answer-note">문제의 조건과 각 칸의 항목에 맞춰 입력하세요. 한 문항의 모든 칸이 맞아야 정답입니다.</p>':''}<div id="feedback-area">${checked?feedbackHTML(q):''}</div><div class="quiz-actions"><button id="prev" class="secondary" ${session.index===0?'disabled':''}>← 이전</button><div>${session.mode==='practice'&&!checked?'<button id="check" class="secondary">정답 · 해설 확인</button>':''}<button id="next" class="primary">${session.index===session.questions.length-1?'답안 제출':'다음 문제 →'}</button></div></div><p class="answer-note">Alt + ← / → 로 문제 이동 · 답안은 자동 저장됩니다.</p></section><aside class="palette"><h3>문제 탐색</h3><p id="answered-count">${count} / ${session.questions.length}문항 답안 작성</p><div class="numbers">${session.questions.map((item,i)=>`<button class="number ${answered(item)?'filled':''} ${i===session.index?'current':''} ${session.marks[item.id]?'marked':''}" data-jump="${i}" aria-label="${i+1}번 문제${answered(item)?', 답안 작성됨':''}${session.marks[item.id]?', 다시 보기':''}" ${i===session.index?'aria-current="step"':''}>${i+1}</button>`).join('')}</div><div class="legend"><span><i></i>작성함</span><span><i class="book"></i>다시 보기</span></div><button id="submit-exam" class="primary">답안 제출하고 채점하기</button></aside></div>`;
     $('#save-exit').onclick=()=>{persist();go('home');};
     $('#delete-current').onclick=()=>{if(!removeQuestion(session.bankId,q.id))return;if(session){renderQuiz();focusMain();}else{go('home');}toast('문제를 삭제했습니다. 삭제 취소로 되돌릴 수 있어요.');};
     $('#mark').onclick=()=>{session.marks[q.id]=!session.marks[q.id];persist();renderQuiz();};
@@ -100,12 +102,90 @@
     document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>openEditor(b.dataset.add));
     document.querySelectorAll('[data-export]').forEach(b=>b.onclick=()=>download(`${b.dataset.export}.json`,[getBank(b.dataset.export)]));
     document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=async()=>{if(await confirmDialog('과목을 삭제할까요?',`“${getBank(b.dataset.remove).title}”의 문제를 삭제합니다. 필요하다면 먼저 내보내기로 백업하세요. 완료한 학습 기록은 유지됩니다.`,'과목 삭제')){custom=custom.filter(s=>s.id!==b.dataset.remove);persist();renderManage();}});
-    document.querySelectorAll('[data-inspect]').forEach(b=>b.onclick=()=>{const bank=getBank(b.dataset.inspect);$('#bank-preview').innerHTML=`<div class="note-card"><h3>${esc(bank.title)} · 문제 목록</h3><div class="bank-list">${bank.questions.map(q=>`<details><summary>${q.week}주차 · ${TYPES[q.type]} · ${esc(q.prompt)}</summary><p>정답: ${esc(correctText(q))}</p><p>${esc(q.explanation)}</p><p>${esc(q.source||'')}</p><button class="link-btn danger" data-delete-question="${esc(q.id)}">문제 삭제</button></details>`).join('')||'<p>아직 문제가 없습니다.</p>'}</div></div>`;document.querySelectorAll('[data-delete-question]').forEach(del=>del.onclick=async()=>{if(await confirmDialog('문제를 삭제할까요?','이 브라우저의 문제은행에서 삭제합니다.','문제 삭제')){removeQuestion(bank.id,del.dataset.deleteQuestion);renderManage();}});$('#bank-preview').scrollIntoView({behavior:'smooth'});});
+    document.querySelectorAll('[data-inspect]').forEach(b=>b.onclick=()=>{const bank=getBank(b.dataset.inspect);$('#bank-preview').innerHTML=`<div class="note-card"><h3>${esc(bank.title)} · 문제 목록</h3><div class="bank-list">${bank.questions.map(q=>`<details><summary>${q.week}주차 · ${TYPES[q.type]} · ${esc(q.prompt)}</summary><p>정답: ${esc(correctText(q))}</p><p>${esc(q.explanation)}</p><p>${esc(q.source||'')}</p><button class="link-btn danger" data-delete-question="${esc(q.id)}">나만 제외</button></details>`).join('')||'<p>아직 문제가 없습니다.</p>'}</div></div>`;document.querySelectorAll('[data-delete-question]').forEach(del=>del.onclick=async()=>{if(await confirmDialog('문제를 삭제할까요?','이 브라우저의 문제은행에서 삭제합니다.','문제 삭제')){removeQuestion(bank.id,del.dataset.deleteQuestion);renderManage();}});$('#bank-preview').scrollIntoView({behavior:'smooth'});});
   }
   function ensureCustom(id){let b=custom.find(s=>s.id===id);if(!b){const original=window.STUDY_BANKS.find(s=>s.id===id);b=JSON.parse(JSON.stringify(original));custom.push(b);window.STUDY_BANKS=window.STUDY_BANKS.filter(s=>s.id!==id);}return b;}
+  function sourceDeletionLink(bankId,q){
+    const shared=builtInBanks.find(b=>b.id===bankId);
+    const repo=window.STUDY_REPOSITORY;
+    if(!repo||!shared?.questions.some(item=>item.id===q.id))return '';
+    const payload=JSON.stringify({subjectId:bankId,questionId:q.id},null,2);
+    const body=`<!-- studyroom-delete:v1 -->\n## 전체 사이트 문제 삭제 요청\n\n과목: ${shared.title}\n문제: ${q.prompt}\n\n\`\`\`json\n${payload}\n\`\`\`\n\n삭제 사유: 불필요한 문제\n\n저장소 소유자가 등록하면 자동 반영됩니다. 다른 이용자의 요청은 소유자 승인 후 반영됩니다.`;
+    const url=new URL(`https://github.com/${repo}/issues/new`);
+    url.searchParams.set('title',`[문제 삭제] ${shared.title} / ${q.id}`);
+    url.searchParams.set('body',body);
+    return `<a class="delete-question-btn source-delete-link" href="${esc(url.href)}" target="_blank" rel="noopener noreferrer">문제 삭제 ↗</a>`;
+  }
+  function readDeletionState(){
+    try{
+      const value=JSON.parse(localStorage.getItem(DELETION_KEY)||'{}');
+      const deleted={};
+      for(const [id,ids] of Object.entries(value?.deleted||{})){
+        if(!['__proto__','constructor','prototype'].includes(id)&&Array.isArray(ids))deleted[id]=ids.filter(v=>typeof v==='string');
+      }
+      return {deleted,dismissed:typeof value?.dismissed==='string'?value.dismissed:null};
+    }catch{return {deleted:{},dismissed:null};}
+  }
+  function deletedIds(bankId){return [...new Set([...(deletionState.deleted[bankId]||[]),...(window.STUDY_REMOVED?.[bankId]||[])])];}
+  function deletionSignature(removed){return `${removed.bankId}:${removed.question.id}`;}
+  function saveDeletionState(){
+    try{localStorage.setItem(DELETION_KEY,JSON.stringify(deletionState));}
+    catch{storageOK=false;toast('삭제 기록을 브라우저에 저장하지 못했습니다. 문제은행을 내보내 백업해 주세요.');}
+  }
+  function updateDeletionState(bankId,questionId,remove){
+    deletionState=readDeletionState();
+    const ids=new Set(deletionState.deleted[bankId]||[]);
+    if(remove)ids.add(questionId);else ids.delete(questionId);
+    deletionState.deleted[bankId]=[...ids];
+    deletionState.dismissed=null;
+    saveDeletionState();
+  }
+  function resetDeletionState(bankId){
+    deletionState=readDeletionState();
+    delete deletionState.deleted[bankId];
+    saveDeletionState();
+  }
+  function dismissDeletionNotice(){
+    if(!lastDeleted)return;
+    deletionState=readDeletionState();
+    deletionState.dismissed=deletionSignature(lastDeleted);
+    saveDeletionState();
+    $('.deletion-notice')?.remove();
+  }
+  function migrateLegacyDeletions(){
+    let changed=false;
+    for(const original of builtInBanks){
+      const edited=custom.find(b=>b.id===original.id);
+      if(!edited)continue;
+      const present=new Set(edited.questions.map(q=>q.id));
+      const missing=original.questions.filter(q=>!present.has(q.id)).map(q=>q.id);
+      if(missing.length){deletionState.deleted[original.id]=[...new Set([...(deletionState.deleted[original.id]||[]),...missing])];changed=true;}
+    }
+    if(changed)saveDeletionState();
+  }
+  function reconcileDeletedSession(){
+    if(!session)return;
+    const excluded=new Set(deletedIds(session.bankId));
+    const currentId=session.questions[session.index]?.id;
+    session.questions=session.questions.filter(q=>!excluded.has(q.id));
+    for(const field of ['answers','checked','marks','grades'])for(const id of excluded)delete session[field][id];
+    if(!session.questions.length){session=null;clearInterval(timerInterval);return;}
+    const index=session.questions.findIndex(q=>q.id===currentId);
+    session.index=index>=0?index:Math.min(session.index,session.questions.length-1);
+  }
+  window.addEventListener('storage',e=>{
+    if(e.key!==DELETION_KEY)return;
+    deletionState=readDeletionState();
+    reconcileDeletedSession();
+    if(page==='quiz'){if(session)renderQuiz();else go('home');}
+    else if(page==='home')renderHome();
+    else if(page==='manage')renderManage();
+    else if(page==='records')renderRecords();
+    else if(page==='result')renderResult();
+  });
   function deletionNotice(){
-    if(!lastDeleted)return '';
-    return `<div class="deletion-notice" role="status"><div><b>문제를 삭제했습니다.</b><span>현재 브라우저의 출제 대상에서 제외했어요. 친구의 문제은행은 그대로예요.</span></div><button type="button" class="secondary" data-undo-delete>삭제 취소</button></div>`;
+    if(!lastDeleted||deletionState.dismissed===deletionSignature(lastDeleted))return '';
+    return `<div class="deletion-notice" role="status"><div><b>문제은행에서 삭제했습니다.</b><span>${esc(getBank(lastDeleted.bankId)?.title||'과목')} 문제은행 ${getBank(lastDeleted.bankId)?.questions.length??0}문항 · 다음 시험에서도 나오지 않아요.</span></div><div class="deletion-actions"><button type="button" class="secondary" data-undo-delete>삭제 취소</button><button type="button" class="icon-btn close-deletion-notice" data-dismiss-deletion aria-label="삭제 안내 닫기" title="안내만 닫기">✕</button></div></div>`;
   }
   function removeQuestion(bankId,questionId){
     const bank=getBank(bankId);
@@ -135,7 +215,9 @@
         }
       }
     }
-    ensureCustom(bankId).questions.splice(bankIndex,1);
+    const mutable=ensureCustom(bankId);
+    mutable.questions=mutable.questions.filter(q=>q.id!==questionId);
+    updateDeletionState(bankId,questionId,true);
     lastDeleted=removed;
     persist();
     return true;
@@ -143,6 +225,7 @@
   function undoQuestionDeletion(){
     const removed=lastDeleted;
     if(!removed)return;
+    if((window.STUDY_REMOVED?.[removed.bankId]||[]).includes(removed.question.id)){toast('사이트 원본에서 삭제된 문제는 이곳에서 복원할 수 없습니다.');return;}
     const bank=getBank(removed.bankId);
     if(!bank){toast('과목이 삭제되어 문제를 복원할 수 없습니다.');return;}
     const mutable=ensureCustom(bank.id);
@@ -158,6 +241,7 @@
       for(const [field,value] of Object.entries(removed.values))session[field][removed.question.id]=value;
       session.index=index;
     }
+    updateDeletionState(removed.bankId,removed.question.id,false);
     lastDeleted=null;
     persist();
     if(page==='quiz'&&session)renderQuiz();
@@ -167,12 +251,12 @@
     else if(page==='result')renderResult();
     toast('문제를 복원했습니다.');
   }
-  document.addEventListener('click',e=>{if(e.target.closest('[data-undo-delete]'))undoQuestionDeletion();});
+  document.addEventListener('click',e=>{if(e.target.closest('[data-undo-delete]'))undoQuestionDeletion();if(e.target.closest('[data-dismiss-deletion]'))dismissDeletionNotice();});
   // 모든 과목에 동일하게 브라우저의 수정본을 우선 적용합니다.
   window.STUDY_BANKS=window.STUDY_BANKS.filter(b=>!custom.some(c=>c.id===b.id));
   function download(name,data,script=false){const json=JSON.stringify(data,null,2);const url=URL.createObjectURL(new Blob([script?`/* 스터디룸 문제은행 */\nwindow.STUDY_OVERRIDES = ${json};\n`:json],{type:script?'text/javascript;charset=utf-8':'application/json;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
   function sampleBank(){return {id:'network-basics',title:'네트워크 기초',description:'나만의 새 과목',source:'직접 작성',weeks:['네트워크 입문'],questions:[{id:'net-001',week:1,type:'choice',prompt:'다음 중 IP 주소와 MAC 주소의 대응을 확인하는 프로토콜은?',options:[{id:'a',text:'ARP'},{id:'b',text:'DNS'},{id:'c',text:'HTTP'},{id:'d',text:'SMTP'}],answer:'a',explanation:'ARP는 같은 네트워크에서 IPv4 주소에 대응하는 MAC 주소를 알아내는 데 사용합니다.',source:'직접 작성'}]};}
-  async function importBanks(e){const file=e.target.files[0];if(!file)return;try{if(file.size>10*1024*1024)throw Error('파일은 10MB 이하로 가져와 주세요.');const list=validateBanks(JSON.parse(await file.text()));const collisions=list.filter(b=>getBank(b.id));if(collisions.length&&!await confirmDialog('기존 과목을 교체할까요?',`${collisions.map(b=>b.title).join(', ')}의 문제은행을 가져온 내용으로 바꿉니다. 기존 시험 기록은 유지됩니다.`,'교체하고 가져오기'))return;for(const b of list){custom=custom.filter(s=>s.id!==b.id);window.STUDY_BANKS=window.STUDY_BANKS.filter(s=>s.id!==b.id);custom.push(b);}persist();renderManage();toast(`${list.length}개 과목을 가져왔습니다.`);}catch(error){$('#import-error').textContent=`가져오기 실패: ${error.message}`;}finally{e.target.value='';}}
+  async function importBanks(e){const file=e.target.files[0];if(!file)return;try{if(file.size>10*1024*1024)throw Error('파일은 10MB 이하로 가져와 주세요.');const list=validateBanks(JSON.parse(await file.text()));const collisions=list.filter(b=>getBank(b.id));if(collisions.length&&!await confirmDialog('기존 과목을 교체할까요?',`${collisions.map(b=>b.title).join(', ')}의 문제은행을 가져온 내용으로 바꿉니다. 기존 시험 기록은 유지됩니다.`,'교체하고 가져오기'))return;for(const b of list){resetDeletionState(b.id);custom=custom.filter(s=>s.id!==b.id);window.STUDY_BANKS=window.STUDY_BANKS.filter(s=>s.id!==b.id);custom.push(b);}persist();renderManage();toast(`${list.length}개 과목을 가져왔습니다.`);}catch(error){$('#import-error').textContent=`가져오기 실패: ${error.message}`;}finally{e.target.value='';}}
   let editingBank=null;
   function openEditor(id){editingBank=id;const bank=getBank(id);$('#editor-fields').innerHTML=`<label class="field-label" for="q-type">유형</label><select id="q-type">${Object.entries(TYPES).map(([id,label])=>`<option value="${id}">${label}</option>`).join('')}</select><label class="field-label" for="q-week">주차</label><select id="q-week">${bank.weeks.map((w,i)=>`<option value="${i+1}">${i+1}주차 · ${esc(w)}</option>`).join('')}</select><label class="field-label" for="q-prompt">문제</label><textarea id="q-prompt" required></textarea><div id="type-fields"></div><label class="field-label" for="q-explanation">해설 / 서술형 모범답안</label><textarea id="q-explanation" required></textarea><label class="field-label" for="q-source">출처 (선택)</label><input id="q-source" type="text" placeholder="예: 교재 12쪽">`;$('#q-type').onchange=renderTypeFields;renderTypeFields();$('#editor-error').textContent='';$('#editor').showModal();}
   function renderTypeFields(){const type=$('#q-type').value;$('#type-fields').innerHTML=type==='choice'?`<div class="field-label">보기 4개 · 정답을 선택하세요</div>${[0,1,2,3].map(i=>`<div class="row" style="margin:8px 0"><label style="white-space:nowrap"><input type="radio" name="q-correct" value="${i}" ${i===0?'checked':''}>${i+1}번</label><input type="text" id="q-option-${i}" required aria-label="보기 ${i+1}"></div>`).join('')}`:type==='short'?'<label class="field-label" for="q-answers">허용 정답 (한 줄에 하나씩)</label><textarea id="q-answers" required></textarea>':type==='blanks'?'<label class="field-label" for="q-fields">빈칸 라벨 (한 줄에 하나씩)</label><textarea id="q-fields" required>빈칸 1\n빈칸 2</textarea><label class="field-label" for="q-answers">정답 (라벨과 같은 순서, 한 줄에 하나씩)</label><textarea id="q-answers" required></textarea>':'<label class="field-label" for="q-rubric">직접 채점 기준 (한 줄에 하나씩)</label><textarea id="q-rubric" required></textarea>';}
@@ -185,6 +269,8 @@
   // 잘못된 사용자 문제은행은 기본 학습 화면이 열리는 것을 막지 않습니다.
   try{validateBanks(banks());}catch{custom=[];window.STUDY_BANKS=builtInBanks;toast('저장된 추가 과목의 형식을 확인해 주세요. 기본 문제은행을 불러옵니다.');}
   if(session&&(!Array.isArray(session.questions)||!session.questions.length||!session.answers||!session.grades)){session=null;persist();}
+  migrateLegacyDeletions();
+  reconcileDeletedSession();
   go('home');
   if(session?.deadline&&Date.now()>=session.deadline)finishSession(true);
   setInterval(()=>{if(session?.deadline&&Date.now()>=session.deadline)finishSession(true);},1000);

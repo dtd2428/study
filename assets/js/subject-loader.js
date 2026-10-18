@@ -3,11 +3,15 @@
   'use strict';
   window.STUDY_BANKS = [];
   window.STUDY_LOAD_ERRORS = [];
+  window.STUDY_REMOVED = {};
+  const assetVersion = new URL(document.currentScript.src).searchParams.get('v');
 
   function loadScript(path) {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
-      script.src = new URL(path, document.baseURI).href;
+      const url = new URL(path, document.baseURI);
+      if (assetVersion) url.searchParams.set('v', assetVersion);
+      script.src = url.href;
       script.onload = resolve;
       script.onerror = () => reject(new Error(path));
       document.head.append(script);
@@ -44,6 +48,15 @@
       }
     } catch {
       window.STUDY_LOAD_ERRORS.push('data/overrides.js');
+    }
+    try {
+      await loadScript('data/deletions.js');
+      for (const bank of window.STUDY_BANKS) {
+        const removed = window.STUDY_REMOVED[bank.id] || [];
+        bank.questions = bank.questions.filter(q => !removed.includes(q.id));
+      }
+    } catch {
+      window.STUDY_LOAD_ERRORS.push('data/deletions.js');
     }
   })();
 })();

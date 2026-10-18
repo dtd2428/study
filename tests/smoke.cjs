@@ -10,8 +10,11 @@ const KEY = 'studyroom-v1';
 fs.mkdirSync(path.join(root,'tmp'),{recursive:true});
 global.window={STUDY_BANKS:[]};require('../data/subjects/hacking/questions.js');
 const bank=window.STUDY_BANKS[0];
-assert.equal(bank.questions.length,92);
-assert.equal(new Set(bank.questions.map(q=>q.id)).size,92);
+const BANK_SIZE=bank.questions.length;
+const CHOICE_COUNT=bank.questions.filter(q=>q.type==='choice').length;
+const ESSAY_COUNT=bank.questions.filter(q=>q.type==='essay').length;
+assert.ok(BANK_SIZE>=30);
+assert.equal(new Set(bank.questions.map(q=>q.id)).size,BANK_SIZE);
 for(const q of bank.questions){assert.ok(q.source&&q.explanation);if(q.type==='choice'){assert.equal(q.options.length,4);assert.equal(new Set(q.options.map(o=>o.text)).size,4);assert.ok(q.options.some(o=>o.id===q.answer));}}
 const counts=bank.questions.reduce((a,q)=>(a[q.type]=(a[q.type]||0)+1,a),{});
 console.log('Problem bank:', counts);
@@ -28,7 +31,7 @@ console.log('Problem bank:', counts);
   const start=async(types,mode='practice')=>{await selectTypes(types);await page.locator('#count').selectOption('all');await page.locator(`input[name=mode][value=${mode}]`).check();await page.locator('#setup button[type=submit]').click();await page.locator('.question-card').waitFor();};
   await page.screenshot({path:path.join(root,'tmp/home-desktop.png'),fullPage:true});
   await page.locator('#quick-start').click();await page.locator('.question-card').waitFor();let quick=(await state()).session;assert.equal(quick.questions.length,30);assert.equal(new Set(quick.questions.map(q=>q.id)).size,30);const firstSet=quick.questions.map(q=>q.id).sort().join('|');await page.locator('[data-page=home]').click();await page.locator('#quick-start').click();await page.locator('.question-card').waitFor();quick=(await state()).session;assert.equal(quick.questions.length,30);assert.notEqual(quick.questions.map(q=>q.id).sort().join('|'),firstSet);await clean();
-  await start(['choice'],'exam');let s=(await state()).session;assert.equal(s.questions.length,57);
+  await start(['choice'],'exam');let s=(await state()).session;assert.equal(s.questions.length,CHOICE_COUNT);
   const firstOrder=s.questions.map(q=>q.options.map(o=>o.id).join('')).join('|');
   const first=s.questions[0];await page.locator(`[data-option="${first.answer}"]`).click();
   await page.locator('#mark').click();await page.reload();await page.locator('#resume').click();
@@ -36,15 +39,15 @@ console.log('Problem bank:', counts);
   await page.screenshot({path:path.join(root,'tmp/quiz-desktop.png'),fullPage:true});
   // 모든 객관식 문항을 버튼으로 답하고, 섞인 보기의 ID로 채점되는지 확인.
   for(let i=0;i<s.questions.length;i++){await page.locator(`[data-jump="${i}"]`).click();const q=s.questions[i];await page.locator(`[data-option="${q.answer}"]`).click();}
-  await page.locator('#submit-exam').click();await page.locator('[data-confirm]').click();await page.locator('.result-hero').waitFor();let data=await state();assert.equal(data.history[0].score,100);assert.equal(data.history[0].correct,57);
+  await page.locator('#submit-exam').click();await page.locator('[data-confirm]').click();await page.locator('.result-hero').waitFor();let data=await state();assert.equal(data.history[0].score,100);assert.equal(data.history[0].correct,CHOICE_COUNT);
   await page.locator('#retry-all').click();s=(await state()).session;assert.notEqual(s.questions.map(q=>q.options.map(o=>o.id).join('')).join('|'),firstOrder);
   await clean();await start(['short']);s=(await state()).session;let q=s.questions[0];await page.locator('#written').fill('  '+q.answers[0]+'  ');await page.locator('#check').click();assert.match(await page.locator('.feedback h3').innerText(),/정답/);assert.equal(await page.locator('#written').isDisabled(),true);
   await clean();await start(['blanks']);s=(await state()).session;q=s.questions[0];for(let i=0;i<q.answers.length;i++)await page.locator(`[data-answer="${i}"]`).fill(q.answers[i]);await page.locator('#check').click();assert.match(await page.locator('.feedback h3').innerText(),/정답/);
-  await clean();await start(['essay'],'exam');await page.locator('#written').fill('나의 설명');await page.locator('#submit-exam').click();await page.locator('[data-confirm]').click();await page.locator('[data-filter=pending]').click();assert.equal(await page.locator('[data-grade=yes]').count(),8);await page.locator('[data-grade=yes]').first().click();data=await state();assert.equal(data.history[0].correct,1);assert.equal(data.history[0].pending,7);
+  await clean();await start(['essay'],'exam');await page.locator('#written').fill('나의 설명');await page.locator('#submit-exam').click();await page.locator('[data-confirm]').click();await page.locator('[data-filter=pending]').click();assert.equal(await page.locator('[data-grade=yes]').count(),ESSAY_COUNT);await page.locator('[data-grade=yes]').first().click();data=await state();assert.equal(data.history[0].correct,1);assert.equal(data.history[0].pending,ESSAY_COUNT-1);
   await page.screenshot({path:path.join(root,'tmp/results-desktop.png'),fullPage:true});
   // 저장된 미완료 시험이 있어도 과거 서술형 기록을 독립적으로 평가할 수 있어야 함.
   await page.locator('[data-page=home]').click();await start(['choice']);const activeSession=(await state()).session.id;await page.locator('[data-page=records]').click();await page.locator('[data-record="0"]').click();await page.locator('[data-filter=pending]').click();await page.locator('[data-grade=yes]').first().click();assert.equal((await state()).history[0].correct,2);assert.equal((await state()).session.id,activeSession);
-  await clean();await start(['choice'],'exam');s=(await state()).session;q=s.questions[0];await page.locator(`[data-option="${q.options.find(o=>o.id!==q.answer).id}"]`).click();await page.locator('#submit-exam').click();await page.locator('[data-confirm]').click();await page.locator('.result-hero').waitFor();assert.equal((await state()).history[0].wrong,57);await page.locator('#retry-wrong').click();await page.locator('.question-card').waitFor();assert.equal((await state()).session.questions.length,57);
+  await clean();await start(['choice'],'exam');s=(await state()).session;q=s.questions[0];await page.locator(`[data-option="${q.options.find(o=>o.id!==q.answer).id}"]`).click();await page.locator('#submit-exam').click();await page.locator('[data-confirm]').click();await page.locator('.result-hero').waitFor();assert.equal((await state()).history[0].wrong,CHOICE_COUNT);await page.locator('#retry-wrong').click();await page.locator('.question-card').waitFor();assert.equal((await state()).session.questions.length,CHOICE_COUNT);
   await clean();await openSettings();for(const check of await page.locator('input[name=week]').all())await check.uncheck();await page.locator('#setup button[type=submit]').click();assert.match(await page.locator('#setup-error').innerText(),/없습니다/);
   await clean();await page.locator('[data-page=manage]').click();await page.locator('#new-title').fill('테스트 과목');await page.locator('#new-weeks').fill('2');await page.locator('#new-subject button[type=submit]').click();data=await state();const newId=data.custom[0].id;await page.locator(`[data-add="${newId}"]`).click();await page.locator('#q-prompt').fill('테스트 문제');await page.locator('#q-explanation').fill('테스트 해설');for(let i=0;i<4;i++)await page.locator(`#q-option-${i}`).fill('보기 '+i);await page.locator('input[name=q-correct][value="2"]').check();await page.locator('#editor-form button[type=submit]').click();data=await state();assert.equal(data.custom[0].questions[0].answer,'o2');await page.reload();await page.locator('[data-page=manage]').click();assert.ok((await page.locator('.manage-list').innerText()).includes('테스트 과목'));
   const imported={id:'imported',title:'<img src=x onerror=alert(1)>',description:'테스트',weeks:['입문'],questions:[{id:'x',week:1,type:'short',prompt:'가져온 문제',answers:['test'],explanation:'해설',source:'자료'}]};

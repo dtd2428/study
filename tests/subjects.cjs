@@ -23,6 +23,7 @@ network.questions[0] = {
   fields:['프로토콜','기능'], answers:['ARP','주소 대응'], explanation:'문자 입력과 채점을 검증합니다.'
 };
 let badOverrides = false;
+let globalRemoval = {};
 const catalog = [
   {id:'hacking',script:'data/subjects/hacking/questions.js'},
   {id:'network',script:'data/subjects/network/questions.js'},
@@ -33,6 +34,7 @@ const catalog = [
 const server = http.createServer((req,res) => {
   const pathname = new URL(req.url,'http://localhost').pathname;
   const sendScript = code => {res.writeHead(200,{'Content-Type':'text/javascript;charset=utf-8'});res.end(code);};
+  if(pathname==='/data/deletions.js')return sendScript(`window.STUDY_REMOVED=${JSON.stringify(globalRemoval)};`);
   if(pathname==='/data/subjects.js')return sendScript(`window.STUDY_SUBJECTS=${JSON.stringify(catalog)};`);
   if(pathname==='/data/subjects/network/questions.js')return sendScript(`window.STUDY_BANKS.push(${JSON.stringify(network)});`);
   if(pathname==='/data/subjects/mismatch/questions.js')return sendScript(`window.STUDY_BANKS.push(${JSON.stringify({...network,id:'unexpected'})});`);
@@ -62,15 +64,17 @@ const server = http.createServer((req,res) => {
   await page.locator('#setup button[type=submit]').click();await page.locator('[data-confirm]').click();await page.locator('.blanks-grid').waitFor();
   assert.equal(await page.locator('[data-answer="0"]').getAttribute('inputmode'),'text');
   await page.locator('[data-answer="0"]').fill('ARP');await page.locator('[data-answer="1"]').fill('주소 대응');await page.locator('#check').click();assert.match(await page.locator('.feedback h3').innerText(),/정답/);
-  const q=hacking.questions[0];
+  const q=hacking.questions.find(q=>q.type==='choice');
   const legacySession={id:'legacy-session',bankId:'hacking',title:'해킹실무',mode:'exam',started:Date.now(),deadline:null,index:0,questions:[q],answers:{[q.id]:q.answer},marks:{[q.id]:true},checked:{},grades:{}};
   const legacyRecord={...legacySession,id:'legacy-record',date:'2026-10-18T00:00:00Z',elapsed:60,total:1,correct:1,wrong:0,pending:0,score:100};
   const persisted={custom:[{...network,title:'브라우저 수정 네트워크'}],session:legacySession,history:[legacyRecord]};
   await page.evaluate(({key,value})=>localStorage.setItem(key,JSON.stringify(value)),{key:KEY,value:persisted});await page.reload();await page.locator('#setup').waitFor();
   assert.equal(await page.locator('#subject option[value=network]').count(),1);assert.match(await page.locator('#subject option[value=network]').innerText(),/브라우저 수정/);
   await page.locator('#resume').click();await page.locator('.question-card').waitFor();state=await readState();assert.deepEqual(state.session.questions[0],q);assert.equal(state.session.answers[q.id],q.answer);
-  assert.equal(await page.locator('.option.selected').innerText().then(t=>t.includes('화이트 햇')),true);
+  assert.equal(await page.locator('.option.selected').innerText().then(t=>t.includes(q.options.find(o=>o.id===q.answer).text)),true);
   await page.locator('[data-page=records]').click();await page.locator('[data-record="0"]').click();await page.locator('.result-hero').waitFor();assert.match(await page.locator('.score').innerText(),/100/);
+  globalRemoval={network:['net-1']};
+  await page.reload();await page.locator('#setup').waitFor();await page.locator('#subject').selectOption('network');assert.match(await page.locator('#subject-chips').innerText(),/34문항/);await page.locator('#quick-start').click();await page.locator('.question-card').waitFor();assert.ok((await readState()).session.questions.every(q=>q.id!=='net-1'));
   badOverrides=true;await page.evaluate(()=>localStorage.clear());await page.reload();await page.locator('#setup').waitFor();
   assert.equal(await page.locator('#subject option').count(),2);assert.match(await page.locator('#subject option[value=network]').innerText(),/네트워크 테스트/);assert.match(await page.locator('.storage-warning').innerText(),/overrides.js/);
   assert.deepEqual(errors,[]);await context.close();
