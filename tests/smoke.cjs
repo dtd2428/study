@@ -8,7 +8,7 @@ const root = path.resolve(__dirname,'..');
 const url = pathToFileURL(path.join(root,'index.html')).href;
 const KEY = 'studyroom-v1';
 fs.mkdirSync(path.join(root,'tmp'),{recursive:true});
-global.window={};require('../data/questions.js');
+global.window={STUDY_BANKS:[]};require('../data/subjects/hacking/questions.js');
 const bank=window.STUDY_BANKS[0];
 assert.equal(bank.questions.length,92);
 assert.equal(new Set(bank.questions.map(q=>q.id)).size,92);
@@ -50,7 +50,7 @@ console.log('Problem bank:', counts);
   const imported={id:'imported',title:'<img src=x onerror=alert(1)>',description:'테스트',weeks:['입문'],questions:[{id:'x',week:1,type:'short',prompt:'가져온 문제',answers:['test'],explanation:'해설',source:'자료'}]};
   await page.locator('#import-file').setInputFiles({name:'bank.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(imported))});await page.locator('[data-add=imported]').waitFor();assert.equal(await page.locator('main img').count(),0);assert.ok((await state()).custom.some(b=>b.id==='imported'));
   const invalid={...imported,id:'invalid',questions:[{...imported.questions[0],type:'choice',options:[],answer:'missing'}]};await page.locator('#import-file').setInputFiles({name:'bad.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(invalid))});await page.locator('#import-error').filter({hasText:'失敗'.replace('失敗','실패')}).waitFor();assert.ok(!(await state()).custom.some(b=>b.id==='invalid'));
-  const [download]=await Promise.all([page.waitForEvent('download'),page.getByRole('button',{name:'GitHub 배포용 questions.js 받기 ↓'}).click()]);await download.saveAs(path.join(root,'tmp/exported-bank.js'));const exported=fs.readFileSync(path.join(root,'tmp/exported-bank.js'),'utf8');assert.ok(exported.includes('window.STUDY_BANKS ='));assert.ok(exported.includes('가져온 문제'));
+  const [download]=await Promise.all([page.waitForEvent('download'),page.getByRole('button',{name:'GitHub 배포용 overrides.js 받기 ↓'}).click()]);await download.saveAs(path.join(root,'tmp/exported-bank.js'));const exported=fs.readFileSync(path.join(root,'tmp/exported-bank.js'),'utf8');assert.ok(exported.includes('window.STUDY_OVERRIDES ='));assert.ok(exported.includes('가져온 문제'));
   await clean();await openSettings();await page.locator('#time').selectOption('15');await start(['choice'],'exam');await page.evaluate(k=>{let d=JSON.parse(localStorage.getItem(k));d.session.deadline=Date.now()-100;localStorage.setItem(k,JSON.stringify(d));},KEY);await page.reload();await page.locator('.result-hero').waitFor();data=await state();assert.equal(data.session,null);assert.equal(data.history[0].timedOut,true);
   // 손상된 저장본과 저장소 사용 불가에서도 기본 화면이 열리는지 확인.
   await page.evaluate(k=>localStorage.setItem(k,'{broken'),KEY);await page.reload();await page.locator('#setup').waitFor();

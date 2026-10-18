@@ -1,12 +1,11 @@
 /* 정답은 선택지 번호가 아닌 고정 ID로 보관합니다. 자세한 형식은 README.md 참고. */
-window.STUDY_BANKS = [{
+(() => {
+const bank = {
   id: 'hacking', title: '해킹실무', description: '리눅스 기초부터 네트워크 분석, UID 권한 흐름까지',
   source: '해킹실무 1~7주차 통합정리 빈칸학습',
   weeks: ['해킹 기초', '리눅스 구조', '계정과 권한', '정보 수집', 'DB와 인증', '스니핑과 대응', 'SetUID와 백도어'],
   questions: []
-}];
-(() => {
-  const bank = window.STUDY_BANKS[0];
+};
   let serial = 0;
   const base = (week, type, prompt, explanation, page) => ({id: `hk-${String(++serial).padStart(3,'0')}`, week, type, prompt, explanation, source: `PDF ${page}쪽`});
   const mc = (w,p,correct,others,e,page) => bank.questions.push({...base(w,'choice',p,e,page), options:[correct,...others].map((text,i)=>({id:`o${i}`,text})),answer:'o0'});
@@ -112,4 +111,5 @@ window.STUDY_BANKS = [{
   mc(7,'정상 프로그램처럼 보이거나 그 안에 의도치 않은 동작을 포함한 프로그램은?', '트로이 목마',['장치 드라이버 전체','FIFO','정상 passwd 전체'],'프로그램의 정상 같은 외형과 실제 동작을 구분한다. 정상 파일명이나 안내 문구만으로 무결성을 판단하지 않는다.',28);
   mc(7,'서비스 침해로 실행된 코드의 권한을 판단할 때 확인할 것은?', '실제 요청을 처리하는 프로세스의 권한',['접속한 웹 방문자의 화면 크기','도메인 이름의 길이','백도어 파일명에 root가 들어가는지 여부'],'서비스의 요청 처리 프로세스 권한이 중요하다. 웹 방문 자체가 방문자에게 서버 root 권한을 부여하는 것은 아니다.',28);
   short(7,'파일의 소유자를 바꾸는 명령과 C의 UID 변경 함수를 구분하세요. 파일 소유자 변경 명령 이름만 쓰세요.', ['chown'],'chown은 파일 소유권 변경 명령이고 setuid()는 프로세스의 사용자 ID 변경을 요청하는 C 함수다. chmod는 파일 권한을 바꾼다.',7);
+  window.STUDY_BANKS.push(bank);
 })();

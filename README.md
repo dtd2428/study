@@ -1,6 +1,6 @@
 # 스터디룸
 
-해킹실무 1~7주차 PDF를 바탕으로 만든 브라우저 모의고사입니다. 별도 서버·설치·API 키·빌드 과정 없이 HTML, CSS, JavaScript로 동작합니다. 외부 폰트나 CDN도 사용하지 않습니다.
+여러 과목을 등록하고 풀 수 있는 브라우저 모의고사입니다. 첫 기본 과목으로 해킹실무 1~7주차 PDF 기반 92문항이 들어 있습니다. 별도 서버·설치·API 키·빌드 과정 없이 HTML, CSS, JavaScript로 동작합니다. 외부 폰트나 CDN도 사용하지 않습니다.
 
 ## 지금 실행하기
 
@@ -10,13 +10,15 @@
 
 GitHub 저장소의 코드 화면 자체에서 시험이 실행되는 것은 아닙니다. **GitHub Pages**를 한 번 켜면 별도 서버 운영 없이 사이트 주소로 접속할 수 있습니다.
 
-1. GitHub 저장소에 `index.html`, `styles.css`, `app.js`, `data/questions.js`, `.nojekyll`을 폴더 구조 그대로 업로드합니다. 원본 PDF는 업로드할 필요가 없습니다.
+1. GitHub 저장소에 `index.html`, `assets/` 폴더 전체, `data/` 폴더 전체, `.nojekyll`을 폴더 구조 그대로 업로드합니다. 원본 PDF는 업로드할 필요가 없습니다.
 2. 저장소 **Settings → Pages → Build and deployment**에서 **Source: Deploy from a branch**를 선택합니다.
 3. 파일을 업로드한 브랜치(예: `main`)와 **/ (root)**를 선택하고 **Save**합니다.
 4. Pages 설정에 표시되는 주소에 접속합니다. 일반적인 프로젝트 주소 형태는 `https://사용자명.github.io/저장소명/`입니다.
 5. 이후 해당 브랜치에 파일 변경을 업로드하면 사이트에도 반영됩니다.
 
-현재 작업 폴더는 Git 저장소로 초기화되어 있지 않아 원격 저장소 연결·업로드·Pages 활성화는 수행하지 않았습니다.
+운영 사이트: https://dtd2428.github.io/study/ · 저장소: https://github.com/dtd2428/study
+
+이 `study` 폴더가 GitHub Desktop과 연결된 실제 작업 저장소입니다. 상위 폴더의 `archive/initial-site/`는 보관용이며, 이후 수정은 이 저장소에서 진행하세요.
 
 공식 안내: [GitHub Pages 게시 소스 설정](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
@@ -43,12 +45,14 @@ GitHub 저장소의 코드 화면 자체에서 시험이 실행되는 것은 아
 
 ## 과목을 계속 추가하기
 
+파일로 관리할 때는 `data/subjects/과목-id/questions.js`에 작성하고 `data/subjects.js`에 등록합니다. 복사용 템플릿과 전체 절차는 [과목 추가 안내](docs/adding-subjects.md)에 있습니다.
+
 ### 웹 화면에서 작성
 
 1. **과목 · 문제 관리 → 새 과목 만들기**에서 이름과 주차 수를 입력합니다.
 2. 해당 과목의 **문제 추가**에서 유형, 주차, 문제, 정답, 해설을 입력합니다.
 3. 다른 브라우저에서도 이어서 관리하려면 **모든 과목 JSON 내보내기**로 백업하고 가져옵니다.
-4. 사이트의 모든 방문자에게 새 문제를 제공하려면 **GitHub 배포용 questions.js 받기**를 눌러 내려받고 저장소의 **`data/questions.js`를 그 파일로 교체**해 업로드합니다. `index.html`과 `app.js`를 바꿀 필요는 없습니다.
+4. 사이트의 모든 방문자에게 새 문제를 제공하려면 **GitHub 배포용 overrides.js 받기**를 눌러 내려받고 저장소의 **`data/overrides.js`를 그 파일로 교체**해 업로드합니다. 공통 HTML·JavaScript를 바꿀 필요는 없습니다. 과목별 파일로 관리하는 방법과 데이터 적용 순서는 [과목 추가 안내](docs/adding-subjects.md)를 참고하세요.
 
 브라우저에서 편집한 문제은행은 그 브라우저의 수정본으로 보관됩니다. 새 배포의 기본 문제은행보다 수정본이 우선합니다. 새 기본본으로 덮어쓰려면 관리 화면에서 새 JSON을 가져와 해당 ID의 과목 교체를 승인하세요. 기존 기록에는 시험 당시 문제와 답안이 보존됩니다.
 
@@ -109,12 +113,27 @@ GitHub 저장소의 코드 화면 자체에서 시험이 실행되는 것은 아
 ## 파일 구성
 
 ```text
-index.html          화면 뼈대
-styles.css          반응형 디자인
-app.js              출제·채점·기록·문제 관리
-data/questions.js   과목과 문제은행
-.nojekyll           GitHub Pages 정적 파일 제공
-tests/smoke.cjs     개발용 브라우저 통합 검증
+study/                          실제 Git 저장소
+├─ index.html                   시작 화면
+├─ assets/
+│  ├─ css/styles.css            공통 디자인
+│  └─ js/
+│     ├─ app.js                 공통 출제·채점·기록·관리
+│     ├─ question-schema.js     문제 데이터 검증
+│     └─ subject-loader.js      과목 파일 불러오기
+├─ data/
+│  ├─ subjects.js               과목 등록 목록
+│  ├─ overrides.js              웹에서 편집한 배포용 문제은행
+│  └─ subjects/
+│     └─ hacking/
+│        ├─ questions.js        해킹실무 문제 92개
+│        └─ README.md           과목 정보
+├─ docs/
+│  ├─ adding-subjects.md        새 과목 추가 절차
+│  └─ templates/subject.js      복사용 새 과목 템플릿
+└─ tests/                       개발용 검증
 ```
 
 사용자는 Node나 Python을 설치할 필요가 없습니다. 개발 검증은 Node와 Playwright가 있는 환경에서 `node tests/smoke.cjs`로 실행합니다. 기본 브라우저는 설치된 Chrome이며 `BROWSER_CHANNEL=msedge` 등으로 변경할 수 있습니다. 테스트 화면과 중간 파일은 Git에서 제외하는 `tmp/`에 생성됩니다.
+
+과목 파일 로딩과 기존 저장 기록 호환성 검증은 `node tests/subjects.cjs`로 실행합니다.
