@@ -887,20 +887,6 @@
       ]
     },
     {
-      "id": "hk-040",
-      "week": 4,
-      "type": "essay",
-      "prompt": "포트 스캔 결과 filtered가 closed와 다른 이유를 설명하세요.",
-      "explanation": "closed는 닫힌 상태로 판정한 것이고, filtered는 필터링 등의 영향으로 열림 여부 판단이 제한된 상태다. filtered를 닫힘으로 단정할 수 없다.",
-      "source": "PDF 11쪽",
-      "model": "closed는 닫힌 상태로 판정한 것이고, filtered는 필터링 등의 영향으로 열림 여부 판단이 제한된 상태다. filtered를 닫힘으로 단정할 수 없다.",
-      "rubric": [
-        "closed는 닫힘 판정",
-        "filtered는 필터링으로 판단 제한",
-        "두 상태를 동일하게 단정하지 않음"
-      ]
-    },
-    {
       "id": "hk-041",
       "week": 5,
       "type": "choice",
