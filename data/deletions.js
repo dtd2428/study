@@ -2,6 +2,7 @@
 window.STUDY_REMOVED = {
   "hacking": [
     "hk-053",
-    "hk-040"
+    "hk-040",
+    "hk-031"
   ]
 };

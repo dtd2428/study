@@ -705,17 +705,6 @@
       ]
     },
     {
-      "id": "hk-031",
-      "week": 3,
-      "type": "short",
-      "prompt": "DNS 이름 해석 서비스와 연결되는 강의의 데몬 이름은?",
-      "explanation": "named는 DNS, httpd는 웹, sendmail은 메일 전송, syslogd는 시스템 기록과 연결된다.",
-      "source": "PDF 9쪽",
-      "answers": [
-        "named"
-      ]
-    },
-    {
       "id": "hk-032",
       "week": 3,
       "type": "essay",
