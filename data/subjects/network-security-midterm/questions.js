@@ -13,7 +13,7 @@
     options: texts.map((text, i) => ({id: 'abcd'[i], text})), answer: 'abcd'[answer]
   }, e, pages);
   const essay = (n, w, p, model, rubric, pages) => add(n, w, 'essay', p, {model, rubric}, model, pages);
-  const ox = (n, w, p, answer, e, pages) => short(n, w, `[O/X] ${p} (O 또는 X를 입력하세요.)`, [answer, answer.toLowerCase()], e, pages);
+  const ox = (n, w, p, answer, e, pages) => short(n, w, `[O/X] ${p}`, [answer, answer.toLowerCase()], e, pages);
 
   blank(1, 1, '프로토콜의 세 구성요소를 형식, 해석과 동작, 전송 시점과 속도에 대응하는 순서로 쓰세요. 한글 용어로 답하세요.', ['형식', '해석과 동작', '전송 시점과 속도'], ['구문', '의미', '타이밍'], '구문은 데이터 형식, 의미는 필드 해석과 동작, 타이밍은 전송 시점과 속도를 정합니다.', '2, 24, 29');
   blank(2, 1, 'DTE와 DCE의 접속 표준과 SNA를 위한 데이터링크 프로토콜의 영문 이름을 쓰세요.', ['DTE-DCE 접속 표준', 'SNA 링크 프로토콜'], ['RS-232C', 'SDLC'], 'RS-232C는 장치 접속 표준, SDLC는 SNA를 위한 링크 프로토콜입니다. V.21은 모뎀 변조 표준입니다.', '2, 24, 29');
