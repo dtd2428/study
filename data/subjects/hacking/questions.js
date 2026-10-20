@@ -1528,18 +1528,6 @@
       ]
     },
     {
-      "id": "hk-080",
-      "week": 7,
-      "type": "short",
-      "prompt": "EUID를 읽는 C 함수는? (괄호 포함 가능)",
-      "explanation": "geteuid()는 EUID를, getuid()는 RUID를 읽는다.",
-      "source": "PDF 20쪽",
-      "answers": [
-        "geteuid()",
-        "geteuid"
-      ]
-    },
-    {
       "id": "hk-084",
       "week": 7,
       "type": "essay",
