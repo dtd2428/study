@@ -1192,17 +1192,6 @@
       "answer": "o0"
     },
     {
-      "id": "hk-061",
-      "week": 6,
-      "type": "short",
-      "prompt": "tcpdump에서 16진수와 ASCII를 함께 표시하는 옵션은? (대소문자 구분)",
-      "explanation": "-x는 16진수, -X는 16진수와 ASCII다. -X만으로 두 형식을 함께 표시할 수 있다.",
-      "source": "PDF 17쪽",
-      "answers": [
-        "-X"
-      ]
-    },
-    {
       "id": "hk-062",
       "week": 6,
       "type": "short",
