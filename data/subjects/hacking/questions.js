@@ -827,17 +827,6 @@
       ]
     },
     {
-      "id": "hk-039",
-      "week": 4,
-      "type": "short",
-      "prompt": "Metasploit에서 대상 호스트를 지정하는 옵션 이름은?",
-      "explanation": "RHOSTS는 대상 호스트, THREADS는 병렬 처리 수준이다. 옵션을 모듈마다 확인한다.",
-      "source": "PDF 11쪽",
-      "answers": [
-        "RHOSTS"
-      ]
-    },
-    {
       "id": "hk-041",
       "week": 5,
       "type": "choice",
