@@ -2123,5 +2123,16 @@ const bank = {
       }
     }
   }
+  // SetUID 집중 학습에서 출제할 다섯 전용 문제. 기존 문제 ID는 유지합니다.
+  for (const [index, scenario] of setuidScenarios.entries()) {
+    const original = bank.questions.find(q => q.id === scenario.ids[0]);
+    bank.questions.push({
+      ...original,
+      id: 'hk-setuid-' + String(index + 1).padStart(2, '0'),
+      topics: ['setuid'],
+      prompt: 'SetUID 집중 연습: 파일 권한과 실행 계정을 보고 호출 전후의 RUID·EUID 네 값을 입력하세요.',
+      source: 'SetUID 집중 연습 · SUID 다섯 사례 ' + (index + 1)
+    });
+  }
   window.STUDY_BANKS.push(bank);
 })();

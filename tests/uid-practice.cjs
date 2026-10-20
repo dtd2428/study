@@ -11,7 +11,7 @@ require('../assets/js/question-schema.js');
 const bank=window.STUDY_BANKS[0];
 window.STUDY_VALIDATE_BANKS(bank);
 const cases=bank.questions.filter(q=>q.practice);
-assert.equal(cases.length,15);
+assert.equal(cases.length,20);
 for(const q of cases){
  assert.equal(q.practice.outcome,['성공','실패','성공','실패','실패'][q.practice.number-1]);
  if(q.type==='blanks')assert.equal(q.fields.length,4);
@@ -47,6 +47,6 @@ for(const q of cases){
   await page.locator('.uid-practice').screenshot({path:path.join(root,'tmp/uid-visual-mobile.png')});
   await page.reload();await page.locator('#resume').click();await page.locator('.uid-practice').waitFor();assert.match(await page.locator('.uid-outcome').innerText(),/실패/);
   assert.deepEqual(errors,[]);
-  console.log('PASS: five cases across 15 questions; permission/status/actor shown; four UID blanks; unchanged grading; desktop/mobile; reload; schema validation.');
+  console.log('PASS: five cases across 20 questions; permission/status/actor shown; four UID blanks; unchanged grading; desktop/mobile; reload; schema validation.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
