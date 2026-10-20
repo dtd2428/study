@@ -336,17 +336,6 @@
       ]
     },
     {
-      "id": "hk-016",
-      "week": 2,
-      "type": "short",
-      "prompt": "C 헤더 파일이 위치하는 강의의 디렉터리 경로는?",
-      "explanation": "/usr/include에는 C 등에서 사용하는 헤더 파일이 위치한다.",
-      "source": "PDF 4쪽",
-      "answers": [
-        "/usr/include"
-      ]
-    },
-    {
       "id": "hk-017",
       "week": 2,
       "type": "essay",
