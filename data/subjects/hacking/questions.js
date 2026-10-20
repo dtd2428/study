@@ -349,17 +349,6 @@
       ]
     },
     {
-      "id": "hk-015",
-      "week": 2,
-      "type": "short",
-      "prompt": "root 계정의 홈 디렉터리 경로는?",
-      "explanation": "/는 최상위 디렉터리, /root는 관리자 root의 홈 디렉터리다.",
-      "source": "PDF 4쪽",
-      "answers": [
-        "/root"
-      ]
-    },
-    {
       "id": "hk-016",
       "week": 2,
       "type": "short",
