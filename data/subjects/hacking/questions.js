@@ -2100,5 +2100,28 @@ const bank = {
       if (question) question.prompt += '\n\n' + context;
     }
   }
+  // 다섯 SUID 사례: 파일 권한과 실행 조건을 화면의 실습 패널로 제공합니다.
+  const setuidScenarios = [
+    { ids:['hk-074','hk-093','hk-friend-w7p02'], permission:'-rwxr-xr-x', owner:'root', actor:'root', actorUid:'0', file:'setuid1000', target:'1000', outcome:'성공' },
+    { ids:['hk-075','hk-094','hk-friend-w7p03'], permission:'-rwxr-xr-x', owner:'root', actor:'kali', actorUid:'1000', file:'setuid0', target:'0', outcome:'실패' },
+    { ids:['hk-076','hk-095','hk-friend-w7p04'], permission:'-rwsr-xr-x', owner:'root', actor:'kali1001', actorUid:'1001', file:'setuid1000', target:'1000', outcome:'성공' },
+    { ids:['hk-077','hk-096','hk-friend-w7p05'], permission:'-rwsr-xr-x', owner:'kali', actor:'kali1001', actorUid:'1001', file:'setuid1000', target:'1000', outcome:'실패' },
+    { ids:['hk-078','hk-097','hk-friend-w7p06'], permission:'-rwsr-xr-x', owner:'kali', actor:'root', actorUid:'0', file:'setuid1000', target:'1000', outcome:'실패' }
+  ];
+  for (const [index, scenario] of setuidScenarios.entries()) {
+    for (const id of scenario.ids) {
+      const q = bank.questions.find(item => item.id === id);
+      if (!q) continue;
+      const { ids, ...conditions } = scenario;
+      q.practice = { ...conditions, number:index + 1 };
+      q.prompt = '화면의 파일 권한과 실행 계정을 보고, setuid() 호출 전후의 RUID·EUID를 구하세요.';
+      if (q.type === 'short') q.prompt += '\n호출 전 RUID, 호출 전 EUID, 호출 후 RUID, 호출 후 EUID 순서로 숫자 네 개를 입력하세요. 공백 또는 쉼표로 구분합니다.';
+      // 성공/실패는 문제 조건에 공개하므로 UID 네 칸만 답합니다.
+      if (q.fields?.length === 5) {
+        q.answers = q.answers.filter((_, i) => i !== 2);
+        q.fields = q.fields.filter((_, i) => i !== 2);
+      }
+    }
+  }
   window.STUDY_BANKS.push(bank);
 })();
