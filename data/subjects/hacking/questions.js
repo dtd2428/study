@@ -1688,17 +1688,6 @@
       ]
     },
     {
-      "id": "hk-082",
-      "week": 7,
-      "type": "short",
-      "prompt": "id에서 숫자로 EUID만 조회하는 강의의 보충 명령은?",
-      "explanation": "id -u는 EUID, id -ru는 RUID를 조회한다.",
-      "source": "PDF 20쪽",
-      "answers": [
-        "id -u"
-      ]
-    },
-    {
       "id": "hk-084",
       "week": 7,
       "type": "essay",
