@@ -1657,20 +1657,6 @@
       "answer": "o0"
     },
     {
-      "id": "hk-088",
-      "week": 5,
-      "type": "short",
-      "prompt": "cat 명령으로 후보를 입력하다 표준 입력을 끝낼 때 누르는 키는? (Ctrl+D 형식)",
-      "explanation": "Ctrl+D는 표준 입력의 끝을 전달한다. Ctrl+Z는 작업 일시 중지이므로 입력 종료와 다르다.",
-      "source": "PDF 14쪽",
-      "answers": [
-        "Ctrl+D",
-        "Ctrl + D",
-        "ctrl+d",
-        "ctrl + d"
-      ]
-    },
-    {
       "id": "hk-089",
       "week": 6,
       "type": "short",
