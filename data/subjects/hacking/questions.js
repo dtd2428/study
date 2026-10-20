@@ -1421,33 +1421,6 @@
       "answer": "o0"
     },
     {
-      "id": "hk-069",
-      "week": 7,
-      "type": "choice",
-      "prompt": "2>/dev/null에서 숫자 2는 무엇인가?",
-      "explanation": "0은 표준 입력, 1은 표준 출력, 2는 표준 오류다. 2>/dev/null은 표준 오류만 버린다.",
-      "source": "PDF 26쪽",
-      "options": [
-        {
-          "id": "o0",
-          "text": "표준 오류 파일 디스크립터"
-        },
-        {
-          "id": "o1",
-          "text": "EUID"
-        },
-        {
-          "id": "o2",
-          "text": "RUID"
-        },
-        {
-          "id": "o3",
-          "text": "그룹 ID"
-        }
-      ],
-      "answer": "o0"
-    },
-    {
       "id": "hk-070",
       "week": 7,
       "type": "choice",
