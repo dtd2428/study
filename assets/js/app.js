@@ -271,6 +271,32 @@ RUID: <span class="uid-slot">?</span>   EUID: <span class="uid-slot">?</span>   
     toast('문제를 복원했습니다.');
   }
   document.addEventListener('click',e=>{if(e.target.closest('[data-undo-delete]'))undoQuestionDeletion();if(e.target.closest('[data-dismiss-deletion]'))dismissDeletionNotice();});
+  // 오래된 브라우저 수정본에도 새 집중 학습 문제를 보충합니다.
+  function syncSetuidPractice() {
+    const original = builtInBanks.find(b => b.id === 'hacking');
+    const edited = custom.find(b => b.id === 'hacking');
+    if (!original || !edited) return;
+    const focus = original.questions.filter(q => /^hk-setuid-0[1-5]$/.test(q.id) && q.topics?.includes('setuid'));
+    const present = new Set(edited.questions.map(q => q.id));
+    const removed = deletionState.deleted.hacking || [];
+    // 이전 누락 추론이 다섯 신규 ID를 한꺼번에 삭제 처리한 경우만 복구합니다.
+    // 실제 마지막 제외가 SetUID 문제라면 사용자의 제외 상태를 유지합니다.
+    const missingAll = focus.length === 5 && focus.every(q => !present.has(q.id));
+    const inferredBatch = missingAll && focus.every(q => removed.includes(q.id)) &&
+      !(lastDeleted?.bankId === 'hacking' && /^hk-setuid-0[1-5]$/.test(lastDeleted.question?.id));
+    if (inferredBatch) {
+      const ids = new Set(focus.map(q => q.id));
+      deletionState.deleted.hacking = removed.filter(id => !ids.has(id));
+      saveDeletionState();
+    }
+    let changed = inferredBatch;
+    for (const q of focus) if (!present.has(q.id)) {
+      edited.questions.push(JSON.parse(JSON.stringify(q)));
+      changed = true;
+    }
+    if (changed) persist();
+  }
+  syncSetuidPractice();
   // 모든 과목에 동일하게 브라우저의 수정본을 우선 적용합니다.
   window.STUDY_BANKS=window.STUDY_BANKS.filter(b=>!custom.some(c=>c.id===b.id));
   function download(name,data,script=false){const json=JSON.stringify(data,null,2);const url=URL.createObjectURL(new Blob([script?`/* 스터디룸 문제은행 */\nwindow.STUDY_OVERRIDES = ${json};\n`:json],{type:script?'text/javascript;charset=utf-8':'application/json;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
