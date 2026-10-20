@@ -1748,20 +1748,6 @@
       ]
     },
     {
-      "id": "hk-083",
-      "week": 7,
-      "type": "essay",
-      "prompt": "kali 소유 SetUID 파일을 kali1001이 실행하고 setuid(1000)를 호출했다. 전후 (1001,1000)이 같다는 것만으로 함수가 -1을 반환했다고 말할 수 없는 이유는?",
-      "explanation": "SetUID 실행 시 이미 EUID=1000이며 Saved UID에도 해당 값이 저장된다. 비특권 setuid()는 RUID 또는 Saved UID와 일치하는 목표로 EUID 변경을 허용할 수 있다. 이미 같은 EUID라면 성공해도 출력이 같을 수 있으므로 실제 반환값을 확인해야 한다. 강의의 실패 표시는 두 UID를 모두 1000으로 변경하지 못했다는 뜻이다.",
-      "source": "PDF 23쪽",
-      "model": "SetUID 실행 시 이미 EUID=1000이며 Saved UID에도 해당 값이 저장된다. 비특권 setuid()는 RUID 또는 Saved UID와 일치하는 목표로 EUID 변경을 허용할 수 있다. 이미 같은 EUID라면 성공해도 출력이 같을 수 있으므로 실제 반환값을 확인해야 한다. 강의의 실패 표시는 두 UID를 모두 1000으로 변경하지 못했다는 뜻이다.",
-      "rubric": [
-        "EUID와 Saved UID 관계",
-        "같은 출력이 함수 실패를 증명하지 않음",
-        "강의 목표 실패와 함수 반환 실패를 구분"
-      ]
-    },
-    {
       "id": "hk-084",
       "week": 7,
       "type": "essay",
