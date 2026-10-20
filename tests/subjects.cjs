@@ -79,7 +79,7 @@ const server = http.createServer((req,res) => {
   assert.equal(await page.locator('#subject option').count(),2);assert.match(await page.locator('#subject option[value=network]').innerText(),/네트워크 테스트/);assert.match(await page.locator('.storage-warning').innerText(),/overrides.js/);
   assert.deepEqual(errors,[]);await context.close();
   // 같은 로더가 서버 없이 파일을 직접 열 때도 정상 동작해야 합니다.
-  const fileContext=await browser.newContext();const filePage=await fileContext.newPage();await filePage.goto(pathToFileURL(path.join(root,'index.html')).href);await filePage.locator('#setup').waitFor();assert.equal(await filePage.locator('#subject option').count(),1);await filePage.locator('#quick-start').click();await filePage.locator('.question-card').waitFor();assert.equal(await filePage.evaluate(k=>JSON.parse(localStorage.getItem(k)).session.questions.length,KEY),30);await fileContext.close();
+  const fileContext=await browser.newContext();const filePage=await fileContext.newPage();await filePage.goto(pathToFileURL(path.join(root,'index.html')).href);await filePage.locator('#setup').waitFor();assert.equal(await filePage.locator('#subject option').count(),2);await filePage.locator('#quick-start').click();await filePage.locator('.question-card').waitFor();assert.equal(await filePage.evaluate(k=>JSON.parse(localStorage.getItem(k)).session.questions.length,KEY),30);await fileContext.close();
   console.log('PASS: multiple subject files, catalog order, independent 30-question pools, generic text blanks, broken-file isolation, ID/schema validation, deployment overrides, custom overrides for every subject, legacy sessions/records, file:// without a server.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>server.close());
