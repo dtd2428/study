@@ -1603,33 +1603,6 @@
       "answer": "o0"
     },
     {
-      "id": "hk-086",
-      "week": 4,
-      "type": "choice",
-      "prompt": "SMB 열거 결과 LockoutTries=0의 강의 해석은?",
-      "explanation": "LockoutTries는 시도 횟수 기반 잠금 정책이다. PasswordMin과 구분한다.",
-      "source": "PDF 11쪽",
-      "options": [
-        {
-          "id": "o0",
-          "text": "시도 횟수 기반 잠금 임계값이 없다."
-        },
-        {
-          "id": "o1",
-          "text": "모든 계정이 이미 잠겼다."
-        },
-        {
-          "id": "o2",
-          "text": "사용자 수가 0명이다."
-        },
-        {
-          "id": "o3",
-          "text": "최소 비밀번호 길이가 0이다."
-        }
-      ],
-      "answer": "o0"
-    },
-    {
       "id": "hk-087",
       "week": 5,
       "type": "choice",

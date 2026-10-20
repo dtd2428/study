@@ -19,6 +19,7 @@ window.STUDY_REMOVED = {
     "hk-016",
     "hk-006",
     "hk-048",
-    "hk-088"
+    "hk-088",
+    "hk-086"
   ]
 };
