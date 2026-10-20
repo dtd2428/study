@@ -111,5 +111,21 @@ const bank = {
   mc(7,'정상 프로그램처럼 보이거나 그 안에 의도치 않은 동작을 포함한 프로그램은?', '트로이 목마',['장치 드라이버 전체','FIFO','정상 passwd 전체'],'프로그램의 정상 같은 외형과 실제 동작을 구분한다. 정상 파일명이나 안내 문구만으로 무결성을 판단하지 않는다.',28);
   mc(7,'서비스 침해로 실행된 코드의 권한을 판단할 때 확인할 것은?', '실제 요청을 처리하는 프로세스의 권한',['접속한 웹 방문자의 화면 크기','도메인 이름의 길이','백도어 파일명에 root가 들어가는지 여부'],'서비스의 요청 처리 프로세스 권한이 중요하다. 웹 방문 자체가 방문자에게 서버 root 권한을 부여하는 것은 아니다.',28);
   short(7,'파일의 소유자를 바꾸는 명령과 C의 UID 변경 함수를 구분하세요. 파일 소유자 변경 명령 이름만 쓰세요.', ['chown'],'chown은 파일 소유권 변경 명령이고 setuid()는 프로세스의 사용자 ID 변경을 요청하는 C 함수다. chmod는 파일 권한을 바꾼다.',7);
+  // 기존 문제 ID를 유지하도록 새 단답형은 문제은행 끝에 추가합니다.
+  const setuidShort = (prompt, values, explanation, slide, pdfPage) => bank.questions.push({
+    ...base(7,'short',`${prompt}\n호출 전 RUID, 호출 전 EUID, 호출 후 RUID, 호출 후 EUID 순서로 숫자 네 개를 한 줄에 쓰세요. 숫자는 공백 또는 쉼표로 구분하세요.`,explanation,pdfPage),
+    source: `SUID 관련 ppt.pdf ${pdfPage}쪽 (슬라이드 ${slide})`,
+    answers: [values.join(' '), values.join(', '), values.join(',')]
+  });
+  setuidShort('[성공 사례] root 소유, SetUID 없음(-rwxr-xr-x). root(UID 0)가 ./setuid1000을 실행하고 프로그램 내부에서 setuid(1000)을 호출합니다.',
+    ['0','0','1000','1000'],'호출 전 (RUID, EUID)는 (0, 0), 호출 후는 (1000, 1000)이다. 유효 root 권한으로 두 UID를 모두 1000으로 바꾸는 강의 목표에 성공한다.',12,4);
+  setuidShort('[실패 사례] root 소유, SetUID 없음(-rwxr-xr-x). kali(UID 1000)가 ./setuid0을 실행하고 프로그램 내부에서 setuid(0)을 호출합니다.',
+    ['1000','1000','1000','1000'],'호출 전후 모두 (RUID, EUID) = (1000, 1000)이다. root 소유라도 SetUID가 없으므로 유효 root 권한을 얻지 못해 setuid(0) 호출이 실패한다.',15,7);
+  setuidShort('[성공 사례] root 소유, SetUID 있음(-rwsr-xr-x). kali1001(UID 1001)이 ./setuid1000을 실행하고 프로그램 내부에서 setuid(1000)을 호출합니다.',
+    ['1001','0','1000','1000'],'호출 전 (RUID, EUID)는 (1001, 0), 호출 후는 (1000, 1000)이다. SetUID로 얻은 유효 root 권한으로 두 UID를 모두 1000으로 바꾸는 강의 목표에 성공한다.',17,9);
+  setuidShort('[실패 사례 · PPT 기준] kali(UID 1000) 소유, SetUID 있음(-rwsr-xr-x). kali1001(UID 1001)이 ./setuid1000을 실행하고 프로그램 내부에서 setuid(1000)을 호출합니다.',
+    ['1001','1000','1001','1000'],'호출 전후 모두 (RUID, EUID) = (1001, 1000)이다. PPT의 실패 표시는 두 UID를 모두 1000으로 바꾸는 목표를 달성하지 못했다는 뜻이다. 출력이 그대로라는 사실만으로 함수가 -1을 반환했다고 확정하지 않는다.',20,12);
+  setuidShort('[실패 사례 · PPT 기준] kali(UID 1000) 소유, SetUID 있음(-rwsr-xr-x). root(UID 0)가 ./setuid1000을 실행하고 프로그램 내부에서 setuid(1000)을 호출합니다.',
+    ['0','1000','0','1000'],'호출 전후 모두 (RUID, EUID) = (0, 1000)이다. 실행 파일 소유자의 UID가 EUID에 적용되어 두 UID를 모두 1000으로 바꾸는 강의 목표는 달성하지 못한다. PPT의 실패 표시는 함수 반환값의 실패와 구분한다.',21,13);
   window.STUDY_BANKS.push(bank);
 })();
