@@ -1019,17 +1019,6 @@
       ]
     },
     {
-      "id": "hk-052",
-      "week": 5,
-      "type": "short",
-      "prompt": "강의에서 사용하는 PostgreSQL의 포트 번호는?",
-      "explanation": "PostgreSQL은 5432, MySQL은 3306이다.",
-      "source": "PDF 15쪽",
-      "answers": [
-        "5432"
-      ]
-    },
-    {
       "id": "hk-054",
       "week": 6,
       "type": "choice",
