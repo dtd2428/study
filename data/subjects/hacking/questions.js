@@ -127,5 +127,1953 @@ const bank = {
     ['1001','1000','1001','1000'],'호출 전후 모두 (RUID, EUID) = (1001, 1000)이다. PPT의 실패 표시는 두 UID를 모두 1000으로 바꾸는 목표를 달성하지 못했다는 뜻이다. 출력이 그대로라는 사실만으로 함수가 -1을 반환했다고 확정하지 않는다.',20,12);
   setuidShort('[실패 사례 · PPT 기준] kali(UID 1000) 소유, SetUID 있음(-rwsr-xr-x). root(UID 0)가 ./setuid1000을 실행하고 프로그램 내부에서 setuid(1000)을 호출합니다.',
     ['0','1000','0','1000'],'호출 전후 모두 (RUID, EUID) = (0, 1000)이다. 실행 파일 소유자의 UID가 EUID에 적용되어 두 UID를 모두 1000으로 바꾸는 강의 목표는 달성하지 못한다. PPT의 실패 표시는 함수 반환값의 실패와 구분한다.',21,13);
+  /* 친구 제공 HTML의 JSON 문제 데이터만 변환. 원문 실행 코드는 포함하지 않습니다.
+     실전 예상의 동일 문항 13개는 주차별/서술형 문항과 통합했습니다. */
+  bank.questions.push(...[
+  {
+    "id": "hk-friend-w1t01",
+    "week": 1,
+    "type": "essay",
+    "prompt": "화이트 햇(White Hat) 해커의 의미를 설명하시오.",
+    "explanation": "악의 없이 시스템의 보안 취약점을 찾아내는 보안 전문가.",
+    "source": "친구 제공 문제집 · 1주차 이론 1번 · 원문 7쪽",
+    "model": "악의 없이 시스템의 보안 취약점을 찾아내는 보안 전문가.",
+    "rubric": [
+      "핵심 내용: 악의",
+      "핵심 내용: 취약점"
+    ]
+  },
+  {
+    "id": "hk-friend-w1t02",
+    "week": 1,
+    "type": "short",
+    "prompt": "타인에게 피해를 주는 불법적인 해킹의 유형은?",
+    "explanation": "블랙 햇(Black Hat).",
+    "source": "친구 제공 문제집 · 1주차 이론 2번 · 원문 7쪽",
+    "answers": [
+      "블랙 햇(Black Hat).",
+      "블랙 햇",
+      "블랙햇",
+      "Black Hat",
+      "black hat"
+    ]
+  },
+  {
+    "id": "hk-friend-w1t03",
+    "week": 1,
+    "type": "short",
+    "prompt": "해킹 뒤 관리자에게 사실을 알리고 수정 대가를 기대하는 유형은?",
+    "explanation": "그레이 햇(Gray Hat).",
+    "source": "친구 제공 문제집 · 1주차 이론 3번 · 원문 7쪽",
+    "answers": [
+      "그레이 햇(Gray Hat).",
+      "그레이 햇",
+      "그레이햇",
+      "Gray Hat",
+      "Grey Hat",
+      "gray hat",
+      "grey hat"
+    ]
+  },
+  {
+    "id": "hk-friend-w1t04",
+    "week": 1,
+    "type": "short",
+    "prompt": "시스템의 정식 운영 전에 버그를 찾는 베타 테스트 성격의 유형은?",
+    "explanation": "블루 햇(Blue Hat).",
+    "source": "친구 제공 문제집 · 1주차 이론 4번 · 원문 8쪽",
+    "answers": [
+      "블루 햇(Blue Hat).",
+      "블루 햇",
+      "블루햇",
+      "Blue Hat",
+      "blue hat"
+    ]
+  },
+  {
+    "id": "hk-friend-w1t05",
+    "week": 1,
+    "type": "essay",
+    "prompt": "아마추어 해커(스크립트 키디)의 정의는?",
+    "explanation": "컴퓨터 지식이 부족하고 남이 만든 프로그램을 이용해 해킹을 시도하는 사람.",
+    "source": "친구 제공 문제집 · 1주차 이론 5번 · 원문 8쪽",
+    "model": "컴퓨터 지식이 부족하고 남이 만든 프로그램을 이용해 해킹을 시도하는 사람.",
+    "rubric": [
+      "핵심 내용: 지식",
+      "핵심 내용: 남이만든 / 다른사람이만든 / 타인이만든"
+    ]
+  },
+  {
+    "id": "hk-friend-w1t06",
+    "week": 1,
+    "type": "short",
+    "prompt": "정치·사회·종교적 메시지를 전하기 위해 해킹하는 유형은?",
+    "explanation": "핵티비스트(Hacktivist).",
+    "source": "친구 제공 문제집 · 1주차 이론 6번 · 원문 8쪽",
+    "answers": [
+      "핵티비스트(Hacktivist).",
+      "핵티비스트",
+      "Hacktivist",
+      "hacktivist"
+    ]
+  },
+  {
+    "id": "hk-friend-w1t07",
+    "week": 1,
+    "type": "essay",
+    "prompt": "취약점 검사(Vulnerability Scanner)의 목적은?",
+    "explanation": "시스템에 침투할 수 있는 보안 취약점을 찾는 것.",
+    "source": "친구 제공 문제집 · 1주차 이론 7번 · 원문 9쪽",
+    "model": "시스템에 침투할 수 있는 보안 취약점을 찾는 것.",
+    "rubric": [
+      "핵심 내용: 취약점",
+      "핵심 내용: 찾 / 검색 / 탐지 / 검사"
+    ]
+  },
+  {
+    "id": "hk-friend-w1t08",
+    "week": 1,
+    "type": "essay",
+    "prompt": "비밀번호 크래킹(Password Cracking)이란?",
+    "explanation": "시스템의 비밀번호를 알아내는 기술.",
+    "source": "친구 제공 문제집 · 1주차 이론 8번 · 원문 10쪽",
+    "model": "시스템의 비밀번호를 알아내는 기술.",
+    "rubric": [
+      "핵심 내용: 비밀번호",
+      "핵심 내용: 알아 / 찾 / 해독 / 탈취 / 추측"
+    ]
+  },
+  {
+    "id": "hk-friend-w1t09",
+    "week": 1,
+    "type": "essay",
+    "prompt": "루트킷(Rootkit)이란?",
+    "explanation": "사용자가 알아채지 못하게 설치되며 자신의 존재를 숨기는 프로그램 모음.",
+    "source": "친구 제공 문제집 · 1주차 이론 9번 · 원문 11쪽",
+    "model": "사용자가 알아채지 못하게 설치되며 자신의 존재를 숨기는 프로그램 모음.",
+    "rubric": [
+      "핵심 내용: 몰래",
+      "핵심 내용: 숨 / 은폐 / 감추"
+    ]
+  },
+  {
+    "id": "hk-friend-w1t10",
+    "week": 1,
+    "type": "essay",
+    "prompt": "키 로거, 스푸핑, 패킷 스니퍼의 기능을 각각 한 가지씩 작성하시오.",
+    "explanation": "키 로거: 키보드 입력 기록 수집 / 스푸핑: 신뢰 대상 사칭 / 패킷 스니퍼: 네트워크 패킷 가로채기.",
+    "source": "친구 제공 문제집 · 1주차 이론 10번 · 원문 12~14쪽",
+    "model": "키 로거: 키보드 입력 기록 수집 / 스푸핑: 신뢰 대상 사칭 / 패킷 스니퍼: 네트워크 패킷 가로채기.",
+    "rubric": [
+      "핵심 내용: 키보드",
+      "핵심 내용: 위장 / 사칭 / 속이",
+      "핵심 내용: 패킷 / packet"
+    ]
+  },
+  {
+    "id": "hk-friend-w1p01",
+    "week": 1,
+    "type": "short",
+    "prompt": "[사례 판별] 직원의 타이핑 기록을 몰래 수집한다. 해당 기술명은?",
+    "explanation": "키 로거(Key Logger).\n\n원문 주의: 1주차는 명령어 실습이 아닌 기술 사례형 연습이야.",
+    "source": "친구 제공 문제집 · 1주차 실습 1번 · 원문 12쪽",
+    "answers": [
+      "키 로거(Key Logger).",
+      "키 로거",
+      "키로거",
+      "Key Logger",
+      "key logger",
+      "Keylogger",
+      "keylogger"
+    ]
+  },
+  {
+    "id": "hk-friend-w1p02",
+    "week": 1,
+    "type": "short",
+    "prompt": "[사례 판별] 공격자가 신뢰받는 PC의 IP 주소인 것처럼 위장한다. 해당 기술명은?",
+    "explanation": "IP 스푸핑(IP Spoofing).",
+    "source": "친구 제공 문제집 · 1주차 실습 2번 · 원문 13쪽",
+    "answers": [
+      "IP 스푸핑(IP Spoofing).",
+      "IP 스푸핑",
+      "IP Spoofing",
+      "IP spoofing",
+      "ip spoofing"
+    ]
+  },
+  {
+    "id": "hk-friend-w1p03",
+    "week": 1,
+    "type": "short",
+    "prompt": "[사례 판별] 통신 중인 패킷을 중간에서 가로챈다. 강의자료의 해당 기술명은?",
+    "explanation": "패킷 스니퍼(Packet Sniffer).",
+    "source": "친구 제공 문제집 · 1주차 실습 3번 · 원문 14쪽",
+    "answers": [
+      "패킷 스니퍼(Packet Sniffer).",
+      "패킷 스니퍼",
+      "패킷 스니핑",
+      "Packet Sniffer",
+      "packet sniffer"
+    ]
+  },
+  {
+    "id": "hk-friend-w1p04",
+    "week": 1,
+    "type": "short",
+    "prompt": "[사례 판별] 타인의 PC에 숨겨져 자기 존재를 감춘 프로그램 모음이 있다. 명칭은?",
+    "explanation": "루트킷(Rootkit).",
+    "source": "친구 제공 문제집 · 1주차 실습 4번 · 원문 11쪽",
+    "answers": [
+      "루트킷(Rootkit).",
+      "루트킷",
+      "Rootkit",
+      "rootkit"
+    ]
+  },
+  {
+    "id": "hk-friend-w1p05",
+    "week": 1,
+    "type": "short",
+    "prompt": "[사례 판별] 4자리 비밀번호에 0000부터 9999까지 가능한 숫자를 대입한다. 적용 기술은?",
+    "explanation": "비밀번호 크래킹(무차별 대입 방식).",
+    "source": "친구 제공 문제집 · 1주차 실습 5번 · 원문 10쪽",
+    "answers": [
+      "비밀번호 크래킹(무차별 대입 방식).",
+      "비밀번호 크래킹",
+      "무차별 대입",
+      "무차별 대입 공격",
+      "Brute Force",
+      "brute force"
+    ]
+  },
+  {
+    "id": "hk-friend-w1p06",
+    "week": 1,
+    "type": "short",
+    "prompt": "[사례 판별] 회사 보안 담당자가 악의 없이 취약점을 찾는다. 해커의 유형은?",
+    "explanation": "화이트 햇(White Hat).",
+    "source": "친구 제공 문제집 · 1주차 실습 6번 · 원문 7쪽",
+    "answers": [
+      "화이트 햇(White Hat).",
+      "화이트 햇",
+      "화이트햇",
+      "White Hat",
+      "white hat"
+    ]
+  },
+  {
+    "id": "hk-friend-w1p07",
+    "week": 1,
+    "type": "short",
+    "prompt": "[사례 판별] 침투 후 관리자에게 사실을 알리고 수정 대가를 요구한다. 해커의 유형은?",
+    "explanation": "그레이 햇(Gray Hat).",
+    "source": "친구 제공 문제집 · 1주차 실습 7번 · 원문 7쪽",
+    "answers": [
+      "그레이 햇(Gray Hat).",
+      "그레이 햇",
+      "그레이햇",
+      "Gray Hat",
+      "Grey Hat",
+      "gray hat",
+      "grey hat"
+    ]
+  },
+  {
+    "id": "hk-friend-w1p08",
+    "week": 1,
+    "type": "short",
+    "prompt": "[사례 판별] 서비스를 정식 오픈하기 전에 보안 버그를 찾아내는 베타테스트 성격의 유형은?",
+    "explanation": "블루 햇(Blue Hat).",
+    "source": "친구 제공 문제집 · 1주차 실습 8번 · 원문 8쪽",
+    "answers": [
+      "블루 햇(Blue Hat).",
+      "블루 햇",
+      "블루햇",
+      "Blue Hat",
+      "blue hat"
+    ]
+  },
+  {
+    "id": "hk-friend-w1p09",
+    "week": 1,
+    "type": "short",
+    "prompt": "[사례 판별] 다른 사람이 만든 해킹 프로그램만 사용하고 관련 지식이 부족하다. 유형은?",
+    "explanation": "스크립트 키디(Script Kiddie).",
+    "source": "친구 제공 문제집 · 1주차 실습 9번 · 원문 8쪽",
+    "answers": [
+      "스크립트 키디(Script Kiddie).",
+      "스크립트 키디",
+      "스크립트키디",
+      "Script Kiddie",
+      "script kiddie"
+    ]
+  },
+  {
+    "id": "hk-friend-w1p10",
+    "week": 1,
+    "type": "short",
+    "prompt": "[사례 판별] 정치적 메시지를 알리기 위해 특정 기관의 홈페이지를 공격한다. 유형은?",
+    "explanation": "핵티비스트(Hacktivist).",
+    "source": "친구 제공 문제집 · 1주차 실습 10번 · 원문 8쪽",
+    "answers": [
+      "핵티비스트(Hacktivist).",
+      "핵티비스트",
+      "Hacktivist",
+      "hacktivist"
+    ]
+  },
+  {
+    "id": "hk-friend-w2t01",
+    "week": 2,
+    "type": "essay",
+    "prompt": "셸(Shell)의 역할을 강의자료 용어로 설명하시오.",
+    "explanation": "응용 프로그램에서 명령을 받아 커널에 전달하고 사용자의 입력에 따라 프로그램을 수행한다.",
+    "source": "친구 제공 문제집 · 2주차 이론 1번 · 원문 49쪽",
+    "model": "응용 프로그램에서 명령을 받아 커널에 전달하고 사용자의 입력에 따라 프로그램을 수행한다.",
+    "rubric": [
+      "핵심 내용: 응용프로그램",
+      "핵심 내용: 커널"
+    ]
+  },
+  {
+    "id": "hk-friend-w2t02r",
+    "week": 2,
+    "type": "essay",
+    "prompt": "리눅스의 시스템 구조를 이루는 주요 세 영역을 모두 작성하시오.",
+    "explanation": "파일 서브 시스템, 장치 드라이버, 프로세스 제어.\n\n학습 참고: 이 자동판정은 예시 4종을 확인해. 다른 올바른 4종을 썼다면 직접 정답 인정 가능.\n\n원문 주의: Shell 주요 기능 암기는 교수님이 시험에서 제외한다고 안내하여 다른 PDF 개념으로 대체했어.",
+    "source": "친구 제공 문제집 · 2주차 이론 2번 · 원문 48쪽",
+    "model": "파일 서브 시스템, 장치 드라이버, 프로세스 제어.\n\n학습 참고: 이 자동판정은 예시 4종을 확인해. 다른 올바른 4종을 썼다면 직접 정답 인정 가능.\n\n원문 주의: Shell 주요 기능 암기는 교수님이 시험에서 제외한다고 안내하여 다른 PDF 개념으로 대체했어.",
+    "rubric": [
+      "핵심 내용: 파일서브시스템",
+      "핵심 내용: 장치드라이버",
+      "핵심 내용: 프로세스제어"
+    ]
+  },
+  {
+    "id": "hk-friend-w2t03r",
+    "week": 2,
+    "type": "essay",
+    "prompt": "리눅스의 일반 파일에 속하는 대표적인 두 가지를 작성하시오.",
+    "explanation": "데이터 파일, 실행 파일.\n\n원문 주의: Shell 주요 기능 암기는 교수님이 시험에서 제외한다고 안내하여 다른 PDF 개념으로 대체했어.",
+    "source": "친구 제공 문제집 · 2주차 이론 3번 · 원문 50쪽",
+    "model": "데이터 파일, 실행 파일.\n\n원문 주의: Shell 주요 기능 암기는 교수님이 시험에서 제외한다고 안내하여 다른 PDF 개념으로 대체했어.",
+    "rubric": [
+      "핵심 내용: 데이터파일",
+      "핵심 내용: 실행파일"
+    ]
+  },
+  {
+    "id": "hk-friend-w2t04r",
+    "week": 2,
+    "type": "essay",
+    "prompt": "리눅스에서 디렉터리는 파일에 해당하는가? 디렉터리가 담고 있는 정보도 설명하시오.",
+    "explanation": "디렉터리도 파일에 해당하며, 내부 파일과 하위 디렉터리에 대한 정보를 담는다.\n\n원문 주의: Shell 주요 기능 암기는 교수님이 시험에서 제외한다고 안내하여 다른 PDF 개념으로 대체했어.",
+    "source": "친구 제공 문제집 · 2주차 이론 4번 · 원문 50쪽",
+    "model": "디렉터리도 파일에 해당하며, 내부 파일과 하위 디렉터리에 대한 정보를 담는다.\n\n원문 주의: Shell 주요 기능 암기는 교수님이 시험에서 제외한다고 안내하여 다른 PDF 개념으로 대체했어.",
+    "rubric": [
+      "핵심 내용: 파일",
+      "핵심 내용: 하위디렉터리"
+    ]
+  },
+  {
+    "id": "hk-friend-w2t05r",
+    "week": 2,
+    "type": "essay",
+    "prompt": "리눅스의 특수 파일은 무엇을 다루기 위한 파일이며 주로 어느 디렉터리에 위치하는가?",
+    "explanation": "프린터·터미널 등 물리적 장치에 접근하기 위한 파일로, /dev에 위치한다.\n\n원문 주의: Shell 주요 기능 암기는 교수님이 시험에서 제외한다고 안내하여 다른 PDF 개념으로 대체했어.",
+    "source": "친구 제공 문제집 · 2주차 이론 5번 · 원문 50쪽",
+    "model": "프린터·터미널 등 물리적 장치에 접근하기 위한 파일로, /dev에 위치한다.\n\n원문 주의: Shell 주요 기능 암기는 교수님이 시험에서 제외한다고 안내하여 다른 PDF 개념으로 대체했어.",
+    "rubric": [
+      "핵심 내용: 장치 / 프린터 / 터미널",
+      "핵심 내용: /dev"
+    ]
+  },
+  {
+    "id": "hk-friend-w2t06",
+    "week": 2,
+    "type": "essay",
+    "prompt": "리눅스의 구성 요소를 바깥 계층부터 네 가지로 작성하시오.",
+    "explanation": "응용 프로그램 → 셸 → 커널 → 하드웨어 (또는 반대 방향).\n\n학습 참고: 정순/역순 배열은 모범답안과 직접 대조해.",
+    "source": "친구 제공 문제집 · 2주차 이론 6번 · 원문 47쪽",
+    "model": "응용 프로그램 → 셸 → 커널 → 하드웨어 (또는 반대 방향).\n\n학습 참고: 정순/역순 배열은 모범답안과 직접 대조해.",
+    "rubric": [
+      "핵심 내용: 응용프로그램",
+      "핵심 내용: 쉘 / 셸",
+      "핵심 내용: 커널",
+      "핵심 내용: 하드웨어"
+    ]
+  },
+  {
+    "id": "hk-friend-w2t07",
+    "week": 2,
+    "type": "essay",
+    "prompt": "리눅스 파일 서브 시스템의 역할은?",
+    "explanation": "저장 공간에서 파일을 저장하고 읽는 역할.",
+    "source": "친구 제공 문제집 · 2주차 이론 7번 · 원문 48쪽",
+    "model": "저장 공간에서 파일을 저장하고 읽는 역할.",
+    "rubric": [
+      "핵심 내용: 파일",
+      "핵심 내용: 저장 / 읽"
+    ]
+  },
+  {
+    "id": "hk-friend-w2t08",
+    "week": 2,
+    "type": "essay",
+    "prompt": "장치 드라이버의 역할은?",
+    "explanation": "하드웨어와 소프트웨어를 연결하는 인터페이스 제공.",
+    "source": "친구 제공 문제집 · 2주차 이론 8번 · 원문 48쪽",
+    "model": "하드웨어와 소프트웨어를 연결하는 인터페이스 제공.",
+    "rubric": [
+      "핵심 내용: 하드웨어",
+      "핵심 내용: 소프트웨어"
+    ]
+  },
+  {
+    "id": "hk-friend-w2t09",
+    "week": 2,
+    "type": "essay",
+    "prompt": "프로세스 제어가 구현하는 세 가지를 작성하시오.",
+    "explanation": "프로세스 간 통신, 스케줄링, 메모리 관리.",
+    "source": "친구 제공 문제집 · 2주차 이론 9번 · 원문 48쪽",
+    "model": "프로세스 간 통신, 스케줄링, 메모리 관리.",
+    "rubric": [
+      "핵심 내용: 통신",
+      "핵심 내용: 스케줄링",
+      "핵심 내용: 메모리"
+    ]
+  },
+  {
+    "id": "hk-friend-w2t10",
+    "week": 2,
+    "type": "essay",
+    "prompt": "강의자료의 파일 종류 네 가지를 작성하시오.",
+    "explanation": "일반 파일, 디렉터리, 특수 파일, 파이프 파일.",
+    "source": "친구 제공 문제집 · 2주차 이론 10번 · 원문 50쪽",
+    "model": "일반 파일, 디렉터리, 특수 파일, 파이프 파일.",
+    "rubric": [
+      "핵심 내용: 일반파일",
+      "핵심 내용: 디렉터리",
+      "핵심 내용: 특수파일",
+      "핵심 내용: 파이프파일"
+    ]
+  },
+  {
+    "id": "hk-friend-w2p01",
+    "week": 2,
+    "type": "short",
+    "prompt": "[개념 적용] 응용 프로그램의 명령을 커널에 전달하는 리눅스 구성 요소는?",
+    "explanation": "쉘(Shell).\n\n원문 주의: 수업하지 않은 네트워크/운영체제 환경설정 실습 대신, 2주차 PDF의 리눅스 개념을 사례로 확인하는 문제야.",
+    "source": "친구 제공 문제집 · 2주차 실습 1번 · 원문 49쪽",
+    "answers": [
+      "쉘(Shell).",
+      "셸",
+      "쉘",
+      "Shell",
+      "shell"
+    ]
+  },
+  {
+    "id": "hk-friend-w2p02r",
+    "week": 2,
+    "type": "short",
+    "prompt": "[개념 적용] 다음 중 데이터나 실행 프로그램을 담는 파일의 종류를 작성하시오.",
+    "explanation": "일반 파일.\n\n원문 주의: 실습 명령어가 아니라, 2주차 PDF의 파일시스템·디렉터리 개념을 확인하는 문제야.",
+    "source": "친구 제공 문제집 · 2주차 실습 2번 · 원문 50쪽",
+    "answers": [
+      "일반 파일.",
+      "일반 파일",
+      "일반파일"
+    ]
+  },
+  {
+    "id": "hk-friend-w2p03r",
+    "week": 2,
+    "type": "short",
+    "prompt": "[개념 적용] 여러 파일과 하위 디렉터리의 정보를 담는 파일시스템 객체의 명칭은?",
+    "explanation": "디렉터리.\n\n원문 주의: 실습 명령어가 아니라, 2주차 PDF의 파일시스템·디렉터리 개념을 확인하는 문제야.",
+    "source": "친구 제공 문제집 · 2주차 실습 3번 · 원문 50쪽",
+    "answers": [
+      "디렉터리.",
+      "디렉터리",
+      "디렉토리",
+      "directory",
+      "Directory"
+    ]
+  },
+  {
+    "id": "hk-friend-w2p04r",
+    "week": 2,
+    "type": "short",
+    "prompt": "[경로 확인] 기본 프로그램의 모듈이 저장되는 디렉터리 경로를 작성하시오.",
+    "explanation": "/lib\n\n원문 주의: 강의 PDF에는 있지만 실제 수업에서 다뤘는지는 확인되지 않았어. 교수님 강조범위보다 우선순위를 낮춰.",
+    "source": "친구 제공 문제집 · 2주차 실습 4번 · 원문 51쪽",
+    "answers": [
+      "/lib"
+    ]
+  },
+  {
+    "id": "hk-friend-w2p05r",
+    "week": 2,
+    "type": "short",
+    "prompt": "[경로 확인] 부팅할 때 읽히는 커널 관련 프로그램 파일이 담긴 디렉터리는?",
+    "explanation": "/boot\n\n원문 주의: 강의 PDF에는 있지만 실제 수업에서 다뤘는지는 확인되지 않았어. 교수님 강조범위보다 우선순위를 낮춰.",
+    "source": "친구 제공 문제집 · 2주차 실습 5번 · 원문 51쪽",
+    "answers": [
+      "/boot"
+    ]
+  },
+  {
+    "id": "hk-friend-w2p06r",
+    "week": 2,
+    "type": "short",
+    "prompt": "[경로 확인] 리눅스에서 기본적으로 실행 가능한 파일들이 담기는 디렉터리는?",
+    "explanation": "/bin\n\n원문 주의: 강의 PDF에는 있지만 실제 수업에서 다뤘는지는 확인되지 않았어. 교수님 강조범위보다 우선순위를 낮춰.",
+    "source": "친구 제공 문제집 · 2주차 실습 6번 · 원문 51쪽",
+    "answers": [
+      "/bin"
+    ]
+  },
+  {
+    "id": "hk-friend-w2p07r",
+    "week": 2,
+    "type": "short",
+    "prompt": "[경로 확인] 프로그램 실행·설치 과정에서 생기는 임시 파일을 저장하는 디렉터리는?",
+    "explanation": "/tmp\n\n원문 주의: 강의 PDF에는 있지만 실제 수업에서 다뤘는지는 확인되지 않았어. 교수님 강조범위보다 우선순위를 낮춰.",
+    "source": "친구 제공 문제집 · 2주차 실습 7번 · 원문 51쪽",
+    "answers": [
+      "/tmp"
+    ]
+  },
+  {
+    "id": "hk-friend-w2p08",
+    "week": 2,
+    "type": "short",
+    "prompt": "[개념 적용] 시스템 환경 설정 및 주요 설정 파일이 담기는 디렉터리 경로를 쓰시오.",
+    "explanation": "/etc\n\n원문 주의: 수업하지 않은 네트워크/운영체제 환경설정 실습 대신, 2주차 PDF의 리눅스 개념을 사례로 확인하는 문제야.",
+    "source": "친구 제공 문제집 · 2주차 실습 8번 · 원문 51쪽",
+    "answers": [
+      "/etc"
+    ]
+  },
+  {
+    "id": "hk-friend-w2p09",
+    "week": 2,
+    "type": "short",
+    "prompt": "[개념 적용] 장치(프린터·터미널 등)를 다루기 위한 특수 파일이 모여 있는 디렉터리 경로를 쓰시오.",
+    "explanation": "/dev\n\n원문 주의: 수업하지 않은 네트워크/운영체제 환경설정 실습 대신, 2주차 PDF의 리눅스 개념을 사례로 확인하는 문제야.",
+    "source": "친구 제공 문제집 · 2주차 실습 9번 · 원문 51쪽",
+    "answers": [
+      "/dev"
+    ]
+  },
+  {
+    "id": "hk-friend-w2p10",
+    "week": 2,
+    "type": "short",
+    "prompt": "[개념 적용] 일반 사용자의 개인 작업 디렉터리가 위치하는 상위 디렉터리 경로를 쓰시오.",
+    "explanation": "/home\n\n원문 주의: 수업하지 않은 네트워크/운영체제 환경설정 실습 대신, 2주차 PDF의 리눅스 개념을 사례로 확인하는 문제야.",
+    "source": "친구 제공 문제집 · 2주차 실습 10번 · 원문 52쪽",
+    "answers": [
+      "/home"
+    ]
+  },
+  {
+    "id": "hk-friend-w3t01",
+    "week": 3,
+    "type": "essay",
+    "prompt": "리눅스 로그인(Login)의 의미는?",
+    "explanation": "계정 ID와 비밀번호로 사용자 신원을 확인하고 권한에 따른 시스템 접근을 허가받는 과정.",
+    "source": "친구 제공 문제집 · 3주차 이론 1번 · 원문 4쪽",
+    "model": "계정 ID와 비밀번호로 사용자 신원을 확인하고 권한에 따른 시스템 접근을 허가받는 과정.",
+    "rubric": [
+      "핵심 내용: 계정",
+      "핵심 내용: 비밀번호 / 패스워드",
+      "핵심 내용: 접근 / 권한"
+    ]
+  },
+  {
+    "id": "hk-friend-w3t02",
+    "week": 3,
+    "type": "essay",
+    "prompt": "/etc/passwd의 세 번째와 네 번째 필드 명칭을 순서대로 작성하시오.",
+    "explanation": "UID(User ID), GID(Group ID).",
+    "source": "친구 제공 문제집 · 3주차 이론 2번 · 원문 6쪽",
+    "model": "UID(User ID), GID(Group ID).",
+    "rubric": [
+      "핵심 내용: uid",
+      "핵심 내용: gid"
+    ]
+  },
+  {
+    "id": "hk-friend-w3t03",
+    "week": 3,
+    "type": "essay",
+    "prompt": "ls -al 출력의 맨 앞 문자 d와 -는 각각 무엇을 뜻하는가?",
+    "explanation": "d: 디렉터리 / -: 일반 파일.",
+    "source": "친구 제공 문제집 · 3주차 이론 3번 · 원문 8쪽",
+    "model": "d: 디렉터리 / -: 일반 파일.",
+    "rubric": [
+      "핵심 내용: 디렉터리",
+      "핵심 내용: 일반파일"
+    ]
+  },
+  {
+    "id": "hk-friend-w3t04",
+    "week": 3,
+    "type": "essay",
+    "prompt": "r, w, x가 의미하는 권한과 숫자값을 각각 작성하시오.",
+    "explanation": "r 읽기 4 / w 쓰기 2 / x 실행 1.",
+    "source": "친구 제공 문제집 · 3주차 이론 4번 · 원문 9쪽",
+    "model": "r 읽기 4 / w 쓰기 2 / x 실행 1.",
+    "rubric": [
+      "핵심 내용: 읽기",
+      "핵심 내용: 쓰기",
+      "핵심 내용: 실행",
+      "핵심 내용: 4",
+      "핵심 내용: 2",
+      "핵심 내용: 1"
+    ]
+  },
+  {
+    "id": "hk-friend-w3t05",
+    "week": 3,
+    "type": "essay",
+    "prompt": "umask란 무엇인가?",
+    "explanation": "새 파일·디렉터리 생성 시 기본 권한에서 제한할 권한을 지정하는 값.",
+    "source": "친구 제공 문제집 · 3주차 이론 5번 · 원문 11쪽",
+    "model": "새 파일·디렉터리 생성 시 기본 권한에서 제한할 권한을 지정하는 값.",
+    "rubric": [
+      "핵심 내용: 생성",
+      "핵심 내용: 권한",
+      "핵심 내용: 제한 / 마스크 / 지정"
+    ]
+  },
+  {
+    "id": "hk-friend-w3t06",
+    "week": 3,
+    "type": "essay",
+    "prompt": "RUID와 EUID를 각각 정확하게 정의하시오.",
+    "explanation": "RUID: 프로세스의 실제 사용자 ID / EUID: 권한 검사에 사용되는 사용자 ID.",
+    "source": "친구 제공 문제집 · 3주차 이론 6번 · 원문 16쪽",
+    "model": "RUID: 프로세스의 실제 사용자 ID / EUID: 권한 검사에 사용되는 사용자 ID.",
+    "rubric": [
+      "핵심 내용: ruid",
+      "핵심 내용: euid",
+      "핵심 내용: 실제 / 실행",
+      "핵심 내용: 권한 / 검사"
+    ]
+  },
+  {
+    "id": "hk-friend-w3t07",
+    "week": 3,
+    "type": "short",
+    "prompt": "SetUID 비트가 설정된 실행 파일의 EUID는 실행 시 누구의 UID로 설정되는가?",
+    "explanation": "파일 소유자의 UID.",
+    "source": "친구 제공 문제집 · 3주차 이론 7번 · 원문 18~19쪽",
+    "answers": [
+      "파일 소유자의 UID.",
+      "파일 소유자의 UID",
+      "파일 소유자 UID",
+      "소유자의 UID",
+      "소유자 UID"
+    ]
+  },
+  {
+    "id": "hk-friend-w3t08",
+    "week": 3,
+    "type": "essay",
+    "prompt": "해킹의 5단계를 순서대로 작성하시오.",
+    "explanation": "정보 수집 → 리모트 어택 → 로컬 어택 → 흔적 지우기 → 백도어 생성.\n\n학습 참고: 순서도 확인해.",
+    "source": "친구 제공 문제집 · 3주차 이론 8번 · 원문 20쪽",
+    "model": "정보 수집 → 리모트 어택 → 로컬 어택 → 흔적 지우기 → 백도어 생성.\n\n학습 참고: 순서도 확인해.",
+    "rubric": [
+      "핵심 내용: 정보수집",
+      "핵심 내용: 리모트어택",
+      "핵심 내용: 로컬어택",
+      "핵심 내용: 흔적지우기",
+      "핵심 내용: 백도어생성"
+    ]
+  },
+  {
+    "id": "hk-friend-w3t09",
+    "week": 3,
+    "type": "essay",
+    "prompt": "포트 스캐닝의 정의는?",
+    "explanation": "해당 IP를 사용하는 컴퓨터의 열려 있는 포트를 검색하는 것.",
+    "source": "친구 제공 문제집 · 3주차 이론 9번 · 원문 21쪽",
+    "model": "해당 IP를 사용하는 컴퓨터의 열려 있는 포트를 검색하는 것.",
+    "rubric": [
+      "핵심 내용: 포트",
+      "핵심 내용: 열려 / 열린",
+      "핵심 내용: 검색 / 탐지 / 확인"
+    ]
+  },
+  {
+    "id": "hk-friend-w3t10",
+    "week": 3,
+    "type": "essay",
+    "prompt": "데몬(Daemon)의 정의는?",
+    "explanation": "백그라운드에서 특정 작업이나 서비스를 수행하는 프로그램.",
+    "source": "친구 제공 문제집 · 3주차 이론 10번 · 원문 21쪽",
+    "model": "백그라운드에서 특정 작업이나 서비스를 수행하는 프로그램.",
+    "rubric": [
+      "핵심 내용: 백그라운드",
+      "핵심 내용: 서비스 / 작업"
+    ]
+  },
+  {
+    "id": "hk-friend-w3p01",
+    "week": 3,
+    "type": "short",
+    "prompt": "[출력 판별] drwxr-xr-x 2 root root … 에서 첫 문자 d의 파일 종류는?",
+    "explanation": "디렉터리.",
+    "source": "친구 제공 문제집 · 3주차 실습 1번 · 원문 8쪽",
+    "answers": [
+      "디렉터리.",
+      "디렉터리",
+      "디렉토리",
+      "directory",
+      "Directory"
+    ]
+  },
+  {
+    "id": "hk-friend-w3p02",
+    "week": 3,
+    "type": "short",
+    "prompt": "[권한 계산] -rw-r--r-- 를 세 자리 숫자 권한으로 작성하시오.",
+    "explanation": "644",
+    "source": "친구 제공 문제집 · 3주차 실습 2번 · 원문 9~10쪽",
+    "answers": [
+      "644"
+    ]
+  },
+  {
+    "id": "hk-friend-w3p03",
+    "week": 3,
+    "type": "short",
+    "prompt": "[권한 계산] drwxr-xr-x 를 세 자리 숫자 권한으로 작성하시오.",
+    "explanation": "755",
+    "source": "친구 제공 문제집 · 3주차 실습 3번 · 원문 9쪽",
+    "answers": [
+      "755"
+    ]
+  },
+  {
+    "id": "hk-friend-w3p04",
+    "week": 3,
+    "type": "short",
+    "prompt": "[명령어 빈칸] umask를 002로 변경하는 명령어는?\n\numask 확인 · 변경 전 값 0022는 문제에서 가정한 예시\nkali$ umask\n0022  # 변경 전 초기값(예시)\nkali$ [여기에 변경 명령어 입력]\nkali$ umask\n0002  # umask 002 설정 후 출력",
+    "explanation": "umask 002\n\n원문 주의: 0022와 0002는 서로 다른 값이야. umask 002를 설정하면 umask 명령 출력은 0002로 표시될 수 있어. 초기값 0022는 환경에 따라 달라지며 이 문제에서만 가정한 값이야.",
+    "source": "친구 제공 문제집 · 3주차 실습 4번 · 원문 12쪽",
+    "answers": [
+      "umask 002"
+    ]
+  },
+  {
+    "id": "hk-friend-w3p05",
+    "week": 3,
+    "type": "short",
+    "prompt": "[결과 예측] umask 002 이후 touch c.txt 를 실행할 때 c.txt의 권한은?",
+    "explanation": "664",
+    "source": "친구 제공 문제집 · 3주차 실습 5번 · 원문 12쪽",
+    "answers": [
+      "664"
+    ]
+  },
+  {
+    "id": "hk-friend-w3p06",
+    "week": 3,
+    "type": "short",
+    "prompt": "[결과 예측] umask 002 이후 mkdir c 를 실행할 때 c의 권한은?",
+    "explanation": "775",
+    "source": "친구 제공 문제집 · 3주차 실습 6번 · 원문 12쪽",
+    "answers": [
+      "775"
+    ]
+  },
+  {
+    "id": "hk-friend-w3p07",
+    "week": 3,
+    "type": "short",
+    "prompt": "[명령어 빈칸] c.txt의 접근 권한을 777로 변경하시오.\n\n권한 변경 결과\n-rw-rw-r-- 1 kali kali ... c.txt\nroot# [권한 변경 명령어]\n-rwxrwxrwx 1 kali kali ... c.txt",
+    "explanation": "chmod 777 c.txt",
+    "source": "친구 제공 문제집 · 3주차 실습 7번 · 원문 13쪽",
+    "answers": [
+      "chmod 777 c.txt"
+    ]
+  },
+  {
+    "id": "hk-friend-w3p08",
+    "week": 3,
+    "type": "short",
+    "prompt": "[명령어 빈칸] d.txt 소유자를 kali로 변경하시오.\n\n소유자 변경 결과\n-rw-r--r-- 1 root root ... d.txt\nroot# [소유자 변경 명령어]\n-rw-r--r-- 1 kali root ... d.txt",
+    "explanation": "chown kali d.txt",
+    "source": "친구 제공 문제집 · 3주차 실습 8번 · 원문 14쪽",
+    "answers": [
+      "chown kali d.txt"
+    ]
+  },
+  {
+    "id": "hk-friend-w3p09",
+    "week": 3,
+    "type": "short",
+    "prompt": "[명령어 빈칸] d.txt 소유 그룹을 kali로 변경하시오.\n\n소유 그룹 변경 결과\n-rw-r--r-- 1 kali root ... d.txt\nroot# [그룹 변경 명령어]\n-rw-r--r-- 1 kali kali ... d.txt",
+    "explanation": "chgrp kali d.txt",
+    "source": "친구 제공 문제집 · 3주차 실습 9번 · 원문 14쪽",
+    "answers": [
+      "chgrp kali d.txt"
+    ]
+  },
+  {
+    "id": "hk-friend-w3p10",
+    "week": 3,
+    "type": "short",
+    "prompt": "[권한 계산] -rwsr-xr-x 의 4자리 숫자 권한을 작성하시오.",
+    "explanation": "4755",
+    "source": "친구 제공 문제집 · 3주차 실습 10번 · 원문 18쪽",
+    "answers": [
+      "4755"
+    ]
+  },
+  {
+    "id": "hk-friend-w4t01",
+    "week": 4,
+    "type": "essay",
+    "prompt": "Metasploit이 무엇을 위해 개발된 프로그램인지 한 문장으로 작성하시오.",
+    "explanation": "운영체제 등의 취약점을 점검하는 프로그램.",
+    "source": "친구 제공 문제집 · 4주차 이론 1번 · 원문 5쪽",
+    "model": "운영체제 등의 취약점을 점검하는 프로그램.",
+    "rubric": [
+      "핵심 내용: 취약점",
+      "핵심 내용: 점검 / 검사 / 진단"
+    ]
+  },
+  {
+    "id": "hk-friend-w4t02",
+    "week": 4,
+    "type": "short",
+    "prompt": "MSF의 정식 명칭을 영어로 작성하시오.",
+    "explanation": "Metasploit Framework.",
+    "source": "친구 제공 문제집 · 4주차 이론 2번 · 원문 5~7쪽",
+    "answers": [
+      "Metasploit Framework.",
+      "Metasploit Framework"
+    ]
+  },
+  {
+    "id": "hk-friend-w4t03",
+    "week": 4,
+    "type": "essay",
+    "prompt": "수동적 정보 수집(Passive Information Gathering)이란?",
+    "explanation": "공격 대상 시스템에 직접 접근하지 않고 검색 등을 통해 정보를 수집하는 방식.",
+    "source": "친구 제공 문제집 · 4주차 이론 3번 · 원문 4쪽",
+    "model": "공격 대상 시스템에 직접 접근하지 않고 검색 등을 통해 정보를 수집하는 방식.",
+    "rubric": [
+      "핵심 내용: 대상 / 시스템",
+      "핵심 내용: 직접접근하지 / 접근없이 / 간접 / 검색"
+    ]
+  },
+  {
+    "id": "hk-friend-w4t04",
+    "week": 4,
+    "type": "essay",
+    "prompt": "능동적 정보 수집(Active Information Gathering)이란?",
+    "explanation": "공격 대상에 직접 접근하여 정보를 수집하는 방식.",
+    "source": "친구 제공 문제집 · 4주차 이론 4번 · 원문 7쪽",
+    "model": "공격 대상에 직접 접근하여 정보를 수집하는 방식.",
+    "rubric": [
+      "핵심 내용: 직접",
+      "핵심 내용: 정보수집 / 정보를수집 / 정보획득"
+    ]
+  },
+  {
+    "id": "hk-friend-w4t05",
+    "week": 4,
+    "type": "essay",
+    "prompt": "Nmap의 정식 명칭과 용도를 작성하시오.",
+    "explanation": "Network Mapper — 포트 스캐닝에 이용하는 도구.",
+    "source": "친구 제공 문제집 · 4주차 이론 5번 · 원문 17쪽",
+    "model": "Network Mapper — 포트 스캐닝에 이용하는 도구.",
+    "rubric": [
+      "핵심 내용: networkmapper",
+      "핵심 내용: 포트스캐닝 / 포트검색 / 포트검사"
+    ]
+  },
+  {
+    "id": "hk-friend-w4t06",
+    "week": 4,
+    "type": "essay",
+    "prompt": "포트 스캐닝(Port Scanning)은 무엇을 확인하는 과정인가?",
+    "explanation": "대상 호스트에서 열려 있는 포트를 확인하는 과정.",
+    "source": "친구 제공 문제집 · 4주차 이론 6번 · 원문 17~19쪽",
+    "model": "대상 호스트에서 열려 있는 포트를 확인하는 과정.",
+    "rubric": [
+      "핵심 내용: 포트",
+      "핵심 내용: 열려 / 개방 / open"
+    ]
+  },
+  {
+    "id": "hk-friend-w4t07",
+    "week": 4,
+    "type": "essay",
+    "prompt": "수동적 정보 수집의 강의자료 예시를 하나 작성하시오.",
+    "explanation": "구글 검색, IP 주소 조회 등.",
+    "source": "친구 제공 문제집 · 4주차 이론 7번 · 원문 4쪽",
+    "model": "구글 검색, IP 주소 조회 등.",
+    "rubric": [
+      "핵심 내용: 구글 / google / 검색 / ip주소 / 아이피조회"
+    ]
+  },
+  {
+    "id": "hk-friend-w4t08",
+    "week": 4,
+    "type": "essay",
+    "prompt": "능동적 정보 수집을 수행하면 어떤 위험이 생길 수 있는가? 한 가지 작성하시오.",
+    "explanation": "방화벽에서 차단되거나 침입 탐지 장치에 감지될 수 있다.",
+    "source": "친구 제공 문제집 · 4주차 이론 8번 · 원문 7쪽",
+    "model": "방화벽에서 차단되거나 침입 탐지 장치에 감지될 수 있다.",
+    "rubric": [
+      "핵심 내용: 차단 / 탐지 / 감지 / 기록 / 로그"
+    ]
+  },
+  {
+    "id": "hk-friend-w4t09",
+    "week": 4,
+    "type": "essay",
+    "prompt": "Nmap의 -sT 옵션은 어떤 종류의 포트 스캔을 뜻하는가?",
+    "explanation": "일반적인 TCP 연결 방식 포트 스캔.",
+    "source": "친구 제공 문제집 · 4주차 이론 9번 · 원문 17쪽",
+    "model": "일반적인 TCP 연결 방식 포트 스캔.",
+    "rubric": [
+      "핵심 내용: tcp",
+      "핵심 내용: 스캔 / scan / 연결"
+    ]
+  },
+  {
+    "id": "hk-friend-w4t10",
+    "week": 4,
+    "type": "essay",
+    "prompt": "정보 수집 단계에서 포트 스캐닝을 사용하는 목적은 무엇인가?",
+    "explanation": "대상 호스트의 열려 있는 포트를 확인하여 접근 가능한 서비스를 파악하는 것.",
+    "source": "친구 제공 문제집 · 4주차 이론 10번 · 원문 17~19쪽",
+    "model": "대상 호스트의 열려 있는 포트를 확인하여 접근 가능한 서비스를 파악하는 것.",
+    "rubric": [
+      "핵심 내용: 포트",
+      "핵심 내용: 서비스 / 열려 / 접근"
+    ]
+  },
+  {
+    "id": "hk-friend-w4p01",
+    "week": 4,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 대상 192.168.44.131의 포트를 Nmap으로 확인할 때 가장 기본적인 실행 명령어를 작성하시오.\n\n강의자료 대상 IP를 사용한 기본 실습형 문제\nkali$ [명령어 입력]\n대상: 192.168.44.131",
+    "explanation": "nmap 192.168.44.131",
+    "source": "친구 제공 문제집 · 4주차 실습 1번 · 원문 17쪽",
+    "answers": [
+      "nmap 192.168.44.131"
+    ]
+  },
+  {
+    "id": "hk-friend-w4p02",
+    "week": 4,
+    "type": "short",
+    "prompt": "[출력 해석] Nmap 결과에서 `80/tcp open http`가 나왔다. 포트 80은 열려 있는가, 닫혀 있는가?\n\nNmap 출력의 예시(실제 PDF 명령어 문법을 바탕으로 재구성)\nPORT    STATE  SERVICE\n80/tcp  open   http",
+    "explanation": "열려 있다(open).",
+    "source": "친구 제공 문제집 · 4주차 실습 2번 · 원문 17~19쪽",
+    "answers": [
+      "열려 있다(open).",
+      "open",
+      "열림",
+      "열려 있다",
+      "열려 있다(open)"
+    ]
+  },
+  {
+    "id": "hk-friend-w4p03",
+    "week": 4,
+    "type": "short",
+    "prompt": "[기초 개념 적용] 대상 시스템에 직접 접속해 포트 스캔으로 정보를 확인한 경우 수동적/능동적 정보 수집 중 무엇인가?",
+    "explanation": "능동적 정보 수집.",
+    "source": "친구 제공 문제집 · 4주차 실습 3번 · 원문 7, 17쪽",
+    "answers": [
+      "능동적 정보 수집.",
+      "능동적 정보 수집",
+      "능동적 정보수집",
+      "능동적",
+      "Active Information Gathering"
+    ]
+  },
+  {
+    "id": "hk-friend-w5t01",
+    "week": 5,
+    "type": "essay",
+    "prompt": "Metasploitable은 어떤 목적으로 만든 시스템인가?",
+    "explanation": "모의 침투 실습을 위해 의도적으로 취약하게 만든 가상 운영체제.",
+    "source": "친구 제공 문제집 · 5주차 이론 1번 · 원문 4~6쪽",
+    "model": "모의 침투 실습을 위해 의도적으로 취약하게 만든 가상 운영체제.",
+    "rubric": [
+      "핵심 내용: 취약 / 약점",
+      "핵심 내용: 실습 / 연습 / 모의침투"
+    ]
+  },
+  {
+    "id": "hk-friend-w5t02",
+    "week": 5,
+    "type": "essay",
+    "prompt": "비밀번호 크래킹(Password Cracking)은 무엇을 알아내기 위한 기술인가?",
+    "explanation": "계정 인증에 사용되는 비밀번호를 알아내는 기술.",
+    "source": "친구 제공 문제집 · 5주차 이론 2번 · 원문 31~41쪽",
+    "model": "계정 인증에 사용되는 비밀번호를 알아내는 기술.",
+    "rubric": [
+      "핵심 내용: 비밀번호 / 패스워드",
+      "핵심 내용: 알아 / 해독 / 추측 / 획득 / 크래킹"
+    ]
+  },
+  {
+    "id": "hk-friend-w5t03",
+    "week": 5,
+    "type": "essay",
+    "prompt": "무차별 대입(Brute Force) 공격을 설명하시오.",
+    "explanation": "가능한 비밀번호 조합을 순차적으로 대입하는 공격.",
+    "source": "친구 제공 문제집 · 5주차 이론 3번 · 원문 31쪽",
+    "model": "가능한 비밀번호 조합을 순차적으로 대입하는 공격.",
+    "rubric": [
+      "핵심 내용: 가능한 / 모든 / 여러 / 조합",
+      "핵심 내용: 대입 / 시도"
+    ]
+  },
+  {
+    "id": "hk-friend-w5t04",
+    "week": 5,
+    "type": "essay",
+    "prompt": "사전 기반(Dictionary) 공격을 설명하시오.",
+    "explanation": "사전에 있는 단어나 미리 준비한 비밀번호 후보 목록을 대입하는 공격.",
+    "source": "친구 제공 문제집 · 5주차 이론 4번 · 원문 35쪽",
+    "model": "사전에 있는 단어나 미리 준비한 비밀번호 후보 목록을 대입하는 공격.",
+    "rubric": [
+      "핵심 내용: 사전 / 단어 / 목록",
+      "핵심 내용: 대입 / 시도"
+    ]
+  },
+  {
+    "id": "hk-friend-w5t05",
+    "week": 5,
+    "type": "essay",
+    "prompt": "Brute Force와 Dictionary 공격의 핵심 차이는 무엇인가?",
+    "explanation": "Brute Force는 가능한 조합을 만들고, Dictionary 공격은 준비된 후보 단어 목록을 대입한다.",
+    "source": "친구 제공 문제집 · 5주차 이론 5번 · 원문 31, 35쪽",
+    "model": "Brute Force는 가능한 조합을 만들고, Dictionary 공격은 준비된 후보 단어 목록을 대입한다.",
+    "rubric": [
+      "핵심 내용: 조합 / 무차별",
+      "핵심 내용: 사전 / 목록 / 단어"
+    ]
+  },
+  {
+    "id": "hk-friend-w5t06",
+    "week": 5,
+    "type": "essay",
+    "prompt": "Crunch는 무엇을 생성하는 도구인가?",
+    "explanation": "무차별 대입 공격에 사용할 비밀번호 후보 목록을 생성하는 도구.",
+    "source": "친구 제공 문제집 · 5주차 이론 6번 · 원문 31~34쪽",
+    "model": "무차별 대입 공격에 사용할 비밀번호 후보 목록을 생성하는 도구.",
+    "rubric": [
+      "핵심 내용: 비밀번호 / 패스워드",
+      "핵심 내용: 목록 / 조합 / 후보"
+    ]
+  },
+  {
+    "id": "hk-friend-w5t07",
+    "week": 5,
+    "type": "short",
+    "prompt": "5주차 실습에서 `numeric` 문자 집합은 어떤 문자들로 이루어져 있는가?",
+    "explanation": "숫자(0~9).",
+    "source": "친구 제공 문제집 · 5주차 이론 7번 · 원문 32~34쪽",
+    "answers": [
+      "숫자(0~9).",
+      "숫자",
+      "0~9",
+      "0-9",
+      "숫자(0~9)",
+      "숫자 0~9"
+    ]
+  },
+  {
+    "id": "hk-friend-w5t08",
+    "week": 5,
+    "type": "essay",
+    "prompt": "`users.txt` 파일에는 어떤 종류의 정보를 기록했는가?",
+    "explanation": "계정 이름(사용자 이름) 후보 목록.",
+    "source": "친구 제공 문제집 · 5주차 이론 8번 · 원문 37쪽",
+    "model": "계정 이름(사용자 이름) 후보 목록.",
+    "rubric": [
+      "핵심 내용: 사용자 / 계정 / 아이디 / id",
+      "핵심 내용: 목록 / 후보 / 이름"
+    ]
+  },
+  {
+    "id": "hk-friend-w5t09",
+    "week": 5,
+    "type": "essay",
+    "prompt": "`passwords.txt` 파일에는 어떤 종류의 정보를 기록했는가?",
+    "explanation": "비밀번호 후보 목록.",
+    "source": "친구 제공 문제집 · 5주차 이론 9번 · 원문 33~35쪽",
+    "model": "비밀번호 후보 목록.",
+    "rubric": [
+      "핵심 내용: 비밀번호 / 패스워드",
+      "핵심 내용: 목록 / 후보"
+    ]
+  },
+  {
+    "id": "hk-friend-w5t10",
+    "week": 5,
+    "type": "essay",
+    "prompt": "사전 기반 공격에 사용할 후보 목록의 역할을 한 문장으로 설명하시오.",
+    "explanation": "미리 정리한 사용자명 또는 비밀번호 후보들을 인증 과정에서 순서대로 시험할 수 있도록 준비하는 역할.",
+    "source": "친구 제공 문제집 · 5주차 이론 10번 · 원문 35~37쪽",
+    "model": "미리 정리한 사용자명 또는 비밀번호 후보들을 인증 과정에서 순서대로 시험할 수 있도록 준비하는 역할.",
+    "rubric": [
+      "핵심 내용: 후보 / 단어 / 목록 / 사전",
+      "핵심 내용: 대입 / 시험 / 시도"
+    ]
+  },
+  {
+    "id": "hk-friend-w5p01",
+    "week": 5,
+    "type": "short",
+    "prompt": "[사례 분류] 비밀번호로 가능한 모든 네 자리 숫자를 차례로 대입한다. 어떤 공격 방식인가?",
+    "explanation": "무차별 대입 공격(Brute Force).",
+    "source": "친구 제공 문제집 · 5주차 실습 1번 · 원문 31, 34쪽",
+    "answers": [
+      "무차별 대입 공격(Brute Force).",
+      "무차별 대입",
+      "무차별 대입 공격",
+      "Brute Force",
+      "brute force"
+    ]
+  },
+  {
+    "id": "hk-friend-w5p02",
+    "week": 5,
+    "type": "short",
+    "prompt": "[사례 분류] 미리 정리해 둔 유명 비밀번호 목록을 하나씩 대입한다. 어떤 공격 방식인가?",
+    "explanation": "사전 기반 공격(Dictionary Attack).",
+    "source": "친구 제공 문제집 · 5주차 실습 2번 · 원문 35쪽",
+    "answers": [
+      "사전 기반 공격(Dictionary Attack).",
+      "사전 기반 공격",
+      "사전 공격",
+      "Dictionary Attack",
+      "dictionary attack"
+    ]
+  },
+  {
+    "id": "hk-friend-w5p03",
+    "week": 5,
+    "type": "short",
+    "prompt": "[파일 역할] 실습에서 사용자명 후보를 적은 파일의 이름은?",
+    "explanation": "users.txt",
+    "source": "친구 제공 문제집 · 5주차 실습 3번 · 원문 37쪽",
+    "answers": [
+      "users.txt"
+    ]
+  },
+  {
+    "id": "hk-friend-w5p04",
+    "week": 5,
+    "type": "short",
+    "prompt": "[파일 역할] 실습에서 비밀번호 후보를 적은 파일의 이름은?",
+    "explanation": "passwords.txt",
+    "source": "친구 제공 문제집 · 5주차 실습 4번 · 원문 33~35쪽",
+    "answers": [
+      "passwords.txt"
+    ]
+  },
+  {
+    "id": "hk-friend-w6t01",
+    "week": 6,
+    "type": "essay",
+    "prompt": "스니핑(Sniffing)이란 무엇인가?",
+    "explanation": "네트워크를 통해 전송되는 정보를 엿듣거나 가로채는 것.",
+    "source": "친구 제공 문제집 · 6주차 이론 1번 · 원문 5~6쪽",
+    "model": "네트워크를 통해 전송되는 정보를 엿듣거나 가로채는 것.",
+    "rubric": [
+      "핵심 내용: 패킷 / 데이터 / 정보",
+      "핵심 내용: 도청 / 엿듣 / 가로채"
+    ]
+  },
+  {
+    "id": "hk-friend-w6t02",
+    "week": 6,
+    "type": "essay",
+    "prompt": "프러미스큐어스 모드(Promiscuous Mode)의 정의는?",
+    "explanation": "MAC 주소와 IP 주소에 관계없이 수신한 패킷을 스니퍼에게 전달하는 모드.",
+    "source": "친구 제공 문제집 · 6주차 이론 2번 · 원문 7쪽",
+    "model": "MAC 주소와 IP 주소에 관계없이 수신한 패킷을 스니퍼에게 전달하는 모드.",
+    "rubric": [
+      "핵심 내용: mac",
+      "핵심 내용: ip",
+      "핵심 내용: 패킷 / packet"
+    ]
+  },
+  {
+    "id": "hk-friend-w6t03",
+    "week": 6,
+    "type": "essay",
+    "prompt": "바이패스 모드(Bypass Mode)는 무엇인가?",
+    "explanation": "패킷 분석 기능까지 하드웨어로 구현된 랜 카드 모드.",
+    "source": "친구 제공 문제집 · 6주차 이론 3번 · 원문 7쪽",
+    "model": "패킷 분석 기능까지 하드웨어로 구현된 랜 카드 모드.",
+    "rubric": [
+      "핵심 내용: 패킷",
+      "핵심 내용: 하드웨어"
+    ]
+  },
+  {
+    "id": "hk-friend-w6t04",
+    "week": 6,
+    "type": "essay",
+    "prompt": "TCPDump는 어떤 도구인가?",
+    "explanation": "리눅스에서 패킷을 수집·분석하는 대표적인 스니핑 도구.",
+    "source": "친구 제공 문제집 · 6주차 이론 4번 · 원문 11쪽",
+    "model": "리눅스에서 패킷을 수집·분석하는 대표적인 스니핑 도구.",
+    "rubric": [
+      "핵심 내용: 패킷 / 스니핑",
+      "핵심 내용: 수집 / 분석 / 캡처"
+    ]
+  },
+  {
+    "id": "hk-friend-w6t05",
+    "week": 6,
+    "type": "essay",
+    "prompt": "Fragrouter의 기능은?",
+    "explanation": "받은 패킷을 원래 목적지로 전달하여 세션을 유지하도록 돕는 패킷 릴레이 도구.",
+    "source": "친구 제공 문제집 · 6주차 이론 5번 · 원문 12쪽",
+    "model": "받은 패킷을 원래 목적지로 전달하여 세션을 유지하도록 돕는 패킷 릴레이 도구.",
+    "rubric": [
+      "핵심 내용: 패킷",
+      "핵심 내용: 전달 / 릴레이"
+    ]
+  },
+  {
+    "id": "hk-friend-w6t06",
+    "week": 6,
+    "type": "essay",
+    "prompt": "DSniff는 무엇인가?",
+    "explanation": "네트워크 패킷에서 계정·비밀번호 등 정보를 분석하는 스니핑 도구 모음.",
+    "source": "친구 제공 문제집 · 6주차 이론 6번 · 원문 14쪽",
+    "model": "네트워크 패킷에서 계정·비밀번호 등 정보를 분석하는 스니핑 도구 모음.",
+    "rubric": [
+      "핵심 내용: 스니핑",
+      "핵심 내용: 도구 / 패키지"
+    ]
+  },
+  {
+    "id": "hk-friend-w6t07",
+    "week": 6,
+    "type": "essay",
+    "prompt": "ARP 리다이렉트 공격에서 바꾸려는 정보는?",
+    "explanation": "공격 대상의 IP 주소와 MAC 주소 사이의 ARP 대응 관계(ARP 테이블).",
+    "source": "친구 제공 문제집 · 6주차 이론 7번 · 원문 26~31쪽",
+    "model": "공격 대상의 IP 주소와 MAC 주소 사이의 ARP 대응 관계(ARP 테이블).",
+    "rubric": [
+      "핵심 내용: arp / mac",
+      "핵심 내용: 테이블 / 매핑 / 연결 / 대응"
+    ]
+  },
+  {
+    "id": "hk-friend-w6t08",
+    "week": 6,
+    "type": "essay",
+    "prompt": "스니핑 능동적 대응책을 2가지 작성하시오.",
+    "explanation": "Ping 탐지, ARP 탐지, DNS 탐지, 유인 탐지, ARP Watch 중 2가지.\n\n학습 참고: 서로 다른 두 방법을 적었는지는 직접 확인해.",
+    "source": "친구 제공 문제집 · 6주차 이론 8번 · 원문 34~35쪽",
+    "model": "Ping 탐지, ARP 탐지, DNS 탐지, 유인 탐지, ARP Watch 중 2가지.\n\n학습 참고: 서로 다른 두 방법을 적었는지는 직접 확인해.",
+    "rubric": [
+      "핵심 내용: ping / 핑 / arp / dns / 유인 / watch",
+      "핵심 내용: 탐지 / 확인"
+    ]
+  },
+  {
+    "id": "hk-friend-w6t09",
+    "week": 6,
+    "type": "essay",
+    "prompt": "스니핑 수동적 대응책의 핵심 원리는?",
+    "explanation": "통신 데이터를 암호화해 가로채도 내용을 쉽게 읽을 수 없게 하는 것.",
+    "source": "친구 제공 문제집 · 6주차 이론 9번 · 원문 36~38쪽",
+    "model": "통신 데이터를 암호화해 가로채도 내용을 쉽게 읽을 수 없게 하는 것.",
+    "rubric": [
+      "핵심 내용: 암호화"
+    ]
+  },
+  {
+    "id": "hk-friend-w6t10",
+    "week": 6,
+    "type": "essay",
+    "prompt": "6주차 PDF에서 제시한 수동적 대응 방법 두 가지를 작성하시오.",
+    "explanation": "SSL, PGP, PEM, S/MIME, SSH, VPN 중 두 가지.\n\n학습 참고: 서로 다른 두 가지를 적었는지는 직접 확인해.",
+    "source": "친구 제공 문제집 · 6주차 이론 10번 · 원문 36~38쪽",
+    "model": "SSL, PGP, PEM, S/MIME, SSH, VPN 중 두 가지.\n\n학습 참고: 서로 다른 두 가지를 적었는지는 직접 확인해.",
+    "rubric": [
+      "핵심 내용: ssl / pgp / pem / s/mime / ssh / vpn"
+    ]
+  },
+  {
+    "id": "hk-friend-w6p01",
+    "week": 6,
+    "type": "short",
+    "prompt": "[기본 명령어] eth0 인터페이스를 프러미스큐어스 모드로 설정하는 PDF 명령어를 작성하시오.\n\n수업 자료의 명령어 · 설정 대상\nkali# [명령어 입력]\n네트워크 인터페이스: eth0",
+    "explanation": "ifconfig eth0 promisc",
+    "source": "친구 제공 문제집 · 6주차 실습 1번 · 원문 8~10쪽",
+    "answers": [
+      "ifconfig eth0 promisc"
+    ]
+  },
+  {
+    "id": "hk-friend-w6p02",
+    "week": 6,
+    "type": "short",
+    "prompt": "[명령어 식별] 패킷을 수집하기 위해 6주차 PDF에서 사용한 대표적인 콘솔 도구의 명칭은?",
+    "explanation": "tcpdump",
+    "source": "친구 제공 문제집 · 6주차 실습 2번 · 원문 11, 19쪽",
+    "answers": [
+      "tcpdump"
+    ]
+  },
+  {
+    "id": "hk-friend-w6p03",
+    "week": 6,
+    "type": "essay",
+    "prompt": "[실습 결과 이해] 평문 Telnet 로그인 패킷을 캡처한 PDF 실습에서 노출된 정보의 종류 두 가지는?\n\n수업 자료의 평문 통신 관찰 상황\nTelnet 클라이언트 → 서버 로그인\n네트워크 중간에서 TCPDump가 평문 패킷을 수집함",
+    "explanation": "로그인 계정(아이디), 비밀번호(패스워드).",
+    "source": "친구 제공 문제집 · 6주차 실습 3번 · 원문 20~22쪽",
+    "model": "로그인 계정(아이디), 비밀번호(패스워드).",
+    "rubric": [
+      "핵심 내용: 아이디 / 계정 / 사용자",
+      "핵심 내용: 비밀번호 / 패스워드"
+    ]
+  },
+  {
+    "id": "hk-friend-w7t01",
+    "week": 7,
+    "type": "essay",
+    "prompt": "SetUID 비트의 기능을 설명하시오.",
+    "explanation": "실행 파일의 프로세스를 파일 소유자의 유효 사용자 ID(EUID)로 실행하도록 설정하는 특수 권한.",
+    "source": "친구 제공 문제집 · 7주차 이론 1번 · 원문 7, 22~24쪽",
+    "model": "실행 파일의 프로세스를 파일 소유자의 유효 사용자 ID(EUID)로 실행하도록 설정하는 특수 권한.",
+    "rubric": [
+      "핵심 내용: 파일소유자",
+      "핵심 내용: euid"
+    ]
+  },
+  {
+    "id": "hk-friend-w7t02",
+    "week": 7,
+    "type": "essay",
+    "prompt": "RUID(Real User ID)의 의미는?",
+    "explanation": "프로세스의 실제 사용자 식별 번호(일반적으로 실행자 UID).",
+    "source": "친구 제공 문제집 · 7주차 이론 2번 · 원문 7쪽",
+    "model": "프로세스의 실제 사용자 식별 번호(일반적으로 실행자 UID).",
+    "rubric": [
+      "핵심 내용: 실제 / 실행자",
+      "핵심 내용: uid / 사용자id / 사용자식별"
+    ]
+  },
+  {
+    "id": "hk-friend-w7t03",
+    "week": 7,
+    "type": "essay",
+    "prompt": "EUID(Effective User ID)의 의미는?",
+    "explanation": "프로세스의 접근 권한 검사에 사용되는 사용자 식별 번호.",
+    "source": "친구 제공 문제집 · 7주차 이론 3번 · 원문 7쪽",
+    "model": "프로세스의 접근 권한 검사에 사용되는 사용자 식별 번호.",
+    "rubric": [
+      "핵심 내용: 권한",
+      "핵심 내용: 검사 / 판단"
+    ]
+  },
+  {
+    "id": "hk-friend-w7t04",
+    "week": 7,
+    "type": "essay",
+    "prompt": "-rwsr-xr-x 권한에서 소문자 s가 나타내는 것은?",
+    "explanation": "소유자 실행 비트 자리의 SUID와 실행 권한이 모두 설정됨.",
+    "source": "친구 제공 문제집 · 7주차 이론 4번 · 원문 23, 27쪽",
+    "model": "소유자 실행 비트 자리의 SUID와 실행 권한이 모두 설정됨.",
+    "rubric": [
+      "핵심 내용: suid",
+      "핵심 내용: 실행 / x"
+    ]
+  },
+  {
+    "id": "hk-friend-w7t05",
+    "week": 7,
+    "type": "essay",
+    "prompt": "7주차 PDF의 로컬 백도어(Local Backdoor)는 주로 무엇에 이용되는가?",
+    "explanation": "이미 접근한 서버에서 관리자 권한으로 상승하는 데 이용된다.",
+    "source": "친구 제공 문제집 · 7주차 이론 5번 · 원문 5쪽",
+    "model": "이미 접근한 서버에서 관리자 권한으로 상승하는 데 이용된다.",
+    "rubric": [
+      "핵심 내용: 권한",
+      "핵심 내용: 상승 / root / 관리자"
+    ]
+  },
+  {
+    "id": "hk-friend-w7t06",
+    "week": 7,
+    "type": "essay",
+    "prompt": "7주차 PDF의 원격 백도어(Remote Backdoor)는 무엇인가?",
+    "explanation": "네트워크를 통해 원격으로 시스템에 접근하도록 만든 통로/프로그램.",
+    "source": "친구 제공 문제집 · 7주차 이론 6번 · 원문 5쪽",
+    "model": "네트워크를 통해 원격으로 시스템에 접근하도록 만든 통로/프로그램.",
+    "rubric": [
+      "핵심 내용: 원격 / 네트워크",
+      "핵심 내용: 접근 / 접속"
+    ]
+  },
+  {
+    "id": "hk-friend-w7t07",
+    "week": 7,
+    "type": "essay",
+    "prompt": "백도어(Backdoor)란?",
+    "explanation": "정상 인증 절차를 거치지 않고 시스템이나 프로그램에 접근하도록 만든 통로.",
+    "source": "친구 제공 문제집 · 7주차 이론 7번 · 원문 4쪽",
+    "model": "정상 인증 절차를 거치지 않고 시스템이나 프로그램에 접근하도록 만든 통로.",
+    "rubric": [
+      "핵심 내용: 인증",
+      "핵심 내용: 우회 / 거치지 / 없이"
+    ]
+  },
+  {
+    "id": "hk-friend-w7t08",
+    "week": 7,
+    "type": "essay",
+    "prompt": "트로이 목마(Trojan Horse)의 특징은?",
+    "explanation": "정상적인 프로그램에 사용자가 의도하지 않은 코드가 삽입된 것.",
+    "source": "친구 제공 문제집 · 7주차 이론 8번 · 원문 4쪽",
+    "model": "정상적인 프로그램에 사용자가 의도하지 않은 코드가 삽입된 것.",
+    "rubric": [
+      "핵심 내용: 정상",
+      "핵심 내용: 삽입 / 숨겨 / 의도하지않"
+    ]
+  },
+  {
+    "id": "hk-friend-w7t09",
+    "week": 7,
+    "type": "short",
+    "prompt": "SetUID와 해킹의 5단계 중 직접 관련이 큰 단계는?",
+    "explanation": "3단계 로컬 어택(관리자 권한 상승).",
+    "source": "친구 제공 문제집 · 7주차 이론 9번 · 원문 3주차 27쪽·7주차 22쪽",
+    "answers": [
+      "3단계 로컬 어택(관리자 권한 상승).",
+      "로컬 어택",
+      "3단계 로컬 어택",
+      "로컬 어택(관리자 권한 상승)",
+      "3단계 로컬 어택(관리자 권한 상승)"
+    ]
+  },
+  {
+    "id": "hk-friend-w7t10",
+    "week": 7,
+    "type": "essay",
+    "prompt": "백도어 탐지·대응 방법 두 가지를 작성하시오.",
+    "explanation": "열린 포트/프로세스 확인, SetUID 파일 검사, 무결성 검사, 로그 분석 등.\n\n학습 참고: 서로 다른 두 방법을 적었는지 직접 확인해.",
+    "source": "친구 제공 문제집 · 7주차 이론 10번 · 원문 54~55쪽",
+    "model": "열린 포트/프로세스 확인, SetUID 파일 검사, 무결성 검사, 로그 분석 등.\n\n학습 참고: 서로 다른 두 방법을 적었는지 직접 확인해.",
+    "rubric": [
+      "핵심 내용: 포트 / 프로세스 / setuid / 무결성 / 로그",
+      "핵심 내용: 확인 / 검사 / 분석 / 탐지"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p01",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 일반 사용자 계정과 관리자의 UID·GID를 현재 셸에서 확인하는 명령어는?\n\n실습 명령 흐름\nkali$ [현재 사용자의 UID·GID 확인 명령어]",
+    "explanation": "id",
+    "source": "친구 제공 문제집 · 7주차 실습 1번 · 원문 28쪽",
+    "answers": [
+      "id"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p02",
+    "week": 7,
+    "type": "blanks",
+    "prompt": "[실습 결과 예측] 아래 파일 정보와 프로그램 코드를 읽고, 함수 호출 전후 RUID·EUID와 setuid()의 PDF 기준 성공/실패를 각각 입력하시오.\n\n파일 정보 (ls -al 결과 · PDF 실습 재구성)\n-rwxr-xr-x 1 root root 16392 setuid1000\n\n실행자 (문제에서 추가로 가정)\nroot (UID 0)\n\nC 프로그램 핵심 부분\nprintf(\"RUID: %d, EUID: %d\\n\", getuid(), geteuid());\nsetuid(1000);\nprintf(\"RUID: %d, EUID: %d\\n\", getuid(), geteuid());\n\n출력 예측 (숫자를 아래 입력칸에 작성)\nRUID: [   ], EUID: [   ]  ← setuid 호출 전\nsetuid(1000) : [ 성공 / 실패 ]\nRUID: [   ], EUID: [   ]  ← setuid 호출 후\n\nUID는 숫자로, 결과는 성공 또는 실패로 입력하세요. 성공·실패는 원문 강의의 목표 달성 표기이며 함수 반환값과 구분합니다.",
+    "explanation": "호출 전 RUID=0, EUID=0\nsetuid(1000): 성공\n호출 후 RUID=1000, EUID=1000\n성공. root EUID 0으로 setuid(1000)이 수행되고 RUID·EUID가 1000이 됨.\n\n학습 참고: 호출 전에는 실행자 및 SUID에 따라 UID가 정해지고, 호출 후에는 setuid() 효과를 고려해.\n\n원문 주의: 강의자료에 표시된 실행 결과를 맞히는 문제야. 코드에서 setuid()의 반환값은 출력하지 않으므로 성공·실패 판단은 PDF 해설 기준이야.",
+    "source": "친구 제공 문제집 · 7주차 실습 2번 · 원문 10~12쪽",
+    "fields": [
+      "호출 전 · RUID",
+      "호출 전 · EUID",
+      "setuid(1000) 결과",
+      "호출 후 · RUID",
+      "호출 후 · EUID"
+    ],
+    "answers": [
+      "0",
+      "0",
+      "성공",
+      "1000",
+      "1000"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p03",
+    "week": 7,
+    "type": "blanks",
+    "prompt": "[실습 결과 예측] 아래 파일 정보와 프로그램 코드를 읽고, 함수 호출 전후 RUID·EUID와 setuid()의 PDF 기준 성공/실패를 각각 입력하시오.\n\n파일 정보 (ls -al 결과 · PDF 실습 재구성)\n-rwxr-xr-x 1 root root 16392 setuid0\n\n실행자 (문제에서 추가로 가정)\nkali (UID 1000)\n\nC 프로그램 핵심 부분\nprintf(\"RUID: %d, EUID: %d\\n\", getuid(), geteuid());\nsetuid(0);\nprintf(\"RUID: %d, EUID: %d\\n\", getuid(), geteuid());\n\n출력 예측 (숫자를 아래 입력칸에 작성)\nRUID: [   ], EUID: [   ]  ← setuid 호출 전\nsetuid(0) : [ 성공 / 실패 ]\nRUID: [   ], EUID: [   ]  ← setuid 호출 후\n\nUID는 숫자로, 결과는 성공 또는 실패로 입력하세요. 성공·실패는 원문 강의의 목표 달성 표기이며 함수 반환값과 구분합니다.",
+    "explanation": "호출 전 RUID=1000, EUID=1000\nsetuid(0): 실패\n호출 후 RUID=1000, EUID=1000\n실패. root 권한이 없는 실행이므로 강의자료에서 RUID·EUID가 1000으로 유지됨.\n\n학습 참고: 호출 전에는 실행자 및 SUID에 따라 UID가 정해지고, 호출 후에는 setuid() 효과를 고려해.\n\n원문 주의: 강의자료에 표시된 실행 결과를 맞히는 문제야. 코드에서 setuid()의 반환값은 출력하지 않으므로 성공·실패 판단은 PDF 해설 기준이야.",
+    "source": "친구 제공 문제집 · 7주차 실습 3번 · 원문 13~15쪽",
+    "fields": [
+      "호출 전 · RUID",
+      "호출 전 · EUID",
+      "setuid(0) 결과",
+      "호출 후 · RUID",
+      "호출 후 · EUID"
+    ],
+    "answers": [
+      "1000",
+      "1000",
+      "실패",
+      "1000",
+      "1000"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p04",
+    "week": 7,
+    "type": "blanks",
+    "prompt": "[실습 결과 예측] 아래 파일 정보와 프로그램 코드를 읽고, 함수 호출 전후 RUID·EUID와 setuid()의 PDF 기준 성공/실패를 각각 입력하시오.\n\n파일 정보 (ls -al 결과 · PDF 실습 재구성)\n-rwsr-xr-x 1 root root 16392 setuid1000\n\n실행자 (문제에서 추가로 가정)\nkali1001 (UID 1001)\n\nC 프로그램 핵심 부분\nprintf(\"RUID: %d, EUID: %d\\n\", getuid(), geteuid());\nsetuid(1000);\nprintf(\"RUID: %d, EUID: %d\\n\", getuid(), geteuid());\n\n출력 예측 (숫자를 아래 입력칸에 작성)\nRUID: [   ], EUID: [   ]  ← setuid 호출 전\nsetuid(1000) : [ 성공 / 실패 ]\nRUID: [   ], EUID: [   ]  ← setuid 호출 후\n\nUID는 숫자로, 결과는 성공 또는 실패로 입력하세요. 성공·실패는 원문 강의의 목표 달성 표기이며 함수 반환값과 구분합니다.",
+    "explanation": "호출 전 RUID=1001, EUID=0\nsetuid(1000): 성공\n호출 후 RUID=1000, EUID=1000\n성공. root 소유 SUID 파일이라 EUID 0으로 시작하고 setuid(1000) 호출 후 양쪽 모두 1000으로 변경됨.\n\n학습 참고: 호출 전에는 실행자 및 SUID에 따라 UID가 정해지고, 호출 후에는 setuid() 효과를 고려해.\n\n원문 주의: 강의자료에 표시된 실행 결과를 맞히는 문제야. 코드에서 setuid()의 반환값은 출력하지 않으므로 성공·실패 판단은 PDF 해설 기준이야.",
+    "source": "친구 제공 문제집 · 7주차 실습 4번 · 원문 16~17쪽",
+    "fields": [
+      "호출 전 · RUID",
+      "호출 전 · EUID",
+      "setuid(1000) 결과",
+      "호출 후 · RUID",
+      "호출 후 · EUID"
+    ],
+    "answers": [
+      "1001",
+      "0",
+      "성공",
+      "1000",
+      "1000"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p05",
+    "week": 7,
+    "type": "blanks",
+    "prompt": "[실습 결과 예측] 아래 파일 정보와 프로그램 코드를 읽고, 함수 호출 전후 RUID·EUID와 setuid()의 PDF 기준 성공/실패를 각각 입력하시오.\n\n파일 정보 (ls -al 결과 · PDF 실습 재구성)\n-rwsr-xr-x 1 kali root 16392 setuid1000\n\n실행자 (문제에서 추가로 가정)\nkali1001 (UID 1001)\n\nC 프로그램 핵심 부분\nprintf(\"RUID: %d, EUID: %d\\n\", getuid(), geteuid());\nsetuid(1000);\nprintf(\"RUID: %d, EUID: %d\\n\", getuid(), geteuid());\n\n출력 예측 (숫자를 아래 입력칸에 작성)\nRUID: [   ], EUID: [   ]  ← setuid 호출 전\nsetuid(1000) : [ 성공 / 실패 ]\nRUID: [   ], EUID: [   ]  ← setuid 호출 후\n\nUID는 숫자로, 결과는 성공 또는 실패로 입력하세요. 성공·실패는 원문 강의의 목표 달성 표기이며 함수 반환값과 구분합니다.",
+    "explanation": "호출 전 RUID=1001, EUID=1000\nsetuid(1000): 실패\n호출 후 RUID=1001, EUID=1000\n강의자료 표기: 실패. 출력은 RUID 1001, EUID 1000으로 유지됨. 실제 Linux에서는 호출 성공 여부가 PDF 설명과 다를 수 있음.\n\n학습 참고: 호출 전에는 실행자 및 SUID에 따라 UID가 정해지고, 호출 후에는 setuid() 효과를 고려해.\n\n원문 주의: 강의자료에 표시된 실행 결과를 맞히는 문제야. 코드에서 setuid()의 반환값은 출력하지 않으므로 성공·실패 판단은 PDF 해설 기준이야. 파일 소유자가 kali인 사례의 성공·실패 해설은 실제 Linux와 다를 수 있어.",
+    "source": "친구 제공 문제집 · 7주차 실습 5번 · 원문 18~20쪽",
+    "fields": [
+      "호출 전 · RUID",
+      "호출 전 · EUID",
+      "setuid(1000) 결과",
+      "호출 후 · RUID",
+      "호출 후 · EUID"
+    ],
+    "answers": [
+      "1001",
+      "1000",
+      "실패",
+      "1001",
+      "1000"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p06",
+    "week": 7,
+    "type": "blanks",
+    "prompt": "[실습 결과 예측] 아래 파일 정보와 프로그램 코드를 읽고, 함수 호출 전후 RUID·EUID와 setuid()의 PDF 기준 성공/실패를 각각 입력하시오.\n\n파일 정보 (ls -al 결과 · PDF 실습 재구성)\n-rwsr-xr-x 1 kali root 16392 setuid1000\n\n실행자 (문제에서 추가로 가정)\nroot (UID 0)\n\nC 프로그램 핵심 부분\nprintf(\"RUID: %d, EUID: %d\\n\", getuid(), geteuid());\nsetuid(1000);\nprintf(\"RUID: %d, EUID: %d\\n\", getuid(), geteuid());\n\n출력 예측 (숫자를 아래 입력칸에 작성)\nRUID: [   ], EUID: [   ]  ← setuid 호출 전\nsetuid(1000) : [ 성공 / 실패 ]\nRUID: [   ], EUID: [   ]  ← setuid 호출 후\n\nUID는 숫자로, 결과는 성공 또는 실패로 입력하세요. 성공·실패는 원문 강의의 목표 달성 표기이며 함수 반환값과 구분합니다.",
+    "explanation": "호출 전 RUID=0, EUID=1000\nsetuid(1000): 실패\n호출 후 RUID=0, EUID=1000\n강의자료 표기: 실패. 출력은 RUID 0, EUID 1000으로 유지됨. 실제 Linux의 setuid() 반환값은 PDF 설명과 다를 수 있음.\n\n학습 참고: 호출 전에는 실행자 및 SUID에 따라 UID가 정해지고, 호출 후에는 setuid() 효과를 고려해.\n\n원문 주의: 강의자료에 표시된 실행 결과를 맞히는 문제야. 코드에서 setuid()의 반환값은 출력하지 않으므로 성공·실패 판단은 PDF 해설 기준이야. 파일 소유자가 kali인 사례의 성공·실패 해설은 실제 Linux와 다를 수 있어.",
+    "source": "친구 제공 문제집 · 7주차 실습 6번 · 원문 21쪽",
+    "fields": [
+      "호출 전 · RUID",
+      "호출 전 · EUID",
+      "setuid(1000) 결과",
+      "호출 후 · RUID",
+      "호출 후 · EUID"
+    ],
+    "answers": [
+      "0",
+      "1000",
+      "실패",
+      "0",
+      "1000"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p07",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] backdoor.c를 컴파일하여 backdoor 실행 파일을 만든다.\n\n컴파일 실습 흐름 · PDF 25~27쪽\nroot# nano backdoor.c\nroot# [컴파일 명령어]\nroot# ls -al backdoor\n-rwxr-xr-x 1 root root ... backdoor",
+    "explanation": "gcc -o backdoor backdoor.c",
+    "source": "친구 제공 문제집 · 7주차 실습 7번 · 원문 26쪽",
+    "answers": [
+      "gcc -o backdoor backdoor.c"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p08",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 생성한 backdoor에 SetUID 권한 4755를 설정한다.\n\n권한 설정 실습 흐름 · PDF 26~28쪽\nroot# ls -al backdoor\n-rwxr-xr-x 1 root root ... backdoor\nroot# [권한 설정 명령어]\nroot# ls -al backdoor\n-rwsr-xr-x 1 root root ... backdoor",
+    "explanation": "chmod 4755 backdoor",
+    "source": "친구 제공 문제집 · 7주차 실습 8번 · 원문 27쪽",
+    "answers": [
+      "chmod 4755 backdoor"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p09",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 파일시스템 전체에서 권한이 정확히 4755인 파일을 찾는 PDF 명령어는?\n\n기존 SUID 파일 확인 · PDF 45쪽\nroot# [전체 파일시스템에서 4755 파일 검색 명령어]\n/usr/bin/chfn\n...",
+    "explanation": "find / -perm 4755",
+    "source": "친구 제공 문제집 · 7주차 실습 9번 · 원문 45쪽",
+    "answers": [
+      "find / -perm 4755"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p10",
+    "week": 7,
+    "type": "essay",
+    "prompt": "[결과 설명] PDF의 localbackdoor를 통해 일반 사용자가 /etc/shadow를 읽을 수 있었던 이유는?\n\n실습 상황\n-rwsr-xr-x 1 root root ... localbackdoor\n실행자(가정): kali (UID 1000)\n보호된 대상: /etc/shadow (일반 사용자 읽기 불가)",
+    "explanation": "root 소유 SUID 실행 파일의 EUID가 0이어서 보호된 파일 접근 권한을 이용했기 때문.",
+    "source": "친구 제공 문제집 · 7주차 실습 10번 · 원문 42~43, 51쪽",
+    "model": "root 소유 SUID 실행 파일의 EUID가 0이어서 보호된 파일 접근 권한을 이용했기 때문.",
+    "rubric": [
+      "핵심 내용: suid",
+      "핵심 내용: euid / 유효uid",
+      "핵심 내용: 0 / root"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p11",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 7주차 PDF에서 /bin/bash를 실습 폴더 /home/kali/test3/bash로 복사하는 명령어는?\n\n실습 파일 준비 · PDF 23쪽\nroot# [파일 복사 명령어]\nroot# ls -al /home/kali/test3/bash\n-rwxr-xr-x 1 root root ... bash",
+    "explanation": "cp /bin/bash /home/kali/test3/bash",
+    "source": "친구 제공 문제집 · 7주차 실습 11번 · 원문 23쪽",
+    "answers": [
+      "cp /bin/bash /home/kali/test3/bash"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p12",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 실습용으로 복사한 bash 파일의 권한을 4755로 설정하시오.\n\n권한 비트 변경 · PDF 23쪽\nroot# ls -al bash\n-rwxr-xr-x 1 root root ... bash\nroot# [권한 변경 명령어]\n-rwsr-xr-x 1 root root ... bash",
+    "explanation": "chmod 4755 bash",
+    "source": "친구 제공 문제집 · 7주차 실습 12번 · 원문 23쪽",
+    "answers": [
+      "chmod 4755 bash"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p13",
+    "week": 7,
+    "type": "essay",
+    "prompt": "[실행 결과] root 소유 bash 복사본에 chmod 4755를 준 다음 일반 사용자로 실행했어. 7주차 PDF에서 root 권한 상승 성공/실패는?\n\n실행 결과 판단 · PDF 23~24쪽\n-rwsr-xr-x 1 root root ... bash\n실행자(가정): kali (UID 1000)\nkali$ ./bash\nkali$ id\nuid=1000(kali) ...",
+    "explanation": "권한 상승 실패. bash의 보호 동작 때문에 일반적으로 권한이 유지되지 않았다고 강의자료가 설명함.\n\n원문 주의: 7주차 PDF에 나온 bash 실습 결과를 묻는 문제야.",
+    "source": "친구 제공 문제집 · 7주차 실습 13번 · 원문 24쪽",
+    "model": "권한 상승 실패. bash의 보호 동작 때문에 일반적으로 권한이 유지되지 않았다고 강의자료가 설명함.\n\n원문 주의: 7주차 PDF에 나온 bash 실습 결과를 묻는 문제야.",
+    "rubric": [
+      "핵심 내용: 실패"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p14",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] root 셸에서 일반 사용자 kali로 전환하는 실습 명령어는?\n\n계정 변경 · PDF 28쪽\nroot# [kali로 사용자 전환 명령어]\nkali$ id",
+    "explanation": "su kali",
+    "source": "친구 제공 문제집 · 7주차 실습 14번 · 원문 28쪽",
+    "answers": [
+      "su kali"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p15",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 일반 사용자로 돌아온 뒤 현재 UID·GID를 확인하는 명령어는?\n\n계정 확인 · PDF 28쪽\nroot# su kali\nkali$ [현재 UID·GID 확인 명령어]",
+    "explanation": "id",
+    "source": "친구 제공 문제집 · 7주차 실습 15번 · 원문 28쪽",
+    "answers": [
+      "id"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p16",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 컴파일된 backdoor 실행 파일을 현재 작업 디렉터리에서 실행하는 명령어는?\n\nSUID 실행 파일 동작 확인 · PDF 28쪽\n-rwsr-xr-x 1 root root ... backdoor\nkali$ id\nuid=1000(kali) ...\nkali$ [실행 명령어]\nroot# id\nuid=0(root) ...",
+    "explanation": "./backdoor",
+    "source": "친구 제공 문제집 · 7주차 실습 16번 · 원문 28쪽",
+    "answers": [
+      "./backdoor"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p17",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 강의자료에서 localbackdoor.c를 컴파일해 localbackdoor 실행 파일을 만드는 명령어는?\n\n로컬 백도어 생성 흐름 · PDF 38~40쪽\nroot# nano localbackdoor.c\nroot# [컴파일 명령어]\nroot# ls -al localbackdoor\n-rwxr-xr-x 1 root root ... localbackdoor",
+    "explanation": "gcc -o localbackdoor localbackdoor.c",
+    "source": "친구 제공 문제집 · 7주차 실습 17번 · 원문 38쪽",
+    "answers": [
+      "gcc -o localbackdoor localbackdoor.c"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p18",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 컴파일된 localbackdoor에 SUID 포함 4755 권한을 부여하는 명령어는?\n\n로컬 백도어 실행 권한 · PDF 38~40쪽\nroot# ls -al localbackdoor\n-rwxr-xr-x 1 root root ... localbackdoor\nroot# [권한 변경 명령어]\n-rwsr-xr-x 1 root root ... localbackdoor",
+    "explanation": "chmod 4755 localbackdoor",
+    "source": "친구 제공 문제집 · 7주차 실습 18번 · 원문 38쪽",
+    "answers": [
+      "chmod 4755 localbackdoor"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p19",
+    "week": 7,
+    "type": "essay",
+    "prompt": "[실행 결과] 강의자료의 root 소유 SetUID localbackdoor 프로그램을 kali가 실행한 상황이야. 실행 중 EUID가 0이 되는 이유는?\n\n파일 정보 및 실행 조건 · PDF 42~43쪽\n-rwsr-xr-x 1 root root ... localbackdoor\n실행자(가정): kali (UID 1000)\n실행 중 프로그램 EUID는 몇 번인가?",
+    "explanation": "파일 소유자가 root이고 SUID가 설정되어 있으므로 실행 시 EUID가 root의 UID 0으로 설정됨.",
+    "source": "친구 제공 문제집 · 7주차 실습 19번 · 원문 42~43쪽",
+    "model": "파일 소유자가 root이고 SUID가 설정되어 있으므로 실행 시 EUID가 root의 UID 0으로 설정됨.",
+    "rubric": [
+      "핵심 내용: suid / setuid",
+      "핵심 내용: 소유자 / root",
+      "핵심 내용: euid / 0"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p20",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] localbackdoor2.c를 컴파일해서 localbackdoor2 실행 파일을 만드는 명령어를 작성하시오.\n\nlocalbackdoor2 컴파일 흐름 · PDF 47~48쪽\nroot# nano localbackdoor2.c\nroot# [컴파일 명령어]\nroot# ls -al localbackdoor2\n-rwxr-xr-x 1 root root ... localbackdoor2",
+    "explanation": "gcc -o localbackdoor2 localbackdoor2.c",
+    "source": "친구 제공 문제집 · 7주차 실습 20번 · 원문 48쪽",
+    "answers": [
+      "gcc -o localbackdoor2 localbackdoor2.c"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p21",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] localbackdoor2 실행 파일에 4755 권한을 적용하는 명령어는?\n\nlocalbackdoor2 SUID 설정 · PDF 48쪽\nroot# ls -al localbackdoor2\n-rwxr-xr-x 1 root root ... localbackdoor2\nroot# [권한 변경 명령어]\n-rwsr-xr-x 1 root root ... localbackdoor2",
+    "explanation": "chmod 4755 localbackdoor2",
+    "source": "친구 제공 문제집 · 7주차 실습 21번 · 원문 48쪽",
+    "answers": [
+      "chmod 4755 localbackdoor2"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p22",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 현재 폴더의 localbackdoor2 파일에 적용된 권한·소유자를 확인하는 명령어는?\n\n권한 확인 · PDF 48~49쪽\nroot# [파일 권한 확인 명령어]\n-rwsr-xr-x 1 root root ... localbackdoor2",
+    "explanation": "ls -al localbackdoor2",
+    "source": "친구 제공 문제집 · 7주차 실습 22번 · 원문 48~49쪽",
+    "answers": [
+      "ls -al localbackdoor2"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p23",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸] 컴파일 후 SUID를 설정한 localbackdoor2를 현재 폴더에서 실행하여 동작을 확인하시오.\n\n프로그램 실행 확인 · PDF 49쪽\nroot# [실행 명령어]\nEnter the new value, or press ENTER for the default\nFull Name []:",
+    "explanation": "./localbackdoor2",
+    "source": "친구 제공 문제집 · 7주차 실습 23번 · 원문 49쪽",
+    "answers": [
+      "./localbackdoor2"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p24",
+    "week": 7,
+    "type": "short",
+    "prompt": "[명령어 빈칸·PDF 실습] 7주차 PDF 50쪽에서 localbackdoor2를 /usr/bin/chfn 경로로 옮기는 명령어 전체를 작성하시오. (격리된 실습 VM에서만 다룬 상황)\n\n실습 VM의 파일 이동 · PDF 50쪽\nroot# ls -al localbackdoor2\n-rwsr-xr-x 1 root root ... localbackdoor2\nroot# [파일 이동 명령어]\nroot# ls -al /usr/bin/chfn\n-rwsr-xr-x 1 root root ... /usr/bin/chfn",
+    "explanation": "mv localbackdoor2 /usr/bin/chfn\n\n원문 주의: 강의 PDF에 나온 명령어의 식별·암기 문제야. 실제 사용 중인 시스템에서는 실행하지 마.",
+    "source": "친구 제공 문제집 · 7주차 실습 24번 · 원문 50쪽",
+    "answers": [
+      "mv localbackdoor2 /usr/bin/chfn"
+    ]
+  },
+  {
+    "id": "hk-friend-w7p25",
+    "week": 7,
+    "type": "essay",
+    "prompt": "[실행 결과] 강의자료의 root 소유 SetUID 프로그램으로 교체된 chfn을 kali가 실행해 /etc/shadow를 읽을 수 있었던 원인은?\n\n파일 정보 및 실습 결과 · PDF 50~51쪽\n-rwsr-xr-x 1 root root ... /usr/bin/chfn\n실행자(가정): kali (UID 1000)\nkali$ /usr/bin/chfn \"cat /etc/shadow\"\nroot:...  (보호된 파일의 내용이 화면에 표시됨)",
+    "explanation": "root 소유 SUID 프로그램이 실행 중 EUID 0으로 동작했기 때문에 보호된 파일 읽기 권한을 얻음.\n\n원문 주의: 7주차 강의자료의 실습 결과 해석 문제. 실제 시스템 파일 교체는 금지하고 전용 VM에서만 실습해.",
+    "source": "친구 제공 문제집 · 7주차 실습 25번 · 원문 51쪽",
+    "model": "root 소유 SUID 프로그램이 실행 중 EUID 0으로 동작했기 때문에 보호된 파일 읽기 권한을 얻음.\n\n원문 주의: 7주차 강의자료의 실습 결과 해석 문제. 실제 시스템 파일 교체는 금지하고 전용 VM에서만 실습해.",
+    "rubric": [
+      "핵심 내용: suid / setuid",
+      "핵심 내용: euid / 유효uid",
+      "핵심 내용: 0 / root"
+    ]
+  },
+  {
+    "id": "hk-friend-essay01",
+    "week": 3,
+    "type": "essay",
+    "prompt": "[기본형] 해킹의 5단계를 순서대로 작성하고, 각 단계에서 수행하는 활동과 목적을 설명하시오.",
+    "explanation": "정보 수집 → 리모트 어택 → 로컬 어택 → 흔적 지우기 → 백도어 생성\n\n정보 수집: 대상 시스템의 IP, 열려 있는 포트, 서비스와 버전 등의 정보를 파악한다.\n리모트 어택: 원격에서 취약점(Exploit)을 이용해 대상 서버의 셸 접근을 시도한다.\n로컬 어택: 서버 내부에 접근한 뒤 잘못된 설정이나 SetUID 파일 등을 활용해 관리자 권한을 얻으려 한다.\n흔적 지우기: 접속 기록이나 로그 등 공격 흔적을 제거한다.\n백도어 생성: 이후 다시 접근할 수 있도록 숨겨진 재침입 경로를 마련한다.\n\n학습 참고: 단계 순서 + 다섯 단계의 의미를 모두 설명하는지 직접 점검해.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "source": "친구 제공 문제집 · 5단계 서술형 1번 · 원문 3주차 20~29쪽",
+    "model": "정보 수집 → 리모트 어택 → 로컬 어택 → 흔적 지우기 → 백도어 생성\n\n정보 수집: 대상 시스템의 IP, 열려 있는 포트, 서비스와 버전 등의 정보를 파악한다.\n리모트 어택: 원격에서 취약점(Exploit)을 이용해 대상 서버의 셸 접근을 시도한다.\n로컬 어택: 서버 내부에 접근한 뒤 잘못된 설정이나 SetUID 파일 등을 활용해 관리자 권한을 얻으려 한다.\n흔적 지우기: 접속 기록이나 로그 등 공격 흔적을 제거한다.\n백도어 생성: 이후 다시 접근할 수 있도록 숨겨진 재침입 경로를 마련한다.\n\n학습 참고: 단계 순서 + 다섯 단계의 의미를 모두 설명하는지 직접 점검해.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "rubric": [
+      "1단계 정보 수집",
+      "2단계 리모트 어택",
+      "3단계 로컬 어택",
+      "4단계 흔적 지우기",
+      "5단계 백도어 생성",
+      "대상 정보 파악",
+      "원격 접근/셸",
+      "관리자 권한 상승",
+      "접속 기록/로그 제거",
+      "재접근 경로 확보"
+    ]
+  },
+  {
+    "id": "hk-friend-essay02",
+    "week": 3,
+    "type": "essay",
+    "prompt": "[기술 연결형] 해킹의 5단계를 순서대로 작성하고, 단계별 활동과 강의에서 다룬 관련 기술·도구를 연결해 설명하시오.",
+    "explanation": "정보 수집 → 리모트 어택 → 로컬 어택 → 흔적 지우기 → 백도어 생성\n정보 수집: 대상 정보 파악, 포트 스캐닝·Nmap\n리모트 어택: 원격 취약점 공격, Exploit\n로컬 어택: 내부에서 관리자 권한 상승, SetUID\n흔적 지우기: 접속 기록·로그 제거\n백도어 생성: 다시 침입하기 위한 숨은 통로 확보, 로컬 백도어\n\n학습 참고: 모든 단계에 특정 도구가 있다고 억지로 쓰지 말고, PDF에 연결되는 예시만 작성해.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "source": "친구 제공 문제집 · 5단계 서술형 2번 · 원문 3주차 20~29쪽, 4주차 17쪽, 7주차 3~5쪽",
+    "model": "정보 수집 → 리모트 어택 → 로컬 어택 → 흔적 지우기 → 백도어 생성\n정보 수집: 대상 정보 파악, 포트 스캐닝·Nmap\n리모트 어택: 원격 취약점 공격, Exploit\n로컬 어택: 내부에서 관리자 권한 상승, SetUID\n흔적 지우기: 접속 기록·로그 제거\n백도어 생성: 다시 침입하기 위한 숨은 통로 확보, 로컬 백도어\n\n학습 참고: 모든 단계에 특정 도구가 있다고 억지로 쓰지 말고, PDF에 연결되는 예시만 작성해.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "rubric": [
+      "1단계 정보 수집",
+      "2단계 리모트 어택",
+      "3단계 로컬 어택",
+      "4단계 흔적 지우기",
+      "5단계 백도어 생성",
+      "포트 스캐닝 또는 Nmap",
+      "Exploit/취약점",
+      "SetUID/권한 상승",
+      "로그/접속 기록",
+      "재침입/백도어 목적"
+    ]
+  },
+  {
+    "id": "hk-friend-essay03",
+    "week": 3,
+    "type": "essay",
+    "prompt": "[과정 설명형] 해킹 공격자가 대상의 정보를 수집하고 원격 접근을 시도한 뒤 관리자 권한을 얻고 재접근 경로를 확보하는 전 과정을 해킹의 5단계에 맞춰 설명하시오.",
+    "explanation": "정보 수집 → 리모트 어택 → 로컬 어택 → 흔적 지우기 → 백도어 생성\n\n정보 수집: 대상 시스템의 IP, 열려 있는 포트, 서비스와 버전 등의 정보를 파악한다.\n리모트 어택: 원격에서 취약점(Exploit)을 이용해 대상 서버의 셸 접근을 시도한다.\n로컬 어택: 서버 내부에 접근한 뒤 잘못된 설정이나 SetUID 파일 등을 활용해 관리자 권한을 얻으려 한다.\n흔적 지우기: 접속 기록이나 로그 등 공격 흔적을 제거한다.\n백도어 생성: 이후 다시 접근할 수 있도록 숨겨진 재침입 경로를 마련한다.\n\n학습 참고: 문장 속에 순서를 드러내고, 중간의 흔적 지우기를 빠뜨리지 않았는지 확인해.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "source": "친구 제공 문제집 · 5단계 서술형 3번 · 원문 3주차 20~29쪽",
+    "model": "정보 수집 → 리모트 어택 → 로컬 어택 → 흔적 지우기 → 백도어 생성\n\n정보 수집: 대상 시스템의 IP, 열려 있는 포트, 서비스와 버전 등의 정보를 파악한다.\n리모트 어택: 원격에서 취약점(Exploit)을 이용해 대상 서버의 셸 접근을 시도한다.\n로컬 어택: 서버 내부에 접근한 뒤 잘못된 설정이나 SetUID 파일 등을 활용해 관리자 권한을 얻으려 한다.\n흔적 지우기: 접속 기록이나 로그 등 공격 흔적을 제거한다.\n백도어 생성: 이후 다시 접근할 수 있도록 숨겨진 재침입 경로를 마련한다.\n\n학습 참고: 문장 속에 순서를 드러내고, 중간의 흔적 지우기를 빠뜨리지 않았는지 확인해.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "rubric": [
+      "1단계 정보 수집",
+      "2단계 리모트 어택",
+      "3단계 로컬 어택",
+      "4단계 흔적 지우기",
+      "5단계 백도어 생성",
+      "정보 수집 내용",
+      "원격 셸 접근",
+      "관리자 권한 상승",
+      "흔적 정리",
+      "재침입 목적"
+    ]
+  },
+  {
+    "id": "hk-friend-essay04",
+    "week": 3,
+    "type": "essay",
+    "prompt": "[비교형] 리모트 어택과 로컬 어택의 차이를 설명하고, 해킹의 5단계에서 두 공격이 어떤 역할을 하는지 서술하시오.",
+    "explanation": "해킹 5단계 중 2단계 리모트 어택은 원격 대상의 취약점을 이용해 서버의 셸을 얻으려는 과정이다. 3단계 로컬 어택은 내부 접근 이후 관리자(root) 권한을 획득하는 과정이다. 두 과정은 정보 수집 이후 진행하며, 원격 공격으로 곧바로 root를 얻었다면 로컬 어택은 생략될 수도 있다.\n\n학습 참고: 이 비교형은 전체 5단계를 다 쓰지 않아도 문제에 요구된 비교만 정확하면 돼.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "source": "친구 제공 문제집 · 5단계 서술형 4번 · 원문 3주차 25~27쪽",
+    "model": "해킹 5단계 중 2단계 리모트 어택은 원격 대상의 취약점을 이용해 서버의 셸을 얻으려는 과정이다. 3단계 로컬 어택은 내부 접근 이후 관리자(root) 권한을 획득하는 과정이다. 두 과정은 정보 수집 이후 진행하며, 원격 공격으로 곧바로 root를 얻었다면 로컬 어택은 생략될 수도 있다.\n\n학습 참고: 이 비교형은 전체 5단계를 다 쓰지 않아도 문제에 요구된 비교만 정확하면 돼.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "rubric": [
+      "리모트 어택=원격 접근",
+      "로컬 어택=내부 접근",
+      "원격 셸 획득",
+      "관리자 권한 상승",
+      "단계의 선후"
+    ]
+  },
+  {
+    "id": "hk-friend-essay05",
+    "week": 3,
+    "type": "essay",
+    "prompt": "[상황 분석형] 공격자가 ① 포트 스캐닝 ② 원격 셸 획득 ③ 관리자 권한 상승 ④ 접속 기록 제거 ⑤ 숨겨진 재접근 통로 설치를 했다. 각 행위를 해킹의 5단계와 연결하고 그 이유를 설명하시오.",
+    "explanation": "① 정보 수집: 포트 스캐닝으로 열린 서비스를 확인한다.\n② 리모트 어택: 원격 셸 획득을 시도한다.\n③ 로컬 어택: 관리자 권한을 획득한다.\n④ 흔적 지우기: 접속 기록을 제거한다.\n⑤ 백도어 생성: 재침입할 통로를 남긴다.\n\n학습 참고: 사례의 ①~⑤와 강의자료 단계의 순서가 각각 대응하는지 확인해.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "source": "친구 제공 문제집 · 5단계 서술형 5번 · 원문 3주차 20~29쪽",
+    "model": "① 정보 수집: 포트 스캐닝으로 열린 서비스를 확인한다.\n② 리모트 어택: 원격 셸 획득을 시도한다.\n③ 로컬 어택: 관리자 권한을 획득한다.\n④ 흔적 지우기: 접속 기록을 제거한다.\n⑤ 백도어 생성: 재침입할 통로를 남긴다.\n\n학습 참고: 사례의 ①~⑤와 강의자료 단계의 순서가 각각 대응하는지 확인해.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "rubric": [
+      "1단계 정보 수집",
+      "2단계 리모트 어택",
+      "3단계 로컬 어택",
+      "4단계 흔적 지우기",
+      "5단계 백도어 생성",
+      "포트 스캐닝 의미",
+      "원격 셸 의미",
+      "권한 상승 의미",
+      "기록 제거 의미",
+      "재침입 의미"
+    ]
+  },
+  {
+    "id": "hk-friend-essay06",
+    "week": 3,
+    "type": "essay",
+    "prompt": "[종합형] 해킹의 5단계를 순서대로 쓰고, 단계별 목적·수행 작업·관련 기술 또는 도구를 연결하여 전체 공격 과정을 서술하시오.",
+    "explanation": "정보 수집 → 리모트 어택 → 로컬 어택 → 흔적 지우기 → 백도어 생성\n정보 수집: 대상 시스템의 IP, 열려 있는 포트, 서비스와 버전 등의 정보를 파악한다. 대표 기술: 포트 스캐닝, Nmap\n리모트 어택: 원격에서 취약점(Exploit)을 이용해 대상 서버의 셸 접근을 시도한다. 관련 용어: Exploit\n로컬 어택: 서버 내부에 접근한 뒤 잘못된 설정이나 SetUID 파일 등을 활용해 관리자 권한을 얻으려 한다. 관련 기술: SetUID 및 권한 상승\n흔적 지우기: 접속 기록이나 로그 등 공격 흔적을 제거한다. 접속 기록·로그 제거\n백도어 생성: 이후 다시 접근할 수 있도록 숨겨진 재침입 경로를 마련한다. 관련 기술: 로컬 백도어\n\n학습 참고: 이 문제는 실제 시험의 확정 문제가 아니라 네가 예상한 서술형을 집중 연습하도록 만든 종합형이야.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "source": "친구 제공 문제집 · 5단계 서술형 6번 · 원문 3주차 20~29쪽, 4주차 17쪽, 7주차 3~5쪽",
+    "model": "정보 수집 → 리모트 어택 → 로컬 어택 → 흔적 지우기 → 백도어 생성\n정보 수집: 대상 시스템의 IP, 열려 있는 포트, 서비스와 버전 등의 정보를 파악한다. 대표 기술: 포트 스캐닝, Nmap\n리모트 어택: 원격에서 취약점(Exploit)을 이용해 대상 서버의 셸 접근을 시도한다. 관련 용어: Exploit\n로컬 어택: 서버 내부에 접근한 뒤 잘못된 설정이나 SetUID 파일 등을 활용해 관리자 권한을 얻으려 한다. 관련 기술: SetUID 및 권한 상승\n흔적 지우기: 접속 기록이나 로그 등 공격 흔적을 제거한다. 접속 기록·로그 제거\n백도어 생성: 이후 다시 접근할 수 있도록 숨겨진 재침입 경로를 마련한다. 관련 기술: 로컬 백도어\n\n학습 참고: 이 문제는 실제 시험의 확정 문제가 아니라 네가 예상한 서술형을 집중 연습하도록 만든 종합형이야.\n\n원문 주의: 자동 채점은 문장 의미를 완전히 이해하지 못해. 키워드 점검은 참고용이고 모범답안과 직접 비교해 정답으로 인정해 줘.",
+    "rubric": [
+      "1단계 정보 수집",
+      "2단계 리모트 어택",
+      "3단계 로컬 어택",
+      "4단계 흔적 지우기",
+      "5단계 백도어 생성",
+      "정보 수집 예시 기술",
+      "원격 공격 활동",
+      "로컬 공격 활동",
+      "로그 제거",
+      "재접근 경로"
+    ]
+  },
+  {
+    "id": "hk-friend-exam01",
+    "week": 6,
+    "type": "choice",
+    "prompt": "[객관식] 스니핑을 위한 여러 도구를 패키지로 제공하는 프로그램은 무엇인가?",
+    "explanation": "DSniff(디스니프)",
+    "source": "친구 제공 문제집 · 실전 예상 1번 · 원문 6주차 14~16쪽",
+    "options": [
+      {
+        "id": "o0",
+        "text": "Nmap"
+      },
+      {
+        "id": "o1",
+        "text": "Metasploit"
+      },
+      {
+        "id": "o2",
+        "text": "DSniff"
+      },
+      {
+        "id": "o3",
+        "text": "Crunch"
+      }
+    ],
+    "answer": "o2"
+  }
+]);
   window.STUDY_BANKS.push(bank);
 })();
