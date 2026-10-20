@@ -165,6 +165,8 @@
   short(139, 4, 'L2 스위치가 전달 포트를 찾기 위해 조회하는 주소는 IP 주소와 MAC 주소 중 무엇인가요?', ['MAC', 'MAC 주소', 'MAC주소', 'mac', 'mac 주소'], '일반적인 L2 스위치는 MAC 테이블에서 목적지 MAC 주소의 포트를 찾습니다.', '20-21 · 기초 확인');
   short(140, 4, '스위치가 일정 시간 사용하지 않은 동적 MAC 테이블 항목을 삭제하는 과정을 무엇이라고 하나요?', ['에이징', '만료', 'Aging', 'aging'], '에이징은 사용하지 않은 동적 MAC 항목을 만료시켜 장비 이동이나 변화에 대응하게 합니다.', '21 · 기초 확인');
 
+  for (const q of questions.slice(100)) q.topics = ['basic'];
+
   window.STUDY_BANKS.push({
     id: 'network-security-midterm',
     title: '네트워크보안응용 중간고사',
