@@ -2075,5 +2075,30 @@ const bank = {
     "answer": "o2"
   }
 ]);
+  /* UID 예측 문제에서 ls -al의 판단에 필요한 열과 권한 해석을 함께 제공합니다. */
+  const uidFileCases = [
+    [['hk-074','hk-093','hk-friend-w7p02'], 'root', false, 'setuid1000'],
+    [['hk-075','hk-094','hk-friend-w7p03'], 'root', false, 'setuid0'],
+    [['hk-076','hk-095','hk-friend-w7p04'], 'root', true, 'setuid1000'],
+    [['hk-077','hk-096','hk-friend-w7p05'], 'kali', true, 'setuid1000'],
+    [['hk-078','hk-097','hk-friend-w7p06'], 'kali', true, 'setuid1000'],
+    [['hk-079'], 'root', true, '래퍼 실행 파일']
+  ];
+  for (const [ids, owner, hasSetuid, filename] of uidFileCases) {
+    const permissions = hasSetuid ? '-rwsr-xr-x' : '-rwxr-xr-x';
+    const numeric = hasSetuid ? '4755' : '755';
+    const context = [
+      '파일 권한 확인 · ls -al의 주요 열 (문제 조건 기준)',
+      '권한 / 소유자 / 파일명',
+      permissions + ' / ' + owner + ' / ' + filename,
+      '일반 실행 파일 · 숫자 권한 ' + numeric + ' · 소유자 ' + owner + ' (UID ' + (owner === 'root' ? '0' : '1000') + ')',
+      '소유자 rwx(읽기·쓰기·실행), 그룹 r-x(읽기·실행), 기타 r-x(읽기·실행).',
+      hasSetuid ? '소유자 실행 위치의 s: 소유자 실행 권한과 SetUID가 함께 설정되어 있습니다.' : '소유자 실행 위치의 x: 실행 권한은 있지만 SetUID는 설정되어 있지 않습니다.'
+    ].join('\n');
+    for (const id of ids) {
+      const question = bank.questions.find(q => q.id === id);
+      if (question) question.prompt += '\n\n' + context;
+    }
+  }
   window.STUDY_BANKS.push(bank);
 })();
