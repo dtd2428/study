@@ -980,33 +980,6 @@
       "answer": "o0"
     },
     {
-      "id": "hk-048",
-      "week": 5,
-      "type": "choice",
-      "prompt": "Login Successful: postgres:postgres@template1의 올바른 해석은?",
-      "explanation": "@template1은 DB 이름이다. DB 인증 성공과 운영체제 UID 0 획득은 별개다.",
-      "source": "PDF 15쪽",
-      "options": [
-        {
-          "id": "o0",
-          "text": "사용자 postgres / 비밀번호 postgres / DB template1"
-        },
-        {
-          "id": "o1",
-          "text": "사용자 postgres / 비밀번호 postgres@template1"
-        },
-        {
-          "id": "o2",
-          "text": "운영체제 root 권한 획득"
-        },
-        {
-          "id": "o3",
-          "text": "사용자 template1 / 비밀번호 postgres"
-        }
-      ],
-      "answer": "o0"
-    },
-    {
       "id": "hk-049",
       "week": 5,
       "type": "choice",
