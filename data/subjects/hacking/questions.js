@@ -1119,17 +1119,6 @@
       "answer": "o0"
     },
     {
-      "id": "hk-050",
-      "week": 5,
-      "type": "short",
-      "prompt": "Nmap의 서비스 버전 식별 옵션을 쓰세요. (대소문자 구분)",
-      "explanation": "-sV는 서비스 버전 식별이며 대문자 V를 사용한다. -sU, -sT, -O와 구분한다.",
-      "source": "PDF 13쪽",
-      "answers": [
-        "-sV"
-      ]
-    },
-    {
       "id": "hk-051",
       "week": 5,
       "type": "short",
