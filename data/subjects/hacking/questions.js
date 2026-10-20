@@ -1699,17 +1699,6 @@
       ]
     },
     {
-      "id": "hk-081",
-      "week": 7,
-      "type": "short",
-      "prompt": "현재 디렉터리의 setuid1000 실행 파일을 실행하는 표기를 쓰세요.",
-      "explanation": "./는 현재 디렉터리를 뜻한다. C 함수 setuid() 또는 권한 명령 chmod와 구분한다.",
-      "source": "PDF 35쪽",
-      "answers": [
-        "./setuid1000"
-      ]
-    },
-    {
       "id": "hk-082",
       "week": 7,
       "type": "short",
