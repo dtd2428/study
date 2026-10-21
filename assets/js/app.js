@@ -59,8 +59,10 @@
   const answered=q=>hasAnswer(q,session.answers);
   const isOX = q => q.type==='short' && /^\[O\/X\]/i.test(q.prompt) && q.answers?.length>0 && q.answers.every(v=>/^[OX]$/i.test(norm(v)));
   const questionPrompt = q => isOX(q) ? q.prompt.replace(/\s*\(O 또는 X를 입력하세요\.\)$/, '') : q.prompt;
-  function autoGrade(q,answers,grades){const a=answers[q.id];if(q.type==='essay')return grades[q.id]===true?true:grades[q.id]===false?false:null;if(q.type==='choice')return a===q.answer;if(q.type==='short')return q.answers.some(v=>norm(v)===norm(a));return Array.isArray(a)&&q.answers.every((v,i)=>norm(v)===norm(a[i]));}
-  function correctText(q){if(q.type==='choice')return q.options.find(o=>o.id===q.answer)?.text||'';if(q.type==='short')return q.answers[0];if(q.type==='blanks')return q.fields.map((f,i)=>`${f}: ${q.answers[i]}`).join(' / ');return q.model;}
+  const blankAccepted = (q,i) => [q.answers[i],...(q.answerAliases?.[i]||[])];
+  const blankMatches = (q,i,value) => blankAccepted(q,i).some(expected=>norm(expected)===norm(value));
+  function autoGrade(q,answers,grades){const a=answers[q.id];if(q.type==='essay')return grades[q.id]===true?true:grades[q.id]===false?false:null;if(q.type==='choice')return a===q.answer;if(q.type==='short')return q.answers.some(v=>norm(v)===norm(a));return Array.isArray(a)&&q.answers.every((v,i)=>blankMatches(q,i,a[i]));}
+  function correctText(q){if(q.type==='choice')return q.options.find(o=>o.id===q.answer)?.text||'';if(q.type==='short')return q.answers[0];if(q.type==='blanks')return q.fields.map((f,i)=>`${f}: ${blankAccepted(q,i).join(' / ')}`).join(' / ');return q.model;}
   function renderQuiz(){
     if(!session){go('home');return;}setPage('quiz');
     const q=session.questions[session.index], checked=!!session.checked[q.id], a=session.answers[q.id];
@@ -98,11 +100,11 @@ RUID: <span class="uid-slot">?</span>   EUID: <span class="uid-slot">?</span>   
     </section>`;
   }
   const noInternalSpaces = value => !/\s/.test(norm(value));
-  const blankResults = (q, answer) => q.fields.map((field, i) => ({field, expected:q.answers[i], actual:Array.isArray(answer)?answer[i]:'', correct:norm(answer?.[i])===norm(q.answers[i])}));
+  const blankResults = (q, answer) => q.fields.map((field, i) => ({field, expected:blankAccepted(q,i).join(' / '), actual:Array.isArray(answer)?answer[i]:'', correct:blankMatches(q,i,answer?.[i])}));
   function blanksHTML(q,a,locked){
     return `<div class="blanks-grid">${blankResults(q,a).map((r,i)=>{
-      const hint=noInternalSpaces(r.expected);
-      return `<label class="blank-field ${locked?(r.correct?'blank-correct':'blank-incorrect'):''}"><span class="blank-label">${esc(r.field)}${hint?`<small class="spacing-hint" id="blank-spacing-${i}">띄어쓰기 금지</small>`:''}</span><input aria-label="${esc(r.field)}" ${hint?`aria-describedby="blank-spacing-${i}"`:''} ${locked?`aria-invalid="${!r.correct}" disabled`:''} type="text" inputmode="${q.answers.every(v=>/^\d+$/.test(v))?'numeric':'text'}" autocomplete="off" data-answer="${i}" value="${esc(r.actual||'')}">${locked?`<span class="blank-status">${r.correct?'✓ 정답':'✗ 오답'}</span>`:''}</label>`;
+      const hint=blankAccepted(q,i).every(noInternalSpaces);
+      return `<label class="blank-field ${locked?(r.correct?'blank-correct':'blank-incorrect'):''}"><span class="blank-label">${esc(r.field)}${hint?`<small class="spacing-hint" id="blank-spacing-${i}">띄어쓰기 금지</small>`:''}</span><input aria-label="${esc(r.field)}" ${hint?`aria-describedby="blank-spacing-${i}"`:''} ${locked?`aria-invalid="${!r.correct}" disabled`:''} type="text" inputmode="${q.answers.every((v,i)=>blankAccepted(q,i).every(value=>/^\d+$/.test(value)))?'numeric':'text'}" autocomplete="off" data-answer="${i}" value="${esc(r.actual||'')}">${locked?`<span class="blank-status">${r.correct?'✓ 정답':'✗ 오답'}</span>`:''}</label>`;
     }).join('')}</div>`;
   }
   function blankFeedbackHTML(q,answer){
