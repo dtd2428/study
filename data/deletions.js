@@ -24,5 +24,8 @@ window.STUDY_REMOVED = {
     "hk-061",
     "hk-052",
     "hk-080"
+  ],
+  "network-security-midterm": [
+    "nsm-217"
   ]
 };
