@@ -1,4 +1,4 @@
-/* 실제 등록 파일로 새 과목 로딩·출제·160문항 채점·Lecture 필터를 확인합니다. */
+/* 실제 등록 파일로 새 과목 로딩·출제·184문항 채점·Lecture 필터를 확인합니다. */
 const assert = require('node:assert/strict');
 const path = require('node:path');
 const {pathToFileURL} = require('node:url');
@@ -11,10 +11,10 @@ for (const entry of window.STUDY_SUBJECTS) require(path.join(root, entry.script)
 window.STUDY_VALIDATE_BANKS(window.STUDY_BANKS);
 const bank = window.STUDY_BANKS.find(b => b.id === 'network-security-midterm');
 assert.equal(bank.title, '네트워크보안응용 중간고사');
-assert.equal(bank.questions.length, 160);
-assert.equal(new Set(bank.questions.map(q => q.prompt)).size, 160);
+assert.equal(bank.questions.length, 184);
+assert.equal(new Set(bank.questions.map(q => q.prompt)).size, 184);
 assert.ok(bank.questions.every(q => q.source && q.explanation));
-assert.deepEqual(bank.weeks.map((_, i) => bank.questions.filter(q => q.week === i + 1).length), [50, 62, 25, 23]);
+assert.deepEqual(bank.weeks.map((_, i) => bank.questions.filter(q => q.week === i + 1).length), [74, 62, 25, 23]);
 
 (async () => {
   const browser = await chromium.launch({channel: process.env.BROWSER_CHANNEL || 'chrome', headless: true});
@@ -27,7 +27,7 @@ assert.deepEqual(bank.weeks.map((_, i) => bank.questions.filter(q => q.week === 
     await page.locator('#setup').waitFor();
     assert.equal(await page.locator('#subject option').count(), window.STUDY_SUBJECTS.length);
     await page.locator('#subject').selectOption(bank.id);
-    assert.match(await page.locator('#subject-chips').innerText(), /160문항/);
+    assert.match(await page.locator('#subject-chips').innerText(), /184문항/);
     await page.screenshot({path: path.join(root, 'tmp/network-home.png'), fullPage: true});
     await page.locator('#quick-start').click();
     await page.locator('.question-card').waitFor();
@@ -50,7 +50,7 @@ assert.deepEqual(bank.weeks.map((_, i) => bank.questions.filter(q => q.week === 
     await page.locator('[data-confirm]').click();
     await page.locator('.question-card').waitFor();
     session = (await state()).session;
-    assert.equal(session.questions.length, 160);
+    assert.equal(session.questions.length, 184);
     const screenshots = new Set();
     for (const [i, q] of session.questions.entries()) {
       await page.locator(`[data-jump="${i}"]`).click();
@@ -92,7 +92,7 @@ assert.deepEqual(bank.weeks.map((_, i) => bank.questions.filter(q => q.week === 
     await page.locator('[data-confirm]').click();
     await page.locator('.result-hero').waitFor();
     const record = (await state()).history[0];
-    assert.equal(record.correct, 160);
+    assert.equal(record.correct, 184);
     assert.equal(record.score, 100);
     assert.equal(record.pending, 0);
 
@@ -127,9 +127,9 @@ assert.deepEqual(bank.weeks.map((_, i) => bank.questions.filter(q => q.week === 
     assert.equal(await page.locator('[data-ox=O].incorrect:disabled').count(), 1);
     assert.equal(await page.locator('[data-ox=X].correct:disabled').count(), 1);
 
-    // 기본개념문제 필터: 빠른 시작·전체 60문항·주차/유형 교집합·해제.
+    // 기본개념문제 필터: 빠른 시작·전체 84문항·주차/유형 교집합·해제.
     const basic = bank.questions.filter(q => q.topics?.includes('basic'));
-    assert.equal(basic.length, 60);
+    assert.equal(basic.length, 84);
     assert.ok(basic.every(q => Number(q.id.slice(4)) >= 101));
     await page.evaluate(() => localStorage.clear());
     await page.reload();
@@ -137,7 +137,7 @@ assert.deepEqual(bank.weeks.map((_, i) => bank.questions.filter(q => q.week === 
     await page.locator('#advanced-settings summary').click();
     await page.locator('#basic-only').check();
     await page.locator('#count').selectOption('all');
-    assert.match(await page.locator('#start-label').innerText(), /60문항/);
+    assert.match(await page.locator('#start-label').innerText(), /84문항/);
     assert.match(await page.locator('#quick-start-note').innerText(), /기본개념문제만/);
     await page.screenshot({path: path.join(root, 'tmp/network-basic-settings.png'), fullPage: true});
     await page.locator('#quick-start').click();
@@ -152,7 +152,7 @@ assert.deepEqual(bank.weeks.map((_, i) => bank.questions.filter(q => q.week === 
     await page.locator('#setup button[type=submit]').click();
     await page.locator('[data-confirm]').click();
     await page.locator('.question-card').waitFor();
-    assert.equal((await state()).session.questions.length, 60);
+    assert.equal((await state()).session.questions.length, 84);
     assert.ok((await state()).session.questions.every(q => q.topics?.includes('basic')));
     await page.locator('[data-page=home]').click();
     await page.locator('#subject').selectOption(bank.id);
@@ -160,16 +160,17 @@ assert.deepEqual(bank.weeks.map((_, i) => bank.questions.filter(q => q.week === 
     await page.locator('#count').selectOption('all');
     await page.locator('#basic-only').check();
     for (const input of await page.locator('input[name=week]').all()) await input.setChecked(await input.getAttribute('value') === '1');
-    assert.match(await page.locator('#start-label').innerText(), /32문항/);
+    assert.match(await page.locator('#start-label').innerText(), /56문항/);
     for (const input of await page.locator('input[name=type]').all()) await input.setChecked(await input.getAttribute('value') === 'blanks');
-    assert.match(await page.locator('#start-label').innerText(), /1문항/);
+    assert.match(await page.locator('#start-label').innerText(), /5문항/);
     await page.locator('input[name=type][value=blanks]').uncheck();
     await page.locator('input[name=type][value=choice]').check();
-    assert.match(await page.locator('#start-label').innerText(), /20문항/);
-    await page.locator('#quick-start').click();
+    assert.match(await page.locator('#start-label').innerText(), /34문항/);
+    await page.locator('#setup button[type=submit]').click();
+    await page.locator('[data-confirm]').click();
     await page.locator('.question-card').waitFor();
     const lectureOneChoices = (await state()).session.questions;
-    assert.equal(lectureOneChoices.length, 20);
+    assert.equal(lectureOneChoices.length, 34);
     assert.ok(lectureOneChoices.every(q => q.week === 1 && q.type === 'choice' && q.topics?.includes('basic')));
     assert.ok(lectureOneChoices.every(q => Number(q.id.slice(4)) >= 141));
     await page.locator('[data-page=home]').click();
@@ -184,14 +185,14 @@ assert.deepEqual(bank.weeks.map((_, i) => bank.questions.filter(q => q.week === 
     assert.equal(await page.locator('.question-card').count(), 0);
     for (const input of await page.locator('input[name=type], input[name=week]').all()) await input.check();
     await page.locator('#basic-only').uncheck();
-    assert.match(await page.locator('#start-label').innerText(), /160문항/);
+    assert.match(await page.locator('#start-label').innerText(), /184문항/);
     await page.locator('#basic-only').check();
     await page.locator('#subject').selectOption('hacking');
     assert.equal(await page.locator('#basic-only').isChecked(), false);
     assert.equal(await page.locator('#basic-settings').isVisible(), false);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     assert.deepEqual(errors, []);
-    console.log('PASS: actual catalog, 160 source-linked questions, independent random 30, resume, all four answer types, full grading, Lecture filter, mobile layout.');
+    console.log('PASS: actual catalog, 184 source-linked questions, independent random 30, resume, all four answer types, full grading, Lecture filter, mobile layout.');
   } finally {
     await browser.close();
   }
