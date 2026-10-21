@@ -10,7 +10,7 @@ require('../data/subjects/network-security-midterm/questions.js');
 const banks = window.STUDY_BANKS;
 const choices = banks.flatMap(bank => bank.questions.filter(q => q.type === 'choice').map(q => ({bank, q})));
 window.STUDY_VALIDATE_BANKS(banks);
-assert.equal(choices.length, 111);
+assert.equal(choices.length, 143);
 for (const {q} of choices) for (const option of q.options) assert.ok(option.explanation?.trim(), `${q.id}:${option.id}`);
 const base = choices.find(({q}) => q.id === 'nsm-150');
 for (const bad of ['', 123, {}]) {
@@ -74,7 +74,7 @@ for (const bad of ['', 123, {}]) {
     await page.locator('#check').click();
     assert.equal(await page.locator('.wrong-choice-feedback').count(), 0);
 
-    // 오답 333개를 저장된 결과로 표시해 보기 ID와 해설의 연결을 확인합니다.
+    // 오답 429개를 저장된 결과로 표시해 보기 ID와 해설의 연결을 확인합니다.
     const questions = [], answers = {};
     for (const {q} of choices) for (const wrong of q.options.filter(o => o.id !== q.answer)) {
       const item = {...q, id: `${q.id}-${wrong.id}`, options: [...q.options].reverse()};
@@ -87,7 +87,7 @@ for (const bad of ['', 123, {}]) {
     await page.locator('[data-page=records]').click();
     await page.locator('[data-record="0"]').click();
     const reasons = await page.locator('.wrong-choice-reason').allTextContents();
-    assert.equal(reasons.length, 333);
+    assert.equal(reasons.length, 429);
     assert.deepEqual(reasons, questions.map(q => q.options.find(o => o.id === answers[q.id]).explanation));
 
     const safe = structuredClone(base.q);
@@ -116,6 +116,6 @@ for (const bad of ['', 123, {}]) {
     assert.deepEqual(created.options.map(o => o.explanation), ['개별 설명 0', '개별 설명 1', '개별 설명 2', '개별 설명 3']);
     window.STUDY_VALIDATE_BANKS({...base.bank, questions: [created]});
     assert.deepEqual(errors, []);
-    console.log('PASS: 111 choice questions, 333 wrong-option reasons, shuffled IDs, practice/exam timing, retry, reload, records, legacy matching, custom isolation, escaping, schema and mobile.');
+    console.log('PASS: 143 choice questions, 429 wrong-option reasons, shuffled IDs, practice/exam timing, retry, reload, records, legacy matching, custom isolation, escaping, schema and mobile.');
   } finally {await browser.close();}
 })().catch(e => {console.error(e); process.exitCode = 1;});
