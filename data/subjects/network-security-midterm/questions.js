@@ -2148,7 +2148,7 @@
       "id": "nsm-113",
       "week": 2,
       "type": "short",
-      "prompt": "같은 IPv4 링크에서 IP 주소에 대응하는 MAC 주소를 알아내는 프로토콜은 무엇인가요? 약어로 쓰세요.",
+      "prompt": "IP 주소로 MAC 주소를 찾는 프로토콜은 무엇인가요? 약어로 쓰세요.",
       "answers": [
         "ARP",
         "arp"
@@ -2163,7 +2163,7 @@
       "id": "nsm-114",
       "week": 2,
       "type": "short",
-      "prompt": "MAC 주소를 바탕으로 IPv4 주소를 알아내던 과거의 주소 설정 프로토콜은 무엇인가요? 약어로 쓰세요.",
+      "prompt": "MAC 주소로 IP 주소를 찾는 프로토콜은 무엇인가요? 약어로 쓰세요.",
       "answers": [
         "RARP",
         "rarp"
@@ -4853,7 +4853,7 @@
       "id": "nsm-212",
       "week": 2,
       "type": "short",
-      "prompt": "장비가 자신의 MAC 주소를 바탕으로 IPv4 주소 설정 정보를 요청하던 과거 프로토콜의 이름은?",
+      "prompt": "MAC 주소로 IP 주소를 찾는 프로토콜은 무엇인가요? 약어로 쓰세요.",
       "answers": [
         "RARP",
         "rarp",
