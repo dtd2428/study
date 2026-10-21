@@ -5315,25 +5315,6 @@
       ]
     },
     {
-      "id": "nsm-231",
-      "week": 4,
-      "type": "short",
-      "prompt": "하나의 L2 브로드캐스트 프레임이 전달될 수 있는 논리적 범위를 무엇이라고 하나요?",
-      "answers": [
-        "브로드캐스트 도메인",
-        "브로드캐스트도메인",
-        "broadcast domain",
-        "Broadcast Domain",
-        "Broadcast domain"
-      ],
-      "explanation": "브로드캐스트 도메인은 L2 브로드캐스트가 도달하는 범위입니다. VLAN은 이 범위를 논리적으로 분리하며 충돌 도메인과는 다른 개념입니다.",
-      "source": "nsa_lecture04 (26-2) (1).pdf · 원본 PDF 11 · 핵심 용어쪽 · 핵심 용어 보충",
-      "topics": [
-        "basic",
-        "keyword-concepts"
-      ]
-    },
-    {
       "id": "nsm-232",
       "week": 4,
       "type": "essay",
